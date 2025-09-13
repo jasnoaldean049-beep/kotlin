@@ -3,8 +3,8 @@
 
 package org.jetbrains.kotlin.backend.common.serialization.proto;
 
-public interface IrOperationOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation)
+public interface IrOperationPre240OrBuilder extends
+    // @@protoc_insertion_point(interface_extends:org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240)
     org.jetbrains.kotlin.protobuf.MessageLiteOrBuilder {
 
   /**

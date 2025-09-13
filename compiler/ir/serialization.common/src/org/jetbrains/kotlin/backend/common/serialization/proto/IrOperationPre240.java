@@ -4,35 +4,30 @@
 package org.jetbrains.kotlin.backend.common.serialization.proto;
 
 /**
- * Protobuf type {@code org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation}
- *
- * <pre>
- * TODO: we need an extension mechanism to accomodate new
- * IR operators in upcoming releases.
- * </pre>
+ * Protobuf type {@code org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240}
  */
-public final class IrOperation extends
+public final class IrOperationPre240 extends
     org.jetbrains.kotlin.protobuf.GeneratedMessageLite implements
-    // @@protoc_insertion_point(message_implements:org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation)
-    IrOperationOrBuilder {
-  // Use IrOperation.newBuilder() to construct.
-  private IrOperation(org.jetbrains.kotlin.protobuf.GeneratedMessageLite.Builder builder) {
+    // @@protoc_insertion_point(message_implements:org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240)
+    IrOperationPre240OrBuilder {
+  // Use IrOperationPre240.newBuilder() to construct.
+  private IrOperationPre240(org.jetbrains.kotlin.protobuf.GeneratedMessageLite.Builder builder) {
     super(builder);
     this.unknownFields = builder.getUnknownFields();
   }
-  private IrOperation(boolean noInit) { this.unknownFields = org.jetbrains.kotlin.protobuf.ByteString.EMPTY;}
+  private IrOperationPre240(boolean noInit) { this.unknownFields = org.jetbrains.kotlin.protobuf.ByteString.EMPTY;}
 
-  private static final IrOperation defaultInstance;
-  public static IrOperation getDefaultInstance() {
+  private static final IrOperationPre240 defaultInstance;
+  public static IrOperationPre240 getDefaultInstance() {
     return defaultInstance;
   }
 
-  public IrOperation getDefaultInstanceForType() {
+  public IrOperationPre240 getDefaultInstanceForType() {
     return defaultInstance;
   }
 
   private final org.jetbrains.kotlin.protobuf.ByteString unknownFields;
-  private IrOperation(
+  private IrOperationPre240(
       org.jetbrains.kotlin.protobuf.CodedInputStream input,
       org.jetbrains.kotlin.protobuf.ExtensionRegistryLite extensionRegistry)
       throws org.jetbrains.kotlin.protobuf.InvalidProtocolBufferException {
@@ -584,18 +579,18 @@ public final class IrOperation extends
       makeExtensionsImmutable();
     }
   }
-  public static org.jetbrains.kotlin.protobuf.Parser<IrOperation> PARSER =
-      new org.jetbrains.kotlin.protobuf.AbstractParser<IrOperation>() {
-    public IrOperation parsePartialFrom(
+  public static org.jetbrains.kotlin.protobuf.Parser<IrOperationPre240> PARSER =
+      new org.jetbrains.kotlin.protobuf.AbstractParser<IrOperationPre240>() {
+    public IrOperationPre240 parsePartialFrom(
         org.jetbrains.kotlin.protobuf.CodedInputStream input,
         org.jetbrains.kotlin.protobuf.ExtensionRegistryLite extensionRegistry)
         throws org.jetbrains.kotlin.protobuf.InvalidProtocolBufferException {
-      return new IrOperation(input, extensionRegistry);
+      return new IrOperationPre240(input, extensionRegistry);
     }
   };
 
   @java.lang.Override
-  public org.jetbrains.kotlin.protobuf.Parser<IrOperation> getParserForType() {
+  public org.jetbrains.kotlin.protobuf.Parser<IrOperationPre240> getParserForType() {
     return PARSER;
   }
 
@@ -1922,53 +1917,53 @@ public final class IrOperation extends
     return super.writeReplace();
   }
 
-  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation parseFrom(
+  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 parseFrom(
       org.jetbrains.kotlin.protobuf.ByteString data)
       throws org.jetbrains.kotlin.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation parseFrom(
+  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 parseFrom(
       org.jetbrains.kotlin.protobuf.ByteString data,
       org.jetbrains.kotlin.protobuf.ExtensionRegistryLite extensionRegistry)
       throws org.jetbrains.kotlin.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation parseFrom(byte[] data)
+  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 parseFrom(byte[] data)
       throws org.jetbrains.kotlin.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation parseFrom(
+  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 parseFrom(
       byte[] data,
       org.jetbrains.kotlin.protobuf.ExtensionRegistryLite extensionRegistry)
       throws org.jetbrains.kotlin.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation parseFrom(java.io.InputStream input)
+  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return PARSER.parseFrom(input);
   }
-  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation parseFrom(
+  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 parseFrom(
       java.io.InputStream input,
       org.jetbrains.kotlin.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return PARSER.parseFrom(input, extensionRegistry);
   }
-  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation parseDelimitedFrom(java.io.InputStream input)
+  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return PARSER.parseDelimitedFrom(input);
   }
-  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation parseDelimitedFrom(
+  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 parseDelimitedFrom(
       java.io.InputStream input,
       org.jetbrains.kotlin.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return PARSER.parseDelimitedFrom(input, extensionRegistry);
   }
-  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation parseFrom(
+  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 parseFrom(
       org.jetbrains.kotlin.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return PARSER.parseFrom(input);
   }
-  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation parseFrom(
+  public static org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 parseFrom(
       org.jetbrains.kotlin.protobuf.CodedInputStream input,
       org.jetbrains.kotlin.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -1977,26 +1972,21 @@ public final class IrOperation extends
 
   public static Builder newBuilder() { return Builder.create(); }
   public Builder newBuilderForType() { return newBuilder(); }
-  public static Builder newBuilder(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation prototype) {
+  public static Builder newBuilder(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 prototype) {
     return newBuilder().mergeFrom(prototype);
   }
   public Builder toBuilder() { return newBuilder(this); }
 
   /**
-   * Protobuf type {@code org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation}
-   *
-   * <pre>
-   * TODO: we need an extension mechanism to accomodate new
-   * IR operators in upcoming releases.
-   * </pre>
+   * Protobuf type {@code org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240}
    */
   public static final class Builder extends
       org.jetbrains.kotlin.protobuf.GeneratedMessageLite.Builder<
-        org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation, Builder>
+        org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240, Builder>
       implements
-      // @@protoc_insertion_point(builder_implements:org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation)
-      org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationOrBuilder {
-    // Construct using org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation.newBuilder()
+      // @@protoc_insertion_point(builder_implements:org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240)
+      org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240OrBuilder {
+    // Construct using org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -2018,20 +2008,20 @@ public final class IrOperation extends
       return create().mergeFrom(buildPartial());
     }
 
-    public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation getDefaultInstanceForType() {
-      return org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation.getDefaultInstance();
+    public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 getDefaultInstanceForType() {
+      return org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance();
     }
 
-    public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation build() {
-      org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation result = buildPartial();
+    public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 build() {
+      org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation buildPartial() {
-      org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation result = new org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation(this);
+    public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 buildPartial() {
+      org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 result = new org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240(this);
       int from_bitField0_ = bitField0_;
       int from_bitField1_ = bitField1_;
       int to_bitField0_ = 0;
@@ -2159,8 +2149,8 @@ public final class IrOperation extends
       return result;
     }
 
-    public Builder mergeFrom(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation other) {
-      if (other == org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation.getDefaultInstance()) return this;
+    public Builder mergeFrom(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 other) {
+      if (other == org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance()) return this;
       switch (other.getOperationCase()) {
         case BLOCK: {
           mergeBlock(other.getBlock());
@@ -2563,11 +2553,11 @@ public final class IrOperation extends
         org.jetbrains.kotlin.protobuf.CodedInputStream input,
         org.jetbrains.kotlin.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation parsedMessage = null;
+      org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (org.jetbrains.kotlin.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation) e.getUnfinishedMessage();
+        parsedMessage = (org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240) e.getUnfinishedMessage();
         throw e;
       } finally {
         if (parsedMessage != null) {
@@ -5137,13 +5127,13 @@ public final class IrOperation extends
       return this;
     }
 
-    // @@protoc_insertion_point(builder_scope:org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation)
+    // @@protoc_insertion_point(builder_scope:org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240)
   }
 
   static {
-    defaultInstance = new IrOperation(true);
+    defaultInstance = new IrOperationPre240(true);
     defaultInstance.initFields();
   }
 
-  // @@protoc_insertion_point(class_scope:org.jetbrains.kotlin.backend.common.serialization.proto.IrOperation)
+  // @@protoc_insertion_point(class_scope:org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240)
 }
