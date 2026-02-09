@@ -28,7 +28,7 @@ import org.jetbrains.kotlin.test.frontend.fir.FirMetaInfoDiffSuppressor
 import org.jetbrains.kotlin.test.frontend.fir.FirOutputArtifact
 import org.jetbrains.kotlin.test.model.*
 import org.jetbrains.kotlin.test.runners.AbstractKotlinCompilerWithTargetBackendTest
-import org.jetbrains.kotlin.test.services.configuration.NativeEnvironmentConfigurator
+import org.jetbrains.kotlin.test.services.configuration.NativeFirstStageEnvironmentConfigurator
 
 // Base class for IR serialization/deserialization test, configured with FIR frontend, in Native-specific way.
 open class AbstractNativeIrDeserializationTest : AbstractKotlinCompilerWithTargetBackendTest(TargetBackend.NATIVE) {
@@ -46,7 +46,7 @@ open class AbstractNativeIrDeserializationTest : AbstractKotlinCompilerWithTarge
         get() = ::NativeDeserializerFacade
 
     override fun configure(builder: TestConfigurationBuilder) = with(builder) {
-        useConfigurators(::NativeEnvironmentConfigurator)
+        useConfigurators(::NativeFirstStageEnvironmentConfigurator)
         useAfterAnalysisCheckers(::FirMetaInfoDiffSuppressor)
         commonConfigurationForNativeFirstStageUpToSerialization(
             targetFrontend,
