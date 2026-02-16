@@ -132,7 +132,7 @@ class FirReplSnippetConfiguratorExtensionImpl(
                 origin = origin,
                 source = null,
                 annotations = annotations,
-                returnTypeRef = returnTypeRef.copyWithNewSourceKind(KtFakeSourceElementKind.DefaultAccessor),
+                returnTypeRef = returnTypeRef.copyWithNewSourceKind(KtFakeSourceElementKind.DefaultAccessor.DefaultBackingField),
                 isVar = isVar,
                 propertySymbol = symbol,
                 status = status,
