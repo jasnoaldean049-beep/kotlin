@@ -474,7 +474,7 @@ class WasmCompiledModuleFragment(
             addAll(fragment.wasmReferencedFunctions.map { key ->
                 WasmElement(
                     type = WasmFuncRef,
-                    values = listOf(WasmTable.Value.Function(definedDeclarations.functions[key] ?: error("Function $key is not found in fragments"))),
+                    values = listOf(WasmTable.Value.Function(definedDeclarations.resolve(FuncSymbol(key)))),
                     mode = WasmElement.Mode.Declarative)
             })
         }
