@@ -18,13 +18,14 @@ import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.builders.*
 import org.jetbrains.kotlin.ir.builders.declarations.buildFun
 import org.jetbrains.kotlin.ir.declarations.*
-import org.jetbrains.kotlin.ir.expressions.IrBlockBody
+import org.jetbrains.kotlin.ir.expressions.*
 import org.jetbrains.kotlin.ir.symbols.IrFunctionSymbol
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import org.jetbrains.kotlin.ir.visitors.acceptVoid
 import org.jetbrains.kotlin.name.Name
+import org.jetbrains.kotlin.utils.addToStdlib.runIf
 
 internal val DECLARATION_ORIGIN_STATIC_GLOBAL_INITIALIZER = IrDeclarationOriginImpl("STATIC_GLOBAL_INITIALIZER")
 internal val DECLARATION_ORIGIN_STATIC_THREAD_LOCAL_INITIALIZER = IrDeclarationOriginImpl("STATIC_THREAD_LOCAL_INITIALIZER")
@@ -46,6 +47,8 @@ internal fun ConfigChecks.shouldBeInitializedEagerly(irField: IrField): Boolean 
     return annotations.hasAnnotation(KonanFqNames.eagerInitialization)
 }
 
+val STATEMENT_ORIGIN_FIELD_GLOBAL_INITIALIZER by IrStatementOriginImpl
+
 // TODO: ExplicitlyExported for IR proto are not longer needed.
 internal class StaticInitializersLowering(val context: Context) : FileLoweringPass {
     override fun lower(irFile: IrFile) {
@@ -65,35 +68,53 @@ internal class StaticInitializersLowering(val context: Context) : FileLoweringPa
     }
 
     fun processDeclarationContainter(container: IrDeclarationContainer) {
-        var requireGlobalInitializer = false
-        var requireThreadLocalInitializer = false
+        val threadLocalInitializers = mutableListOf<IrExpression>()
+        val globalInitializers = mutableListOf<IrExpression>()
+
+        val builder = context.irBuiltIns.createIrBuilder((container as IrSymbolOwner).symbol, SYNTHETIC_OFFSET, SYNTHETIC_OFFSET)
+
         for (declaration in container.declarations) {
             val irField = (declaration as? IrField) ?: (declaration as? IrProperty)?.backingField
-            if (irField == null || !irField.isStatic || !irField.needsInitializationAtRuntime || context.shouldBeInitializedEagerly(irField)) continue
-            if (irField.storageKind != FieldStorageKind.THREAD_LOCAL) {
-                requireGlobalInitializer = true
-            } else {
-                requireThreadLocalInitializer = true // Either marked with thread local or only main thread visible.
-            }
+            if (irField == null || !irField.isStatic || context.shouldBeInitializedEagerly(irField)) continue
+            if (!irField.hasNonConstInitializer && !irField.needsGCRegistration) continue
+            val isThreadLocal = irField.storageKind == FieldStorageKind.THREAD_LOCAL
+            val initializers = if (isThreadLocal) threadLocalInitializers else globalInitializers
+            initializers.add(builder.irSetField(
+                    receiver = null,
+                    field = irField,
+                    // it can be null, if we are here needsGCRegistration branch and need to set something
+                    value = irField.initializer?.expression ?: builder.irNull(),
+                    origin = STATEMENT_ORIGIN_FIELD_GLOBAL_INITIALIZER.takeUnless { isThreadLocal }
+            ))
+            irField.initializer = null
         }
+        val requireGlobalInitializer = globalInitializers.isNotEmpty()
+        val requireThreadLocalInitializer = threadLocalInitializers.isNotEmpty()
         // TODO: think about pure initializers.
         if (!requireGlobalInitializer && !requireThreadLocalInitializer) {
             return
         }
 
-        val globalInitFunction =
-                if (requireGlobalInitializer)
-                    buildInitFileFunction(container, "\$init_global", DECLARATION_ORIGIN_STATIC_GLOBAL_INITIALIZER)
-                else null
-        val threadLocalInitFunction =
-                if (requireThreadLocalInitializer)
-                    buildInitFileFunction(container, "\$init_thread_local",
-                            if (requireGlobalInitializer)
-                                DECLARATION_ORIGIN_STATIC_THREAD_LOCAL_INITIALIZER
-                            else DECLARATION_ORIGIN_STATIC_STANDALONE_THREAD_LOCAL_INITIALIZER
-                    )
-                else null
-
+        val globalInitFunction = runIf(requireGlobalInitializer) {
+            buildInitFunction(
+                    container = container,
+                    name = "\$init_global",
+                    origin = DECLARATION_ORIGIN_STATIC_GLOBAL_INITIALIZER,
+                    initializers = globalInitializers
+            )
+        }
+        val threadLocalInitFunction = runIf (requireThreadLocalInitializer) {
+            buildInitFunction(
+                    container = container,
+                    name = "\$init_thread_local",
+                    origin = when {
+                        requireGlobalInitializer -> DECLARATION_ORIGIN_STATIC_THREAD_LOCAL_INITIALIZER
+                        else -> DECLARATION_ORIGIN_STATIC_STANDALONE_THREAD_LOCAL_INITIALIZER
+                    },
+                    initializers = threadLocalInitializers
+            )
+        }
+        
         fun IrFunction.addInitializersCall() {
             val body = body ?: return
             val statements = (body as IrBlockBody).statements
@@ -105,14 +126,25 @@ internal class StaticInitializersLowering(val context: Context) : FileLoweringPa
             }
         }
 
-        container.simpleFunctions()
-                .filter { it.dispatchReceiverParameter == null }
-                .filterNot { it.origin == DECLARATION_ORIGIN_ENTRY_POINT }
-                .forEach { it.addInitializersCall() }
-        (container as? IrClass)?.constructors?.forEach { it.addInitializersCall() }
+        for (function in container.simpleFunctions()) {
+            if (function.dispatchReceiverParameter != null) continue // already initialized when instance was created
+            if (function.origin == DECLARATION_ORIGIN_ENTRY_POINT) continue // is not really in any class
+            if (function.isStaticInitializer) continue // don't initialize recursively
+            function.addInitializersCall()
+        }
+        if (container is IrClass) {
+            for (constructor in container.constructors) {
+                constructor.addInitializersCall()
+            }
+        }
     }
 
-    private fun buildInitFileFunction(container: IrDeclarationContainer, name: String, origin: IrDeclarationOrigin) = context.irFactory.buildFun {
+    private fun buildInitFunction(
+            container: IrDeclarationContainer,
+            name: String,
+            origin: IrDeclarationOrigin,
+            initializers: List<IrExpression>
+    ) = context.irFactory.buildFun {
         startOffset = SYNTHETIC_OFFSET
         endOffset = SYNTHETIC_OFFSET
         this.origin = origin
@@ -121,10 +153,8 @@ internal class StaticInitializersLowering(val context: Context) : FileLoweringPa
         returnType = context.irBuiltIns.unitType
     }.apply {
         parent = container
+        body = context.irFactory.createBlockBody(startOffset, endOffset, initializers).setDeclarationsParent(this)
         container.declarations.add(0, this)
     }
-
-    private val IrField.needsInitializationAtRuntime: Boolean
-        get() = hasNonConstInitializer || needsGCRegistration
 
 }

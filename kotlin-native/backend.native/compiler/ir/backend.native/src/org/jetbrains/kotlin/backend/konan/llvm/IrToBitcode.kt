@@ -352,48 +352,11 @@ internal class CodeGeneratorVisitor(
         }
     }
 
-    private fun buildInitializerFunctions(scopeState: ScopeInitializersGenerationState) {
-        scopeState.globalInitFunction?.let { fileInitFunction ->
-            generateFunction(codegen, fileInitFunction, fileInitFunction.location(start = true), fileInitFunction.location(start = false)) {
-                using(FunctionScope(fileInitFunction, this)) {
-                    val parameterScope = ParameterScope(fileInitFunction, functionGenerationContext)
-                    using(parameterScope) usingParameterScope@{
-                        using(VariableScope()) usingVariableScope@{
-                            scopeState.topLevelFields
-                                    .filter { it.storageKind != FieldStorageKind.THREAD_LOCAL }
-                                    .filterNot { context.shouldBeInitializedEagerly(it) }
-                                    .forEach { initGlobalField(it) }
-                            ret(null)
-                        }
-                    }
-                }
-            }
-        }
-
-        scopeState.threadLocalInitFunction?.let { fileInitFunction ->
-            generateFunction(codegen, fileInitFunction, fileInitFunction.location(start = true), fileInitFunction.location(start = false)) {
-                using(FunctionScope(fileInitFunction, this)) {
-                    val parameterScope = ParameterScope(fileInitFunction, functionGenerationContext)
-                    using(parameterScope) usingParameterScope@{
-                        using(VariableScope()) usingVariableScope@{
-                            scopeState.topLevelFields
-                                    .filter { it.storageKind == FieldStorageKind.THREAD_LOCAL }
-                                    .filterNot { context.shouldBeInitializedEagerly(it) }
-                                    .forEach { initThreadLocalField(it) }
-                            ret(null)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private fun runAndProcessInitializers(konanLibrary: KotlinLibrary?, f: () -> Unit) {
         val oldScopeState = llvm.initializersGenerationState.reset(ScopeInitializersGenerationState())
         f()
         val scopeState = llvm.initializersGenerationState.reset(oldScopeState)
         scopeState.takeIf { !it.isEmpty() }?.let {
-            buildInitializerFunctions(it)
             val runtimeInitializer = createInitBody(it)
             llvm.irStaticInitializers.add(IrStaticInitializer(konanLibrary, runtimeInitializer))
         }
@@ -498,9 +461,6 @@ internal class CodeGeneratorVisitor(
                                     storeHeapRef(llvm.kNull, address)
                                 }
                             }
-                    state.globalSharedObjects.forEach { address ->
-                        storeHeapRef(llvm.kNull, address)
-                    }
                     state.globalInitState?.let {
                         store(llvm.intptr(FILE_NOT_INITIALIZED), it)
                     }
@@ -794,20 +754,16 @@ internal class CodeGeneratorVisitor(
 
         val scopeState = llvm.initializersGenerationState.scopeState
         if (declaration.origin == DECLARATION_ORIGIN_STATIC_GLOBAL_INITIALIZER) {
-            require(scopeState.globalInitFunction == null) { "There can only be at most one global file initializer" }
-            require(declaration.body == null) { "The body of file initializer should be null" }
+            require(scopeState.globalInitState == null) { "There can only be at most one global file initializer" }
             require(declaration.hasShape()) { "File initializer must be parameterless" }
             require(declaration.returnsUnit()) { "File initializer must return Unit" }
-            scopeState.globalInitFunction = declaration
             scopeState.globalInitState = getGlobalInitStateFor(declaration.parent as IrDeclarationContainer)
         }
         if (declaration.origin == DECLARATION_ORIGIN_STATIC_THREAD_LOCAL_INITIALIZER
                 || declaration.origin == DECLARATION_ORIGIN_STATIC_STANDALONE_THREAD_LOCAL_INITIALIZER) {
-            require(scopeState.threadLocalInitFunction == null) { "There can only be at most one thread local file initializer" }
-            require(declaration.body == null) { "The body of file initializer should be null" }
+            require(scopeState.threadLocalInitState == null) { "There can only be at most one thread local file initializer" }
             require(declaration.hasShape()) { "File initializer must be parameterless" }
             require(declaration.returnsUnit()) { "File initializer must return Unit" }
-            scopeState.threadLocalInitFunction = declaration
             scopeState.threadLocalInitState = getThreadLocalInitStateFor(declaration.parent as IrDeclarationContainer)
         }
 
@@ -1809,11 +1765,15 @@ internal class CodeGeneratorVisitor(
             address = staticFieldPtr(value.symbol.owner, functionGenerationContext)
             alignment = generationState.llvmDeclarations.forStaticField(value.symbol.owner).alignment
         }
-        functionGenerationContext.storeAny(
-                valueToAssign, address, value.symbol.owner.type.binaryTypeIsReference(), false,
-                isVolatile = value.symbol.owner.hasAnnotation(KonanFqNames.volatile),
-                alignment = alignment,
-        )
+        if (value.origin == STATEMENT_ORIGIN_FIELD_GLOBAL_INITIALIZER && value.symbol.owner.needsGCRegistration) {
+            call(llvm.initAndRegisterGlobalFunction, listOf(address, valueToAssign))
+        } else {
+            functionGenerationContext.storeAny(
+                    valueToAssign, address, value.symbol.owner.type.binaryTypeIsReference(), false,
+                    isVolatile = value.symbol.owner.hasAnnotation(KonanFqNames.volatile),
+                    alignment = alignment,
+            )
+        }
 
         assert (value.type.isUnit())
         return codegen.theUnitInstanceRef.llvm

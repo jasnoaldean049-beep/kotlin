@@ -243,15 +243,11 @@ internal fun stringAsBytes(str: String) = str.toByteArray(Charsets.UTF_8)
 
 internal class ScopeInitializersGenerationState {
     val topLevelFields = mutableListOf<IrField>()
-    var globalInitFunction: IrSimpleFunction? = null
     var globalInitState: LLVMValueRef? = null
-    var threadLocalInitFunction: IrSimpleFunction? = null
     var threadLocalInitState: AddressAccess? = null
-    val globalSharedObjects = mutableSetOf<LLVMValueRef>()
     fun isEmpty() = topLevelFields.isEmpty() &&
             globalInitState == null &&
-            threadLocalInitState == null &&
-            globalSharedObjects.isEmpty()
+            threadLocalInitState == null
 }
 
 internal class InitializersGenerationState {
