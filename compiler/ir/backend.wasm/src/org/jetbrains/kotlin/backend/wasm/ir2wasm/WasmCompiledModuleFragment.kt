@@ -908,8 +908,7 @@ class WasmCompiledModuleFragment(
         val oldFromSize = to.size
         to.putAll(from)
         if (oldFromSize + from.size != to.size) {
-            // XXX currently expected due to the fact that we might have the same generated function signatures across modules
-            // compilationException("Declaration redefinition happened on $info.", null)
+            compilationException("Declaration redefinition happened on $info.", null)
         }
     }
 
@@ -936,7 +935,8 @@ class WasmCompiledModuleFragment(
                     putAllChecked(fragment.definedRttiGlobal, definedDeclarations.globalRTTI, "globalRTTI")
                     putAllChecked(fragment.definedGcTypes, definedDeclarations.gcTypes, "gcTypes")
                     putAllChecked(fragment.definedVTableGcTypes, definedDeclarations.vTableGcTypes, "vTableGcTypes")
-                    putAllChecked(fragment.definedFunctionTypes, definedDeclarations.functionTypes, "functionTypes")
+                    // functionTypes are deduplicated by WASM signature structure, duplicates are expected and equivalent
+                    definedDeclarations.functionTypes.putAll(fragment.definedFunctionTypes)
                 }
             }
         }
