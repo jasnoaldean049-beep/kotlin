@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.buildtools.api.arguments.enums.AssertionsMode
 import org.jetbrains.kotlin.buildtools.api.arguments.enums.JspecifyAnnotationsMode
 import org.jetbrains.kotlin.buildtools.api.arguments.enums.JvmDefaultMode
 import org.jetbrains.kotlin.buildtools.api.arguments.enums.LambdasMode
+import org.jetbrains.kotlin.buildtools.api.arguments.enums.SamConversionsMode
 import org.jetbrains.kotlin.buildtools.api.arguments.types.ProfileCompilerCommand
 import org.jetbrains.kotlin.buildtools.api.jvm.JvmPlatformToolchain
 import org.jetbrains.kotlin.buildtools.api.jvm.JvmSnapshotBasedIncrementalCompilationConfiguration
@@ -218,6 +219,14 @@ internal class KotlinWrapperPre2_4_0(
                     LambdasMode.values().first { it.stringValue == stringValue } as V
                 }
 
+                JvmCompilerArguments.X_SAM_CONVERSIONS -> {
+                    @Suppress("SENSELESS_COMPARISON")
+                    if (delegate[key] == null) return null as V
+
+                    val stringValue = delegate[key] as String
+                    SamConversionsMode.values().first { it.stringValue == stringValue } as V
+                }
+
                 else -> delegate[key]
             }
         }
@@ -285,6 +294,14 @@ internal class KotlinWrapperPre2_4_0(
 
                 JvmCompilerArguments.X_LAMBDAS -> {
                     val mode = value as LambdasMode?
+                    val stringValue = mode?.stringValue
+                    val stringKey = JvmCompilerArguments.JvmCompilerArgument<String?>(key.id, key.availableSinceVersion)
+
+                    delegate[stringKey] = stringValue
+                }
+
+                JvmCompilerArguments.X_SAM_CONVERSIONS -> {
+                    val mode = value as SamConversionsMode?
                     val stringValue = mode?.stringValue
                     val stringKey = JvmCompilerArguments.JvmCompilerArgument<String?>(key.id, key.availableSinceVersion)
 

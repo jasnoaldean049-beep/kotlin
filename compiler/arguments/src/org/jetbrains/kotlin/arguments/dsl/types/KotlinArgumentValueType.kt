@@ -306,6 +306,21 @@ class LambdasModeType(
     }
 }
 
+/**
+ * A value which accepts [SamConversionsMode] type.
+ */
+@Serializable
+class SamConversionsModeType(
+    override val isNullable: ReleaseDependent<Boolean> = ReleaseDependent(false),
+    override val defaultValue: ReleaseDependent<SamConversionsMode?> = ReleaseDependent(SamConversionsMode.INDY),
+) : KotlinArgumentValueType<SamConversionsMode> {
+
+    override fun stringRepresentation(value: SamConversionsMode?): String? {
+        if (value == null) return null
+        return value.modeName.valueOrNullStringLiteral
+    }
+}
+
 private val String?.valueOrNullStringLiteral: String
     get() = "\"${this}\""
 
