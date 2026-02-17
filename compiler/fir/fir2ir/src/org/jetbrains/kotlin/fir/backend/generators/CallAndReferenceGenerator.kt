@@ -1010,17 +1010,8 @@ class CallAndReferenceGenerator(
         }
         return visitor.withAnnotationMode {
             val annotationCall = annotation.toAnnotationCall()
-            val evaluationResults = FirExpressionEvaluator.evaluateAnnotationArguments(annotation, session);
-            val evaluatedArgumentMap = evaluationResults
-                .mapValues { (it.value as? FirEvaluatorResult.Evaluated)?.result as? FirExpression}
-                .takeIf { it.all { el -> el.value != null } }
-                ?.mapValues { it.value!! }
-
-            if (evaluatedArgumentMap != null && annotationCall != null && !annotationCall.argumentList.arguments.isEmpty()) {
-                val argumentToParameterMapping = (annotationCall.argumentList as FirResolvedArgumentList).mapping.mapKeys {
-                    evaluatedArgumentMap.getOrElse(it.value.name, { it.key })
-                }.toMap(LinkedHashMap())
-                annotationCall.replaceArgumentList(buildResolvedArgumentList(annotationCall.argumentList, argumentToParameterMapping))
+            if (annotationCall != null && !annotationCall.argumentList.arguments.isEmpty()) {
+                annotationCall.replaceArgumentList(buildResolvedArgumentList(annotationCall.argumentList, annotationCall.resolvedArgumentMapping!!))
             }
 
             irAnnotation
