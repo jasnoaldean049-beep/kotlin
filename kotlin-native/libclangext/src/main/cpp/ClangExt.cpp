@@ -18,9 +18,11 @@
 #include <cstdlib>
 #include <cstring>
 
+#if LIBCLANGEXT_ENABLE
 #include <clang/AST/Attr.h>
 #include <clang/AST/DeclObjC.h>
 #include <clang/Frontend/ASTUnit.h>
+#endif
 #include "clang-c/ext.h"
 
 using namespace clang;
