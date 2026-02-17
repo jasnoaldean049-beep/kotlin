@@ -19,7 +19,7 @@
 #include <cstring>
 
 #include <llvm/ADT/StringRef.h>
-#include <clang/Basic/LLVM.h
+#include <clang/Basic/LLVM.h>
 #include "clang-c/ext.h"
 
 #if LIBCLANGEXT_ENABLE
