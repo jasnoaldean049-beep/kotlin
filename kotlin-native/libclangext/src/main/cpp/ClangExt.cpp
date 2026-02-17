@@ -19,15 +19,18 @@
 #include <cstring>
 
 #include <llvm/ADT/StringRef.h>
+#include <clang/Basic/LLVM.h
 #include "clang-c/ext.h"
 
 #if LIBCLANGEXT_ENABLE
+
 #include <clang/AST/Attr.h>
 #include <clang/AST/DeclObjC.h>
 #include <clang/Frontend/ASTUnit.h>
 
+#endif // LIBCLANGEXT_ENABLE
+
 using namespace clang;
-#endif
 
 #if LIBCLANGEXT_ENABLE
 
