@@ -2,6 +2,7 @@
 // OPT_IN: kotlin.js.ExperimentalJsExport
 // RENDER_DIAGNOSTIC_ARGUMENTS
 // DIAGNOSTICS: -INLINE_CLASS_DEPRECATED
+// LANGUAGE: +AllowInterfaceNestedClassesInJsExport
 
 package foo
 
@@ -40,7 +41,7 @@ interface InterfaceWithNamedCompanion {
 
 @JsExport
 interface OuterInterface {
-    class <!WRONG_EXPORTED_DECLARATION("nested class inside exported interface")!>Nested<!>
+    class Nested
 }
 
 @JsExport
