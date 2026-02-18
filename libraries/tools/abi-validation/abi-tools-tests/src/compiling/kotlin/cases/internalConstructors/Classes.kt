@@ -15,6 +15,12 @@ public class MultipleParameters internal constructor(
     public val c: Int = 0
 )
 
+public class MultipleConstructors internal constructor(
+    public val a: Int = 0
+) {
+    private constructor(str: String) : this()
+}
+
 public class MixedParameters internal constructor(
     public val a: Int = 0,
     public val b: Int = 0,
