@@ -595,7 +595,7 @@ class ExpressionCodegen(
             this is IrSimpleFunction && (returnType.isTypeParameter() || allOverridden().any { it.returnType.isTypeParameter() })
 
         return when {
-            (expression.type.isNothing() || expression.type.isUnit()) &&
+            expression.type.isUnit() &&
                     irFunction.shouldContainSuspendMarkers() &&
                     callee.suspendFunctionOriginal().returnTypeMayBeInferred() -> {
                 // In some cases of Unit functions with tail-call of another function, we shall overwrite the return value
