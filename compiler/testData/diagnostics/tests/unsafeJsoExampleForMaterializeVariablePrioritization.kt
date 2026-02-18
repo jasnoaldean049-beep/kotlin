@@ -1,7 +1,8 @@
+// FIR_IDENTICAL
 // RUN_PIPELINE_TILL: BACKEND
 // DUMP_INFERENCE_LOGS: FIXATION
 
-fun <W : Any> unsafeJso(): W = js("({})")
+fun <W : Any> unsafeJso(): W = TODO() // = js("({})")
 
 interface State
 
@@ -19,3 +20,6 @@ interface ReactComponentWrapper<S : State> {
         )
     }
 }
+
+/* GENERATED_FIR_TAGS: functionDeclaration, functionalType, interfaceDeclaration, lambdaLiteral, typeConstraint,
+typeParameter, typeWithExtension, vararg */
