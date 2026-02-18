@@ -182,7 +182,7 @@ object FirJsExportDeclarationChecker : FirBasicDeclarationChecker(MppCheckerKind
                 }
 
                 if (
-                    !context.languageVersionSettings.supportsFeature(LanguageFeature.AllowNamedCompanionForJsExport) &&
+                    LanguageFeature.AllowNamedCompanionForJsExport.isDisabled() &&
                     context.isInsideInterface &&
                     declaration.status.isCompanion &&
                     declaration.nameOrSpecialName != DEFAULT_NAME_FOR_COMPANION_OBJECT
