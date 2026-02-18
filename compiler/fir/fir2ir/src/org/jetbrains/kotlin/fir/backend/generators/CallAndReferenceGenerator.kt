@@ -1011,29 +1011,9 @@ class CallAndReferenceGenerator(
         return visitor.withAnnotationMode {
             val annotationCall = annotation.toAnnotationCall()
 
-            return when (irAnnotation) {
-                is IrMemberAccessExpression<*> -> irAnnotation.applyIf(annotationCall?.argumentList?.arguments?.isNotEmpty() ?: false) {
-                    val indexedArguments = annotationCall!!.resolvedArgumentMapping!!
-                        .map { (constArg, parameter) ->
-                            val arg = convertArgument(constArg, parameter, ConeSubstitutor.Empty)
-                            val index =
-                                (firConstructorSymbol as FirConstructorSymbol).valueParameterSymbols.map { it.fir }.indexOf(parameter)
-                            index to arg
-                        }
-                    indexedArguments.forEach { (index, arg) -> arguments[index] = arg }
-                    irAnnotation
-                }
-                    .applyTypeArgumentsWithTypealiasConstructorRemapping(firConstructorSymbol?.fir, annotationCall?.typeArguments.orEmpty())
-
-
-                is IrErrorCallExpressionImpl -> irAnnotation.apply {
-                    for (argument in annotationCall?.arguments.orEmpty()) {
-                        irAnnotation.arguments.add(visitor.convertToIrExpression(argument))
-                    }
-                }
-
-                else -> irAnnotation
-            }
+            irAnnotation.deepCopyWithoutPatchingParents()
+                .applyReceiversAndArguments(annotationCall, declarationSiteSymbol = firConstructorSymbol, explicitReceiverExpression = null)
+                .applyTypeArgumentsWithTypealiasConstructorRemapping(firConstructorSymbol?.fir, annotationCall?.typeArguments.orEmpty())
         }
     }
 
@@ -1056,6 +1036,7 @@ class CallAndReferenceGenerator(
                 name = symbol.classId.shortClassName
                 resolvedSymbol = constructorSymbol
             }
+            argumentMapping = this@toAnnotationCall.argumentMapping
 
             /**
              * This is not right, but it doesn't make sense as [FirAnnotationCall.containingDeclarationSymbol] uses only in FIR
@@ -1580,6 +1561,7 @@ class CallAndReferenceGenerator(
                 val parameterIndex = receiverInfo.contextArgumentOffset() + index
 
                 val irExpression = convertArgument(contextArgument, parameter, substitutor)
+
                 add(ArgumentInfo(parameter, irExpression, parameterIndex))
             }
 
@@ -1590,7 +1572,12 @@ class CallAndReferenceGenerator(
                     } else {
                         receiverInfo.contextArgumentOffset() + contextParameters.indexOf(parameter)
                     }
-                    val irExpression = convertArgument(argument, parameter, substitutor)
+                    val irExpression = if (visitor.annotationMode && call is FirAnnotationCall) {
+                        val evaluatedArg = call.argumentMapping.mapping[parameter.name]!!
+                        convertArgument(evaluatedArg, parameter, substitutor)
+                    } else {
+                        convertArgument(argument, parameter, substitutor)
+                    }
                     add(ArgumentInfo(parameter, irExpression, parameterIndex))
                 }
             }
