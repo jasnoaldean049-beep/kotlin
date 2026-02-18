@@ -149,7 +149,7 @@ internal abstract class DescriptorKCallable<out R>(
 
 internal data class KCallableOverriddenStorage(
     val instanceReceiverParameter: ReceiverParameterDescriptor?,
-    private val classTypeParametersSubstitutor: KTypeSubstitutor,
+    private val classTypeParametersSubstitutor: KTypeSubstitutor?,
     val modality: Modality?,
     val originalContainerIfFakeOverride: KDeclarationContainerImpl?,
     private val originalCallableTypeParameters: List<KTypeParameter>,
@@ -161,9 +161,9 @@ internal data class KCallableOverriddenStorage(
 ) {
     companion object {
         val EMPTY = KCallableOverriddenStorage(
-            null,
-            KTypeSubstitutor.EMPTY,
-            null,
+            instanceReceiverParameter = null,
+            classTypeParametersSubstitutor = null,
+            modality = null,
             originalContainerIfFakeOverride = null,
             originalCallableTypeParameters = emptyList(),
             forceIsExternal = false,
@@ -176,10 +176,11 @@ internal data class KCallableOverriddenStorage(
     val isFakeOverride: Boolean get() = originalContainerIfFakeOverride != null
 
     fun withChainedClassTypeParametersSubstitutor(substitutor: KTypeSubstitutor): KCallableOverriddenStorage =
-        copy(classTypeParametersSubstitutor = classTypeParametersSubstitutor.chainedWith(substitutor))
+        copy(classTypeParametersSubstitutor = classTypeParametersSubstitutor?.chainedWith(substitutor) ?: substitutor)
 
     fun getTypeSubstitutor(callableTypeParameters: List<KTypeParameter>, memberNameForDebug: String): KTypeSubstitutor =
         originalCallableTypeParameters.substitutedWith(callableTypeParameters)
-            ?.disjointSumWith(classTypeParametersSubstitutor, memberNameForDebug)
+            ?.disjointSumWith(classTypeParametersSubstitutor ?: KTypeSubstitutor.EMPTY, memberNameForDebug)
             ?: classTypeParametersSubstitutor
+            ?: KTypeSubstitutor.EMPTY
 }
