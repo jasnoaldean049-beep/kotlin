@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.fir.resolve.inference
 
 import org.jetbrains.kotlin.fir.FirElement
+import org.jetbrains.kotlin.fir.declarations.FirCallableDeclaration
 import org.jetbrains.kotlin.fir.diagnostics.ConeCannotInferTypeParameterType
 import org.jetbrains.kotlin.fir.diagnostics.ConeCannotInferValueParameterType
 import org.jetbrains.kotlin.fir.expressions.FirExpression
@@ -16,11 +17,18 @@ import org.jetbrains.kotlin.fir.resolve.calls.*
 import org.jetbrains.kotlin.fir.resolve.calls.candidate.Candidate
 import org.jetbrains.kotlin.fir.resolve.calls.candidate.processCandidatesAndPostponedAtoms
 import org.jetbrains.kotlin.fir.resolve.inference.model.ConeFixVariableConstraintPosition
+import org.jetbrains.kotlin.fir.resolve.toTypeParameterSymbol
+import org.jetbrains.kotlin.fir.resolve.transformers.ReturnTypeCalculator
+import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
+import org.jetbrains.kotlin.fir.symbols.impl.FirFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirTypeParameterSymbol
 import org.jetbrains.kotlin.fir.types.ConeErrorType
 import org.jetbrains.kotlin.fir.types.ConeKotlinType
+import org.jetbrains.kotlin.fir.types.ConeTypeParameterType
 import org.jetbrains.kotlin.fir.types.ConeTypeVariable
 import org.jetbrains.kotlin.fir.types.asCone
+import org.jetbrains.kotlin.fir.types.contains
+import org.jetbrains.kotlin.fir.types.lowerBoundIfFlexible
 import org.jetbrains.kotlin.resolve.calls.inference.components.*
 import org.jetbrains.kotlin.resolve.calls.inference.model.NewConstraintSystemImpl
 import org.jetbrains.kotlin.resolve.calls.inference.model.NotEnoughInformationForTypeParameter
@@ -63,9 +71,36 @@ class ConstraintSystemCompleter(components: BodyResolveComponents) {
         topLevelAtoms: List<ConeResolutionAtom>,
         candidateReturnType: ConeKotlinType,
         context: ResolutionContext,
+        returnTypeCalculator: ReturnTypeCalculator,
         analyzer: PostponedAtomAnalyzer,
     ) {
-        c.runCompletion(completionMode, topLevelAtoms, candidateReturnType, context, analyzer)
+        c.runCompletion(completionMode, topLevelAtoms, candidateReturnType, context, returnTypeCalculator, analyzer)
+    }
+
+    private fun registerReturnTypeTypeVariableOf(
+        candidate: Candidate,
+        constraintsSystem: ConstraintSystemCompletionContext,
+        context: ResolutionContext,
+    ) {
+        val symbol = candidate.symbol as? FirCallableSymbol<*> ?: return
+        val returnTypeTypeParameter = symbol.resolvedReturnType.lowerBoundIfFlexible()
+            .takeIf { it is ConeTypeParameterType && !it.isMarkedNullable }
+            ?: return
+        val returnTypeTypeParameterSymbol = with(context) { returnTypeTypeParameter.toTypeParameterSymbol() }
+            ?: return
+
+        fun ConeKotlinType.contains(type: ConeKotlinType) = contains { it == type }
+
+        val isMentionedInInputTypes = symbol.contextParameterSymbols.any { it.resolvedReturnType.contains(returnTypeTypeParameter) } ||
+                symbol.resolvedReceiverType?.contains(returnTypeTypeParameter) == true ||
+                (symbol as? FirFunctionSymbol<*>)?.valueParameterSymbols?.any { it.resolvedReturnType.contains(returnTypeTypeParameter) } == true
+
+        if (!isMentionedInInputTypes) {
+            val variable = candidate.freshVariables
+                .find { it.typeConstructor.originalTypeParameter == returnTypeTypeParameterSymbol.toLookupTag() }
+                ?: return
+            constraintsSystem.markReturnTypeTypeVariable(variable)
+        }
     }
 
     private fun ConstraintSystemCompletionContext.runCompletion(
@@ -73,10 +108,18 @@ class ConstraintSystemCompleter(components: BodyResolveComponents) {
         topLevelAtoms: List<ConeResolutionAtom>,
         topLevelType: ConeKotlinType,
         context: ResolutionContext,
+        returnTypeCalculator: ReturnTypeCalculator,
         analyzer: PostponedAtomAnalyzer,
     ) {
         val topLevelTypeVariables = topLevelType.extractTypeVariables()
         context.session.inferenceLogger?.logStage("Call Completion", this)
+
+        for (atom in topLevelAtoms) {
+            val callableDeclaration = ((atom as? ConeAtomWithCandidate)?.candidate?.symbol?.fir as? FirCallableDeclaration) ?: continue
+            val resultType = returnTypeCalculator.tryCalculateReturnTypeOrNull(callableDeclaration)?.coneType ?: continue
+            if (resultType.isError()) continue
+            registerReturnTypeTypeVariableOf(atom.candidate, this, context)
+        }
 
         completion@ while (true) {
             if (completionMode.shouldForkPointConstraintsBeResolved) {

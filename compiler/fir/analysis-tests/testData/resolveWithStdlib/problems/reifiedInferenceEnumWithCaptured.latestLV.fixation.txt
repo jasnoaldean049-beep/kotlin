@@ -1,22 +1,4 @@
 CHOSEN for fixation: TypeVariable(T) --- Readiness(
-    	 true ALLOWED
-    	 true HAS_PROPER_CONSTRAINTS
-    	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
-    	false IS_SELF_SUFFICIENT_MATERIALIZE_VARIABLE
-    	 true HAS_PROPER_NON_SELF_TYPE_BASED_CONSTRAINT
-    	 true HAS_NO_DEPENDENCIES_TO_OTHER_VARIABLES
-    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS
-    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
-    	false HAS_PROPER_FLEXIBLE_LOWER_CONSTRAINT
-    	 true HAS_PROPER_NON_ILT_CONSTRAINT
-    	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
-    	 true HAS_PROPER_EQUALITY_CONSTRAINT
-    	 true HAS_PROPER_NON_NOTHING_NON_UPPER_CONSTRAINT
-    )
-     = T
-    FIXED TO: T
-********************************
-CHOSEN for fixation: TypeVariable(T) --- Readiness(
     	false ALLOWED
     	false HAS_PROPER_CONSTRAINTS
     	false HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
@@ -31,7 +13,7 @@ CHOSEN for fixation: TypeVariable(T) --- Readiness(
     	false HAS_PROPER_EQUALITY_CONSTRAINT
     	false HAS_PROPER_NON_NOTHING_NON_UPPER_CONSTRAINT
     )
-     <: I
+     <: kotlin/Enum<TypeVariable(T)>
 ********************************
 CHOSEN for fixation: TypeVariable(K) --- Readiness(
     	 true ALLOWED
@@ -49,15 +31,34 @@ CHOSEN for fixation: TypeVariable(K) --- Readiness(
     	 true HAS_PROPER_NON_NOTHING_NON_UPPER_CONSTRAINT
     )
      >: TypeVariable(T)
-     >: Impl
-     <: I
-     = Impl (inferred during fixation)
-    FIXED TO: Impl
+     >: MyEnum
+     = MyEnum (inferred during fixation)
+    FIXED TO: MyEnum
 TypeVariable(T) --- Readiness(
     	 true ALLOWED
     	 true HAS_PROPER_CONSTRAINTS
     	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
     	false IS_SELF_SUFFICIENT_MATERIALIZE_VARIABLE
+    	false HAS_PROPER_NON_SELF_TYPE_BASED_CONSTRAINT
+    	 true HAS_NO_DEPENDENCIES_TO_OTHER_VARIABLES
+    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS
+    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
+    	false HAS_PROPER_FLEXIBLE_LOWER_CONSTRAINT
+    	false HAS_PROPER_NON_ILT_CONSTRAINT
+    	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
+    	false HAS_PROPER_EQUALITY_CONSTRAINT
+    	false HAS_PROPER_NON_NOTHING_NON_UPPER_CONSTRAINT
+    )
+     <: kotlin/Enum<TypeVariable(T)>
+     <: TypeVariable(K)
+     <: MyEnum (inferred during fixation)
+     <: kotlin/Enum<out MyEnum> (inferred during fixation)
+********************************
+CHOSEN for fixation: TypeVariable(T) --- Readiness(
+    	 true ALLOWED
+    	 true HAS_PROPER_CONSTRAINTS
+    	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
+    	 true IS_SELF_SUFFICIENT_MATERIALIZE_VARIABLE
     	 true HAS_PROPER_NON_SELF_TYPE_BASED_CONSTRAINT
     	 true HAS_NO_DEPENDENCIES_TO_OTHER_VARIABLES
     	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS
@@ -68,12 +69,15 @@ TypeVariable(T) --- Readiness(
     	false HAS_PROPER_EQUALITY_CONSTRAINT
     	false HAS_PROPER_NON_NOTHING_NON_UPPER_CONSTRAINT
     )
-     <: I
-     <: TypeVariable(K)
-     <: I
-     <: Impl (inferred during fixation)
+     <: kotlin/Enum<TypeVariable(T)>
+     <: MyEnum
+     <: kotlin/Enum<out MyEnum>
+     = MyEnum (inferred during fixation)
+     = MyEnum (inferred during fixation)
+     <: kotlin/Enum<MyEnum> (inferred during fixation)
+    FIXED TO: MyEnum
 ********************************
-CHOSEN for fixation: TypeVariable(T) --- Readiness(
+CHOSEN for fixation: TypeVariable(E) --- Readiness(
     	 true ALLOWED
     	 true HAS_PROPER_CONSTRAINTS
     	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
@@ -85,12 +89,11 @@ CHOSEN for fixation: TypeVariable(T) --- Readiness(
     	false HAS_PROPER_FLEXIBLE_LOWER_CONSTRAINT
     	 true HAS_PROPER_NON_ILT_CONSTRAINT
     	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
-    	false HAS_PROPER_EQUALITY_CONSTRAINT
-    	false HAS_PROPER_NON_NOTHING_NON_UPPER_CONSTRAINT
+    	 true HAS_PROPER_EQUALITY_CONSTRAINT
+    	 true HAS_PROPER_NON_NOTHING_NON_UPPER_CONSTRAINT
     )
-     <: I
-     <: I
-     <: Impl
-     = Impl (inferred during fixation)
-    FIXED TO: Impl
+     <: kotlin/Enum<TypeVariable(E)>
+     = MyEnum
+     <: kotlin/Enum<MyEnum>
+    FIXED TO: MyEnum
 ********************************
