@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.arguments.dsl.types
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import org.jetbrains.kotlin.arguments.dsl.base.KotlinReleaseVersion
 import org.jetbrains.kotlin.arguments.dsl.base.KotlinReleaseVersionLifecycle
 import org.jetbrains.kotlin.arguments.dsl.base.WithKotlinReleaseVersionsMetadata
@@ -15,7 +16,7 @@ import org.jetbrains.kotlin.arguments.serialization.json.KotlinReturnValueChecke
 enum class ReturnValueCheckerMode(
     val modeState: String,
     override val releaseVersionsMetadata: KotlinReleaseVersionLifecycle,
-) : WithKotlinReleaseVersionsMetadata {
+) : WithKotlinReleaseVersionsMetadata, WithStringRepresentation {
     checker(
         modeState = "check",
         releaseVersionsMetadata = KotlinReleaseVersionLifecycle(
@@ -34,4 +35,9 @@ enum class ReturnValueCheckerMode(
             introducedVersion = KotlinReleaseVersion.v2_2_0,
         ),
     ),
+    ;
+
+    @Transient
+    override val stringRepresentation: String
+        get() = modeState
 }

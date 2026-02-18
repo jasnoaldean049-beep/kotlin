@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.arguments.dsl.types
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import org.jetbrains.kotlin.arguments.dsl.base.KotlinReleaseVersion
 import org.jetbrains.kotlin.arguments.dsl.base.KotlinReleaseVersionLifecycle
 import org.jetbrains.kotlin.arguments.dsl.base.WithKotlinReleaseVersionsMetadata
@@ -15,7 +16,7 @@ import org.jetbrains.kotlin.arguments.serialization.json.KotlinKlibIrInlinerMode
 enum class KlibIrInlinerMode(
     val modeState: String,
     override val releaseVersionsMetadata: KotlinReleaseVersionLifecycle,
-) : WithKotlinReleaseVersionsMetadata {
+) : WithKotlinReleaseVersionsMetadata, WithStringRepresentation {
     intraModule(
         modeState = "intra-module",
         releaseVersionsMetadata = KotlinReleaseVersionLifecycle(
@@ -40,4 +41,9 @@ enum class KlibIrInlinerMode(
             introducedVersion = KotlinReleaseVersion.v2_3_0,
         ),
     ),
+    ;
+
+    @Transient
+    override val stringRepresentation: String
+        get() = modeState
 }

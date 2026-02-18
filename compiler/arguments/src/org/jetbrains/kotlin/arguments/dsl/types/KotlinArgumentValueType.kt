@@ -160,25 +160,23 @@ class KotlinHeaderModeType(
  * A value which accepts [ReturnValueCheckerMode] type.
  */
 @Serializable
-class ReturnValueCheckerModeType(
-    override val isNullable: ReleaseDependent<Boolean> = ReleaseDependent(false),
-    override val defaultValue: ReleaseDependent<ReturnValueCheckerMode?> = ReleaseDependent(ReturnValueCheckerMode.disabled),
-) : KotlinArgumentValueType<ReturnValueCheckerMode> {
-    override fun stringRepresentation(value: ReturnValueCheckerMode?): String {
-        return value?.modeState.valueOrNullStringLiteral
-    }
+class ReturnValueCheckerModeType : EnumType<ReturnValueCheckerMode>() {
+    override val defaultValue: ReleaseDependent<ReturnValueCheckerMode?> = ReleaseDependent(ReturnValueCheckerMode.disabled)
 }
 
 /**
  * A value which accepts [KlibIrInlinerMode] type.
  */
 @Serializable
-class KlibIrInlinerModeType(
-    override val isNullable: ReleaseDependent<Boolean> = ReleaseDependent(false),
-    override val defaultValue: ReleaseDependent<KlibIrInlinerMode?> = ReleaseDependent(KlibIrInlinerMode.default),
-) : KotlinArgumentValueType<KlibIrInlinerMode> {
-    override fun stringRepresentation(value: KlibIrInlinerMode?): String {
-        return value?.modeState.valueOrNullStringLiteral
+class KlibIrInlinerModeType : EnumType<KlibIrInlinerMode>() {
+    override val defaultValue: ReleaseDependent<KlibIrInlinerMode?> = ReleaseDependent(KlibIrInlinerMode.default)
+}
+
+@Serializable
+sealed class EnumType<T : WithStringRepresentation> : KotlinArgumentValueType<T> {
+    override val isNullable: ReleaseDependent<Boolean> = ReleaseDependent(false)
+    override fun stringRepresentation(value: T?): String {
+        return value?.stringRepresentation.valueOrNullStringLiteral
     }
 }
 

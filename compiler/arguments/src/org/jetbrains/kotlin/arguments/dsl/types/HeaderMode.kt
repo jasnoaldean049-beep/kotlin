@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.arguments.dsl.types
 
+import kotlinx.serialization.Transient
 import org.jetbrains.kotlin.arguments.dsl.base.KotlinReleaseVersion
 import org.jetbrains.kotlin.arguments.dsl.base.KotlinReleaseVersionLifecycle
 import org.jetbrains.kotlin.arguments.dsl.base.WithKotlinReleaseVersionsMetadata
@@ -12,7 +13,7 @@ import org.jetbrains.kotlin.arguments.dsl.base.WithKotlinReleaseVersionsMetadata
 enum class HeaderMode(
     val modeName: String,
     override val releaseVersionsMetadata: KotlinReleaseVersionLifecycle,
-) : WithKotlinReleaseVersionsMetadata {
+) : WithKotlinReleaseVersionsMetadata, WithStringRepresentation {
     any(
         modeName = "any",
         releaseVersionsMetadata = KotlinReleaseVersionLifecycle(
@@ -25,4 +26,9 @@ enum class HeaderMode(
             introducedVersion = KotlinReleaseVersion.v2_3_20
         )
     ),
+    ;
+
+    @Transient
+    override val stringRepresentation: String
+        get() = modeName
 }
