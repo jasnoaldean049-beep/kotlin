@@ -979,6 +979,12 @@ object DIAGNOSTICS_LIST : DiagnosticList("FirErrors") {
             parameter<Int>("expectedCount")
             parameter<FirBasedSymbol<*>>("owner")
         }
+
+        // TODO: make a warning after running user projects
+        val WRONG_NUMBER_OF_TYPE_ARGUMENTS_IN_GET_CLASS_WARNING by error<PsiElement>(PositioningStrategy.TYPE_ARGUMENT_LIST_OR_SELF) {
+            parameter<Int>("expectedCount")
+            parameter<FirBasedSymbol<*>>("owner")
+        }
         val NO_TYPE_ARGUMENTS_ON_RHS by error<PsiElement> {
             parameter<Int>("expectedCount")
             parameter<FirClassLikeSymbol<*>>("classifier")
@@ -1208,6 +1214,9 @@ object DIAGNOSTICS_LIST : DiagnosticList("FirErrors") {
         val ADAPTED_CALLABLE_REFERENCE_AGAINST_REFLECTION_TYPE by error<KtExpression>()
 
         val CLASS_LITERAL_LHS_NOT_A_CLASS by error<KtExpression>()
+
+        // TODO: make a warning after running user projects
+        val CLASS_LITERAL_LHS_NOT_A_CLASS_WARNING by error<KtExpression>()
         val NULLABLE_TYPE_IN_CLASS_LITERAL_LHS by error<KtExpression>()
         val EXPRESSION_OF_NULLABLE_TYPE_IN_CLASS_LITERAL_LHS by error<PsiElement> {
             parameter<ConeKotlinType>("lhsType")
