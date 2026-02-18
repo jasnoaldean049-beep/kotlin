@@ -18,6 +18,7 @@ import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.expressions.UnsafeExpressionUtility
 import org.jetbrains.kotlin.fir.expressions.toReferenceUnsafe
 import org.jetbrains.kotlin.fir.expressions.unwrapSmartcastExpression
+import org.jetbrains.kotlin.fir.packageFqName
 import org.jetbrains.kotlin.fir.references.FirNamedReference
 import org.jetbrains.kotlin.fir.references.FirSuperReference
 import org.jetbrains.kotlin.fir.references.FirThisReference
@@ -28,9 +29,12 @@ import org.jetbrains.kotlin.fir.symbols.SymbolInternals
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.metadata.deserialization.VersionRequirement
+import org.jetbrains.kotlin.mpp.DeclarationSymbolMarker
 import org.jetbrains.kotlin.name.CallableId
 import org.jetbrains.kotlin.name.ClassId
+import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
+import org.jetbrains.kotlin.renderer.render
 import org.jetbrains.kotlin.resolve.ReturnValueStatus
 import java.text.MessageFormat
 
@@ -38,7 +42,21 @@ import java.text.MessageFormat
 object FirDiagnosticRenderers {
     val SYMBOL = symbolRenderer(modifierRenderer = ::FirPartialModifierRenderer)
 
+    val SYMBOL_WITH_LOCATION = symbolRendererWithLocation(modifierRenderer = ::FirPartialModifierRenderer)
+
     val SYMBOL_WITH_ALL_MODIFIERS = symbolRenderer()
+
+    private fun symbolRendererWithLocation(modifierRenderer: () -> FirModifierRenderer? = ::FirAllModifierRenderer) =
+        Renderer { symbol: DeclarationSymbolMarker ->
+            if (symbol is FirBasedSymbol<*>) {
+                buildString {
+                    val packageName = if (symbol.packageFqName().isRoot) "root package" else symbol.packageFqName().render()
+                    val moduleName = symbol.moduleData.name
+                    append(symbolRenderer(modifierRenderer).render(symbol))
+                    append(" defined in $packageName in module $moduleName")
+                }
+            } else "???"
+        }
 
     @OptIn(SymbolInternals::class)
     private fun symbolRenderer(

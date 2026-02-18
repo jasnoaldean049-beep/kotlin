@@ -17,6 +17,7 @@ dependencies {
 
     compileOnly(intellijCore())
     compileOnly(project(":compiler:cli-base"))
+    compileOnly(project(":compiler:fir:checkers"))
 }
 
 optInToUnsafeDuringIrConstructionAPI()
