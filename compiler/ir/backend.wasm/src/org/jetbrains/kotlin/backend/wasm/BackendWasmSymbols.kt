@@ -345,7 +345,7 @@ private object ClassIds {
     val TypeInfoData = "TypeInfoData".wasmClassId
     val KClassImpl = "KClassImpl".wasmClassId
     val KClassInterfaceImpl = "KClassInterfaceImpl".wasmClassId
-    val KFunctionImpl = "KFunctionImpl".wasmClassId
+    val KFunctionImpl = "KFunctionImplNew".wasmClassId
     val KFunctionErrorImpl = "KFunctionErrorImpl".wasmClassId
     val WasmLongImmutableArray = "WasmLongImmutableArray".wasmClassId
     val FunctionAdapter = "FunctionAdapter".wasmClassId
