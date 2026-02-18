@@ -55,25 +55,25 @@ public final class IrExpression extends
             break;
           }
           case 10: {
-            org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.Builder subBuilder = null;
-            if (((bitField1_ & 0x00000080) == 0x00000080)) {
+            org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.Builder subBuilder = null;
+            if (((bitField1_ & 0x00000100) == 0x00000100)) {
               subBuilder = operationPre240_.toBuilder();
             }
-            operationPre240_ = input.readMessage(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.PARSER, extensionRegistry);
+            operationPre240_ = input.readMessage(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.PARSER, extensionRegistry);
             if (subBuilder != null) {
               subBuilder.mergeFrom(operationPre240_);
               operationPre240_ = subBuilder.buildPartial();
             }
-            bitField1_ |= 0x00000080;
+            bitField1_ |= 0x00000100;
             break;
           }
           case 16: {
-            bitField1_ |= 0x00000100;
+            bitField1_ |= 0x00000200;
             type_ = input.readInt32();
             break;
           }
           case 24: {
-            bitField1_ |= 0x00000200;
+            bitField1_ |= 0x00000400;
             coordinates_ = input.readInt64();
             break;
           }
@@ -584,6 +584,19 @@ public final class IrExpression extends
             operationCase_ = 43;
             break;
           }
+          case 354: {
+            org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression.Builder subBuilder = null;
+            if (operationCase_ == 44) {
+              subBuilder = ((org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression) operation_).toBuilder();
+            }
+            operation_ = input.readMessage(org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression.PARSER, extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression) operation_);
+              operation_ = subBuilder.buildPartial();
+            }
+            operationCase_ = 44;
+            break;
+          }
         }
       }
     } catch (org.jetbrains.kotlin.protobuf.InvalidProtocolBufferException e) {
@@ -662,6 +675,7 @@ public final class IrExpression extends
     OP_RICH_FUNCTION_REFERENCE(41),
     OP_RICH_PROPERTY_REFERENCE(42),
     OP_INLINED_FUNCTION_BLOCK(43),
+    OP_MISSING_EXPRESSION(44),
     OPERATION_NOT_SET(0);
     private int value = 0;
     private OperationCase(int value) {
@@ -708,6 +722,7 @@ public final class IrExpression extends
         case 41: return OP_RICH_FUNCTION_REFERENCE;
         case 42: return OP_RICH_PROPERTY_REFERENCE;
         case 43: return OP_INLINED_FUNCTION_BLOCK;
+        case 44: return OP_MISSING_EXPRESSION;
         case 0: return OPERATION_NOT_SET;
         default: throw new java.lang.IllegalArgumentException(
           "Value is undefined for this oneof enum.");
@@ -1403,39 +1418,64 @@ public final class IrExpression extends
     return org.jetbrains.kotlin.backend.common.serialization.proto.IrInlinedFunctionBlock.getDefaultInstance();
   }
 
-  public static final int OPERATION_PRE_2_4_0_FIELD_NUMBER = 1;
-  private org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operationPre240_;
+  public static final int OP_MISSING_EXPRESSION_FIELD_NUMBER = 44;
   /**
-   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
+   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression op_missing_expression = 44;</code>
+   */
+  public boolean hasOpMissingExpression() {
+    return operationCase_ == 44;
+  }
+  /**
+   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression op_missing_expression = 44;</code>
+   */
+  public org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression getOpMissingExpression() {
+    if (operationCase_ == 44) {
+       return (org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression) operation_;
+    }
+    return org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression.getDefaultInstance();
+  }
+
+  public static final int OPERATION_PRE240_FIELD_NUMBER = 1;
+  private org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operationPre240_;
+  /**
+   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
    *
    * <pre>
    * Was required before 2.4.0
    * </pre>
    */
   public boolean hasOperationPre240() {
-    return ((bitField1_ & 0x00000080) == 0x00000080);
+    return ((bitField1_ & 0x00000100) == 0x00000100);
   }
   /**
-   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
+   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
    *
    * <pre>
    * Was required before 2.4.0
    * </pre>
    */
-  public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 getOperationPre240() {
+  public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 getOperationPre240() {
     return operationPre240_;
   }
 
   public static final int TYPE_FIELD_NUMBER = 2;
   private int type_;
   /**
-   * <code>required int32 type = 2;</code>
+   * <code>optional int32 type = 2;</code>
+   *
+   * <pre>
+   * Was required before 2.4.0
+   * </pre>
    */
   public boolean hasType() {
-    return ((bitField1_ & 0x00000100) == 0x00000100);
+    return ((bitField1_ & 0x00000200) == 0x00000200);
   }
   /**
-   * <code>required int32 type = 2;</code>
+   * <code>optional int32 type = 2;</code>
+   *
+   * <pre>
+   * Was required before 2.4.0
+   * </pre>
    */
   public int getType() {
     return type_;
@@ -1444,20 +1484,28 @@ public final class IrExpression extends
   public static final int COORDINATES_FIELD_NUMBER = 3;
   private long coordinates_;
   /**
-   * <code>required int64 coordinates = 3;</code>
+   * <code>optional int64 coordinates = 3;</code>
+   *
+   * <pre>
+   * Was required before 2.4.0
+   * </pre>
    */
   public boolean hasCoordinates() {
-    return ((bitField1_ & 0x00000200) == 0x00000200);
+    return ((bitField1_ & 0x00000400) == 0x00000400);
   }
   /**
-   * <code>required int64 coordinates = 3;</code>
+   * <code>optional int64 coordinates = 3;</code>
+   *
+   * <pre>
+   * Was required before 2.4.0
+   * </pre>
    */
   public long getCoordinates() {
     return coordinates_;
   }
 
   private void initFields() {
-    operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.getDefaultInstance();
+    operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance();
     type_ = 0;
     coordinates_ = 0L;
   }
@@ -1467,14 +1515,6 @@ public final class IrExpression extends
     if (isInitialized == 1) return true;
     if (isInitialized == 0) return false;
 
-    if (!hasType()) {
-      memoizedIsInitialized = 0;
-      return false;
-    }
-    if (!hasCoordinates()) {
-      memoizedIsInitialized = 0;
-      return false;
-    }
     if (hasOpGetValue()) {
       if (!getOpGetValue().isInitialized()) {
         memoizedIsInitialized = 0;
@@ -1716,13 +1756,13 @@ public final class IrExpression extends
   public void writeTo(org.jetbrains.kotlin.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     getSerializedSize();
-    if (((bitField1_ & 0x00000080) == 0x00000080)) {
+    if (((bitField1_ & 0x00000100) == 0x00000100)) {
       output.writeMessage(1, operationPre240_);
     }
-    if (((bitField1_ & 0x00000100) == 0x00000100)) {
+    if (((bitField1_ & 0x00000200) == 0x00000200)) {
       output.writeInt32(2, type_);
     }
-    if (((bitField1_ & 0x00000200) == 0x00000200)) {
+    if (((bitField1_ & 0x00000400) == 0x00000400)) {
       output.writeInt64(3, coordinates_);
     }
     if (operationCase_ == 5) {
@@ -1842,6 +1882,9 @@ public final class IrExpression extends
     if (operationCase_ == 43) {
       output.writeMessage(43, (org.jetbrains.kotlin.backend.common.serialization.proto.IrInlinedFunctionBlock) operation_);
     }
+    if (operationCase_ == 44) {
+      output.writeMessage(44, (org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression) operation_);
+    }
     output.writeRawBytes(unknownFields);
   }
 
@@ -1851,15 +1894,15 @@ public final class IrExpression extends
     if (size != -1) return size;
 
     size = 0;
-    if (((bitField1_ & 0x00000080) == 0x00000080)) {
+    if (((bitField1_ & 0x00000100) == 0x00000100)) {
       size += org.jetbrains.kotlin.protobuf.CodedOutputStream
         .computeMessageSize(1, operationPre240_);
     }
-    if (((bitField1_ & 0x00000100) == 0x00000100)) {
+    if (((bitField1_ & 0x00000200) == 0x00000200)) {
       size += org.jetbrains.kotlin.protobuf.CodedOutputStream
         .computeInt32Size(2, type_);
     }
-    if (((bitField1_ & 0x00000200) == 0x00000200)) {
+    if (((bitField1_ & 0x00000400) == 0x00000400)) {
       size += org.jetbrains.kotlin.protobuf.CodedOutputStream
         .computeInt64Size(3, coordinates_);
     }
@@ -2019,6 +2062,10 @@ public final class IrExpression extends
       size += org.jetbrains.kotlin.protobuf.CodedOutputStream
         .computeMessageSize(43, (org.jetbrains.kotlin.backend.common.serialization.proto.IrInlinedFunctionBlock) operation_);
     }
+    if (operationCase_ == 44) {
+      size += org.jetbrains.kotlin.protobuf.CodedOutputStream
+        .computeMessageSize(44, (org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression) operation_);
+    }
     size += unknownFields.size();
     memoizedSerializedSize = size;
     return size;
@@ -2113,12 +2160,12 @@ public final class IrExpression extends
 
     public Builder clear() {
       super.clear();
-      operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.getDefaultInstance();
-      bitField1_ = (bitField1_ & ~0x00000080);
-      type_ = 0;
+      operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance();
       bitField1_ = (bitField1_ & ~0x00000100);
-      coordinates_ = 0L;
+      type_ = 0;
       bitField1_ = (bitField1_ & ~0x00000200);
+      coordinates_ = 0L;
+      bitField1_ = (bitField1_ & ~0x00000400);
       operationCase_ = 0;
       operation_ = null;
       return this;
@@ -2263,16 +2310,19 @@ public final class IrExpression extends
       if (operationCase_ == 43) {
         result.operation_ = operation_;
       }
-      if (((from_bitField1_ & 0x00000080) == 0x00000080)) {
-        to_bitField1_ |= 0x00000080;
+      if (operationCase_ == 44) {
+        result.operation_ = operation_;
       }
-      result.operationPre240_ = operationPre240_;
       if (((from_bitField1_ & 0x00000100) == 0x00000100)) {
         to_bitField1_ |= 0x00000100;
       }
-      result.type_ = type_;
+      result.operationPre240_ = operationPre240_;
       if (((from_bitField1_ & 0x00000200) == 0x00000200)) {
         to_bitField1_ |= 0x00000200;
+      }
+      result.type_ = type_;
+      if (((from_bitField1_ & 0x00000400) == 0x00000400)) {
+        to_bitField1_ |= 0x00000400;
       }
       result.coordinates_ = coordinates_;
       result.bitField0_ = to_bitField0_;
@@ -2449,6 +2499,10 @@ public final class IrExpression extends
           mergeOpInlinedFunctionBlock(other.getOpInlinedFunctionBlock());
           break;
         }
+        case OP_MISSING_EXPRESSION: {
+          mergeOpMissingExpression(other.getOpMissingExpression());
+          break;
+        }
         case OPERATION_NOT_SET: {
           break;
         }
@@ -2459,14 +2513,6 @@ public final class IrExpression extends
     }
 
     public final boolean isInitialized() {
-      if (!hasType()) {
-        
-        return false;
-      }
-      if (!hasCoordinates()) {
-        
-        return false;
-      }
       if (hasOpGetValue()) {
         if (!getOpGetValue().isInitialized()) {
           
@@ -5282,117 +5328,197 @@ public final class IrExpression extends
       return this;
     }
 
-    private org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.getDefaultInstance();
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression op_missing_expression = 44;</code>
+     */
+    public boolean hasOpMissingExpression() {
+      return operationCase_ == 44;
+    }
+    /**
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression op_missing_expression = 44;</code>
+     */
+    public org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression getOpMissingExpression() {
+      if (operationCase_ == 44) {
+        return (org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression) operation_;
+      }
+      return org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression.getDefaultInstance();
+    }
+    /**
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression op_missing_expression = 44;</code>
+     */
+    public Builder setOpMissingExpression(org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      operation_ = value;
+
+      operationCase_ = 44;
+      return this;
+    }
+    /**
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression op_missing_expression = 44;</code>
+     */
+    public Builder setOpMissingExpression(
+        org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression.Builder builderForValue) {
+      operation_ = builderForValue.build();
+
+      operationCase_ = 44;
+      return this;
+    }
+    /**
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression op_missing_expression = 44;</code>
+     */
+    public Builder mergeOpMissingExpression(org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression value) {
+      if (operationCase_ == 44 &&
+          operation_ != org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression.getDefaultInstance()) {
+        operation_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression.newBuilder((org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression) operation_)
+            .mergeFrom(value).buildPartial();
+      } else {
+        operation_ = value;
+      }
+
+      operationCase_ = 44;
+      return this;
+    }
+    /**
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression op_missing_expression = 44;</code>
+     */
+    public Builder clearOpMissingExpression() {
+      if (operationCase_ == 44) {
+        operationCase_ = 0;
+        operation_ = null;
+        
+      }
+      return this;
+    }
+
+    private org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance();
+    /**
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
      * </pre>
      */
     public boolean hasOperationPre240() {
-      return ((bitField1_ & 0x00000080) == 0x00000080);
+      return ((bitField1_ & 0x00000100) == 0x00000100);
     }
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
      * </pre>
      */
-    public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 getOperationPre240() {
+    public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 getOperationPre240() {
       return operationPre240_;
     }
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
      * </pre>
      */
-    public Builder setOperationPre240(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 value) {
+    public Builder setOperationPre240(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 value) {
       if (value == null) {
         throw new NullPointerException();
       }
       operationPre240_ = value;
 
-      bitField1_ |= 0x00000080;
+      bitField1_ |= 0x00000100;
       return this;
     }
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
      * </pre>
      */
     public Builder setOperationPre240(
-        org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.Builder builderForValue) {
+        org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.Builder builderForValue) {
       operationPre240_ = builderForValue.build();
 
-      bitField1_ |= 0x00000080;
+      bitField1_ |= 0x00000100;
       return this;
     }
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
      * </pre>
      */
-    public Builder mergeOperationPre240(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 value) {
-      if (((bitField1_ & 0x00000080) == 0x00000080) &&
-          operationPre240_ != org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.getDefaultInstance()) {
+    public Builder mergeOperationPre240(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 value) {
+      if (((bitField1_ & 0x00000100) == 0x00000100) &&
+          operationPre240_ != org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance()) {
         operationPre240_ =
-          org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.newBuilder(operationPre240_).mergeFrom(value).buildPartial();
+          org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.newBuilder(operationPre240_).mergeFrom(value).buildPartial();
       } else {
         operationPre240_ = value;
       }
 
-      bitField1_ |= 0x00000080;
+      bitField1_ |= 0x00000100;
       return this;
     }
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
      * </pre>
      */
     public Builder clearOperationPre240() {
-      operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.getDefaultInstance();
+      operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance();
 
-      bitField1_ = (bitField1_ & ~0x00000080);
+      bitField1_ = (bitField1_ & ~0x00000100);
       return this;
     }
 
     private int type_ ;
     /**
-     * <code>required int32 type = 2;</code>
+     * <code>optional int32 type = 2;</code>
+     *
+     * <pre>
+     * Was required before 2.4.0
+     * </pre>
      */
     public boolean hasType() {
-      return ((bitField1_ & 0x00000100) == 0x00000100);
+      return ((bitField1_ & 0x00000200) == 0x00000200);
     }
     /**
-     * <code>required int32 type = 2;</code>
+     * <code>optional int32 type = 2;</code>
+     *
+     * <pre>
+     * Was required before 2.4.0
+     * </pre>
      */
     public int getType() {
       return type_;
     }
     /**
-     * <code>required int32 type = 2;</code>
+     * <code>optional int32 type = 2;</code>
+     *
+     * <pre>
+     * Was required before 2.4.0
+     * </pre>
      */
     public Builder setType(int value) {
-      bitField1_ |= 0x00000100;
+      bitField1_ |= 0x00000200;
       type_ = value;
       
       return this;
     }
     /**
-     * <code>required int32 type = 2;</code>
+     * <code>optional int32 type = 2;</code>
+     *
+     * <pre>
+     * Was required before 2.4.0
+     * </pre>
      */
     public Builder clearType() {
-      bitField1_ = (bitField1_ & ~0x00000100);
+      bitField1_ = (bitField1_ & ~0x00000200);
       type_ = 0;
       
       return this;
@@ -5400,31 +5526,47 @@ public final class IrExpression extends
 
     private long coordinates_ ;
     /**
-     * <code>required int64 coordinates = 3;</code>
+     * <code>optional int64 coordinates = 3;</code>
+     *
+     * <pre>
+     * Was required before 2.4.0
+     * </pre>
      */
     public boolean hasCoordinates() {
-      return ((bitField1_ & 0x00000200) == 0x00000200);
+      return ((bitField1_ & 0x00000400) == 0x00000400);
     }
     /**
-     * <code>required int64 coordinates = 3;</code>
+     * <code>optional int64 coordinates = 3;</code>
+     *
+     * <pre>
+     * Was required before 2.4.0
+     * </pre>
      */
     public long getCoordinates() {
       return coordinates_;
     }
     /**
-     * <code>required int64 coordinates = 3;</code>
+     * <code>optional int64 coordinates = 3;</code>
+     *
+     * <pre>
+     * Was required before 2.4.0
+     * </pre>
      */
     public Builder setCoordinates(long value) {
-      bitField1_ |= 0x00000200;
+      bitField1_ |= 0x00000400;
       coordinates_ = value;
       
       return this;
     }
     /**
-     * <code>required int64 coordinates = 3;</code>
+     * <code>optional int64 coordinates = 3;</code>
+     *
+     * <pre>
+     * Was required before 2.4.0
+     * </pre>
      */
     public Builder clearCoordinates() {
-      bitField1_ = (bitField1_ & ~0x00000200);
+      bitField1_ = (bitField1_ & ~0x00000400);
       coordinates_ = 0L;
       
       return this;

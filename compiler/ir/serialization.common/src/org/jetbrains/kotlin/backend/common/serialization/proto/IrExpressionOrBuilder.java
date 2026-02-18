@@ -375,7 +375,16 @@ public interface IrExpressionOrBuilder extends
   org.jetbrains.kotlin.backend.common.serialization.proto.IrInlinedFunctionBlock getOpInlinedFunctionBlock();
 
   /**
-   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
+   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression op_missing_expression = 44;</code>
+   */
+  boolean hasOpMissingExpression();
+  /**
+   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression op_missing_expression = 44;</code>
+   */
+  org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression getOpMissingExpression();
+
+  /**
+   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
    *
    * <pre>
    * Was required before 2.4.0
@@ -383,29 +392,45 @@ public interface IrExpressionOrBuilder extends
    */
   boolean hasOperationPre240();
   /**
-   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
+   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
    *
    * <pre>
    * Was required before 2.4.0
    * </pre>
    */
-  org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 getOperationPre240();
+  org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 getOperationPre240();
 
   /**
-   * <code>required int32 type = 2;</code>
+   * <code>optional int32 type = 2;</code>
+   *
+   * <pre>
+   * Was required before 2.4.0
+   * </pre>
    */
   boolean hasType();
   /**
-   * <code>required int32 type = 2;</code>
+   * <code>optional int32 type = 2;</code>
+   *
+   * <pre>
+   * Was required before 2.4.0
+   * </pre>
    */
   int getType();
 
   /**
-   * <code>required int64 coordinates = 3;</code>
+   * <code>optional int64 coordinates = 3;</code>
+   *
+   * <pre>
+   * Was required before 2.4.0
+   * </pre>
    */
   boolean hasCoordinates();
   /**
-   * <code>required int64 coordinates = 3;</code>
+   * <code>optional int64 coordinates = 3;</code>
+   *
+   * <pre>
+   * Was required before 2.4.0
+   * </pre>
    */
   long getCoordinates();
 }
