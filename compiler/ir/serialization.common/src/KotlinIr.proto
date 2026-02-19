@@ -449,7 +449,7 @@ message IrDynamicOperatorExpression {
   repeated IrExpression argument = 3;
 }
 
-message IrOperationPre240 {
+message IrOperationPre_2_4_0 {
   oneof operation {
     IrBlock block = 1;
     IrBreak break = 2;
@@ -554,7 +554,7 @@ message IrExpression {
     IrInlinedFunctionBlock op_inlined_function_block = 43;
   }
 
-  optional IrOperationPre240 operation_pre240 = 1; // Was required before 2.4.0
+  optional IrOperationPre_2_4_0 operation_pre_2_4_0 = 1; // Was required before 2.4.0
   required int32 type = 2;
   required int64 coordinates = 3;
 }

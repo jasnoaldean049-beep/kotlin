@@ -108,7 +108,7 @@ import org.jetbrains.kotlin.backend.common.serialization.proto.IrWhile as ProtoW
 import org.jetbrains.kotlin.backend.common.serialization.proto.Loop as ProtoLoop
 import org.jetbrains.kotlin.backend.common.serialization.proto.MemberAccessCommon as ProtoMemberAccessCommon
 import org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression as ProtoNullableIrExpression
-import org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 as ProtoOperationPre240
+import org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 as ProtoOperationPre_2_4_0
 
 open class IrFileSerializer(
     protected val settings: IrSerializationSettings,
@@ -1092,7 +1092,7 @@ open class IrFileSerializer(
                 else -> error("Expression serialization is not supported yet: ${expression.render()}")
             }
         } else {
-            val operationProto = ProtoOperationPre240.newBuilder()
+            val operationProto = ProtoOperationPre_2_4_0.newBuilder()
             when (expression) {
                 is IrReturnableBlock -> operationProto.returnableBlock = serializeReturnableBlock(expression)
                 is IrInlinedFunctionBlock -> operationProto.inlinedFunctionBlock = serializeInlinedFunctionBlock(expression)

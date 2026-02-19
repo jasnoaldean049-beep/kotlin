@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.backend.common.serialization.encodings.BinarySymbolD
 import org.jetbrains.kotlin.backend.common.serialization.proto.FileEntry
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrConst.ValueCase.*
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrExpression.OperationCase.*
-import org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.OperationCase.*
+import org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.OperationCase.*
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrStatement.StatementCase
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrVarargElement.VarargElementCase
 import org.jetbrains.kotlin.descriptors.SourceElement
@@ -60,7 +60,7 @@ import org.jetbrains.kotlin.backend.common.serialization.proto.IrGetObject as Pr
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrGetValue as ProtoGetValue
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrInstanceInitializerCall as ProtoInstanceInitializerCall
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrLocalDelegatedPropertyReference as ProtoLocalDelegatedPropertyReference
-import org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 as ProtoOperationPre240
+import org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 as ProtoOperationPre2_4_0
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrPropertyReference as ProtoPropertyReference
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrReturn as ProtoReturn
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrSetField as ProtoSetField
@@ -925,7 +925,7 @@ class IrBodyDeserializer(
             ProtoExpression.OperationCase.OPERATION_NOT_SET -> error("Expression deserialization not implemented: ${proto.operationCase}")
         }
 
-    private fun deserializeOperationPre240(proto: ProtoOperationPre240, start: Int, end: Int, type: IrType): IrExpression =
+    private fun deserializeOperationPre240(proto: ProtoOperationPre2_4_0, start: Int, end: Int, type: IrType): IrExpression =
         when (proto.operationCase!!) {
             BLOCK -> deserializeBlock(proto.block, start, end, type)
             RETURNABLE_BLOCK -> deserializeReturnableBlock(proto.returnableBlock, start, end, type)
@@ -967,7 +967,7 @@ class IrBodyDeserializer(
             RICH_PROPERTY_REFERENCE -> deserializeRichPropertyReference(proto.richPropertyReference, start, end, type)
             ERROR_EXPRESSION -> deserializeErrorExpression(proto.errorExpression, start, end, type)
             ERROR_CALL_EXPRESSION -> deserializeErrorCallExpression(proto.errorCallExpression, start, end, type)
-            ProtoOperationPre240.OperationCase.OPERATION_NOT_SET -> error("Expression deserialization not implemented: ${proto.operationCase}")
+            ProtoOperationPre2_4_0.OperationCase.OPERATION_NOT_SET -> error("Expression deserialization not implemented: ${proto.operationCase}")
         }
 
     fun deserializeExpression(proto: ProtoExpression): IrExpression {
