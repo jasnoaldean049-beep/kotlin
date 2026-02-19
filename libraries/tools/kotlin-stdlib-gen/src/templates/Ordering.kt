@@ -594,11 +594,15 @@ object Ordering : TemplateGroupBase() {
             @return `true` if the ${f.collection} is sorted according to the specified [comparator], `false` otherwise.
             """
         }
-        when (f) {
-            ArraysOfObjects -> sample("samples.collections.Arrays.Sorting.isSortedWithArrayOfComparable")
-            ArraysOfPrimitives, ArraysOfUnsigned -> sample("samples.collections.Arrays.Sorting.isSortedWith${primitive?.name}Array")
-            else -> sample("samples.collections.Collections.Sorting.isSortedWith${f.name}")
-        }
+        sample(
+            when (f) {
+                Iterables -> "samples.collections.Iterables.Sorting.isSortedWith${f.name}"
+                Sequences -> "samples.collections.Sequences.Sorting.isSortedWith${f.name}"
+                ArraysOfObjects -> "samples.collections.Arrays.Sorting.isSortedWithArrayOfComparable"
+                ArraysOfPrimitives, ArraysOfUnsigned -> "samples.collections.Arrays.Sorting.isSortedWith${primitive?.name}Array"
+                else -> error("Unsupported collection type: $f")
+            }
+        )
         body {
             """
             val iterator = iterator()
@@ -637,11 +641,15 @@ object Ordering : TemplateGroupBase() {
             @return `true` if the ${f.collection} is sorted according to its natural sort order, `false` otherwise.
             """
         }
-        when (f) {
-            ArraysOfObjects -> sample("samples.collections.Arrays.Sorting.isSortedArrayOfComparable")
-            ArraysOfPrimitives, ArraysOfUnsigned -> sample("samples.collections.Arrays.Sorting.isSorted${primitive?.name}Array")
-            else -> sample("samples.collections.Collections.Sorting.isSorted${f.name}")
-        }
+        sample(
+            when (f) {
+                Iterables -> "samples.collections.Iterables.Sorting.isSorted${f.name}"
+                Sequences -> "samples.collections.Sequences.Sorting.isSorted${f.name}"
+                ArraysOfObjects -> "samples.collections.Arrays.Sorting.isSortedArrayOfComparable"
+                ArraysOfPrimitives, ArraysOfUnsigned -> "samples.collections.Arrays.Sorting.isSorted${primitive?.name}Array"
+                else -> error("Unsupported collection type: $f")
+            }
+        )
         body { "return isSortedWith(naturalOrder())" }
     }
 
@@ -660,11 +668,15 @@ object Ordering : TemplateGroupBase() {
             @return `true` if the ${f.collection} is sorted in descending order according to its natural sort order, `false` otherwise.
             """
         }
-        when (f) {
-            ArraysOfObjects -> sample("samples.collections.Arrays.Sorting.isSortedDescendingArrayOfComparable")
-            ArraysOfPrimitives, ArraysOfUnsigned -> sample("samples.collections.Arrays.Sorting.isSortedDescending${primitive?.name}Array")
-            else -> sample("samples.collections.Collections.Sorting.isSortedDescending${f.name}")
-        }
+        sample(
+            when (f) {
+                Iterables -> "samples.collections.Iterables.Sorting.isSortedDescending${f.name}"
+                Sequences -> "samples.collections.Sequences.Sorting.isSortedDescending${f.name}"
+                ArraysOfObjects -> "samples.collections.Arrays.Sorting.isSortedDescendingArrayOfComparable"
+                ArraysOfPrimitives, ArraysOfUnsigned -> "samples.collections.Arrays.Sorting.isSortedDescending${primitive?.name}Array"
+                else -> error("Unsupported collection type: $f")
+            }
+        )
         body { "return isSortedWith(reverseOrder())" }
     }
 
@@ -684,11 +696,15 @@ object Ordering : TemplateGroupBase() {
             @return `true` if the ${f.collection} is sorted according to the natural sort order of the value returned by [selector], `false` otherwise.
             """
         }
-        when (f) {
-            ArraysOfObjects -> sample("samples.collections.Arrays.Sorting.isSortedByArrayOfComparable")
-            ArraysOfPrimitives, ArraysOfUnsigned -> sample("samples.collections.Arrays.Sorting.isSortedBy${primitive?.name}Array")
-            else -> sample("samples.collections.Collections.Sorting.isSortedBy${f.name}")
-        }
+        sample(
+            when (f) {
+                Iterables -> "samples.collections.Iterables.Sorting.isSortedBy${f.name}"
+                Sequences -> "samples.collections.Sequences.Sorting.isSortedBy${f.name}"
+                ArraysOfObjects -> "samples.collections.Arrays.Sorting.isSortedByArrayOfComparable"
+                ArraysOfPrimitives, ArraysOfUnsigned -> "samples.collections.Arrays.Sorting.isSortedBy${primitive?.name}Array"
+                else -> error("Unsupported collection type: $f")
+            }
+        )
         body { "return isSortedWith(compareBy(selector))" }
     }
 
@@ -708,11 +724,15 @@ object Ordering : TemplateGroupBase() {
             @return `true` if the ${f.collection} is sorted in descending order according to the natural sort order of the value returned by [selector], `false` otherwise.
             """
         }
-        when (f) {
-            ArraysOfObjects -> sample("samples.collections.Arrays.Sorting.isSortedByDescendingArrayOfComparable")
-            ArraysOfPrimitives, ArraysOfUnsigned -> sample("samples.collections.Arrays.Sorting.isSortedByDescending${primitive?.name}Array")
-            else -> sample("samples.collections.Collections.Sorting.isSortedByDescending${f.name}")
-        }
+        sample(
+            when (f) {
+                Iterables -> "samples.collections.Iterables.Sorting.isSortedByDescending${f.name}"
+                Sequences -> "samples.collections.Sequences.Sorting.isSortedByDescending${f.name}"
+                ArraysOfObjects -> "samples.collections.Arrays.Sorting.isSortedByDescendingArrayOfComparable"
+                ArraysOfPrimitives, ArraysOfUnsigned -> "samples.collections.Arrays.Sorting.isSortedByDescending${primitive?.name}Array"
+                else -> error("Unsupported collection type: $f")
+            }
+        )
         body { "return isSortedWith(compareByDescending(selector))" }
     }
 }

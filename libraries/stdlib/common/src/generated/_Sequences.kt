@@ -588,7 +588,7 @@ public fun <T> Sequence<T>.takeWhile(predicate: (T) -> Boolean): Sequence<T> {
  * 
  * @return `true` if the sequence is sorted according to its natural sort order, `false` otherwise.
  * 
- * @sample samples.collections.Collections.Sorting.isSortedSequences
+ * @sample samples.collections.Sequences.Sorting.isSortedSequences
  */
 @SinceKotlin("2.4")
 public fun <T : Comparable<T>> Sequence<T>.isSorted(): Boolean {
@@ -600,7 +600,7 @@ public fun <T : Comparable<T>> Sequence<T>.isSorted(): Boolean {
  * 
  * @return `true` if the sequence is sorted according to the natural sort order of the value returned by [selector], `false` otherwise.
  * 
- * @sample samples.collections.Collections.Sorting.isSortedBySequences
+ * @sample samples.collections.Sequences.Sorting.isSortedBySequences
  */
 @SinceKotlin("2.4")
 public inline fun <T, R : Comparable<R>> Sequence<T>.isSortedBy(crossinline selector: (T) -> R?): Boolean {
@@ -612,7 +612,7 @@ public inline fun <T, R : Comparable<R>> Sequence<T>.isSortedBy(crossinline sele
  * 
  * @return `true` if the sequence is sorted in descending order according to the natural sort order of the value returned by [selector], `false` otherwise.
  * 
- * @sample samples.collections.Collections.Sorting.isSortedByDescendingSequences
+ * @sample samples.collections.Sequences.Sorting.isSortedByDescendingSequences
  */
 @SinceKotlin("2.4")
 public inline fun <T, R : Comparable<R>> Sequence<T>.isSortedByDescending(crossinline selector: (T) -> R?): Boolean {
@@ -624,7 +624,7 @@ public inline fun <T, R : Comparable<R>> Sequence<T>.isSortedByDescending(crossi
  * 
  * @return `true` if the sequence is sorted in descending order according to its natural sort order, `false` otherwise.
  * 
- * @sample samples.collections.Collections.Sorting.isSortedDescendingSequences
+ * @sample samples.collections.Sequences.Sorting.isSortedDescendingSequences
  */
 @SinceKotlin("2.4")
 public fun <T : Comparable<T>> Sequence<T>.isSortedDescending(): Boolean {
@@ -636,7 +636,7 @@ public fun <T : Comparable<T>> Sequence<T>.isSortedDescending(): Boolean {
  * 
  * @return `true` if the sequence is sorted according to the specified [comparator], `false` otherwise.
  * 
- * @sample samples.collections.Collections.Sorting.isSortedWithSequences
+ * @sample samples.collections.Sequences.Sorting.isSortedWithSequences
  */
 @SinceKotlin("2.4")
 public fun <T> Sequence<T>.isSortedWith(comparator: Comparator<in T>): Boolean {
