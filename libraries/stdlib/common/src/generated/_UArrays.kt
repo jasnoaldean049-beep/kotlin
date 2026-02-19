@@ -2753,6 +2753,278 @@ public inline fun UShortArray.takeWhile(predicate: (UShort) -> Boolean): List<US
 }
 
 /**
+ * Returns `true` if all elements in the array are sorted according to their natural sort order.
+ * 
+ * @return `true` if the array is sorted according to its natural sort order, `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedUIntArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun UIntArray.isSorted(): Boolean {
+    return isSortedWith(naturalOrder())
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted according to their natural sort order.
+ * 
+ * @return `true` if the array is sorted according to its natural sort order, `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedULongArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun ULongArray.isSorted(): Boolean {
+    return isSortedWith(naturalOrder())
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted according to their natural sort order.
+ * 
+ * @return `true` if the array is sorted according to its natural sort order, `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedUByteArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun UByteArray.isSorted(): Boolean {
+    return isSortedWith(naturalOrder())
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted according to their natural sort order.
+ * 
+ * @return `true` if the array is sorted according to its natural sort order, `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedUShortArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun UShortArray.isSorted(): Boolean {
+    return isSortedWith(naturalOrder())
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted according to natural sort order of the value returned by specified [selector] function.
+ * 
+ * @return `true` if the array is sorted according to the natural sort order of the value returned by [selector], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedByUIntArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public inline fun <R : Comparable<R>> UIntArray.isSortedBy(crossinline selector: (UInt) -> R?): Boolean {
+    return isSortedWith(compareBy(selector))
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted according to natural sort order of the value returned by specified [selector] function.
+ * 
+ * @return `true` if the array is sorted according to the natural sort order of the value returned by [selector], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedByULongArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public inline fun <R : Comparable<R>> ULongArray.isSortedBy(crossinline selector: (ULong) -> R?): Boolean {
+    return isSortedWith(compareBy(selector))
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted according to natural sort order of the value returned by specified [selector] function.
+ * 
+ * @return `true` if the array is sorted according to the natural sort order of the value returned by [selector], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedByUByteArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public inline fun <R : Comparable<R>> UByteArray.isSortedBy(crossinline selector: (UByte) -> R?): Boolean {
+    return isSortedWith(compareBy(selector))
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted according to natural sort order of the value returned by specified [selector] function.
+ * 
+ * @return `true` if the array is sorted according to the natural sort order of the value returned by [selector], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedByUShortArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public inline fun <R : Comparable<R>> UShortArray.isSortedBy(crossinline selector: (UShort) -> R?): Boolean {
+    return isSortedWith(compareBy(selector))
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted descending according to natural sort order of the value returned by specified [selector] function.
+ * 
+ * @return `true` if the array is sorted in descending order according to the natural sort order of the value returned by [selector], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedByDescendingUIntArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public inline fun <R : Comparable<R>> UIntArray.isSortedByDescending(crossinline selector: (UInt) -> R?): Boolean {
+    return isSortedWith(compareByDescending(selector))
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted descending according to natural sort order of the value returned by specified [selector] function.
+ * 
+ * @return `true` if the array is sorted in descending order according to the natural sort order of the value returned by [selector], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedByDescendingULongArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public inline fun <R : Comparable<R>> ULongArray.isSortedByDescending(crossinline selector: (ULong) -> R?): Boolean {
+    return isSortedWith(compareByDescending(selector))
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted descending according to natural sort order of the value returned by specified [selector] function.
+ * 
+ * @return `true` if the array is sorted in descending order according to the natural sort order of the value returned by [selector], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedByDescendingUByteArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public inline fun <R : Comparable<R>> UByteArray.isSortedByDescending(crossinline selector: (UByte) -> R?): Boolean {
+    return isSortedWith(compareByDescending(selector))
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted descending according to natural sort order of the value returned by specified [selector] function.
+ * 
+ * @return `true` if the array is sorted in descending order according to the natural sort order of the value returned by [selector], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedByDescendingUShortArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public inline fun <R : Comparable<R>> UShortArray.isSortedByDescending(crossinline selector: (UShort) -> R?): Boolean {
+    return isSortedWith(compareByDescending(selector))
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted descending according to their natural sort order.
+ * 
+ * @return `true` if the array is sorted in descending order according to its natural sort order, `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedDescendingUIntArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun UIntArray.isSortedDescending(): Boolean {
+    return isSortedWith(reverseOrder())
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted descending according to their natural sort order.
+ * 
+ * @return `true` if the array is sorted in descending order according to its natural sort order, `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedDescendingULongArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun ULongArray.isSortedDescending(): Boolean {
+    return isSortedWith(reverseOrder())
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted descending according to their natural sort order.
+ * 
+ * @return `true` if the array is sorted in descending order according to its natural sort order, `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedDescendingUByteArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun UByteArray.isSortedDescending(): Boolean {
+    return isSortedWith(reverseOrder())
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted descending according to their natural sort order.
+ * 
+ * @return `true` if the array is sorted in descending order according to its natural sort order, `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedDescendingUShortArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun UShortArray.isSortedDescending(): Boolean {
+    return isSortedWith(reverseOrder())
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted according to the specified [comparator].
+ * 
+ * @return `true` if the array is sorted according to the specified [comparator], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedWithUIntArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun UIntArray.isSortedWith(comparator: Comparator<in UInt>): Boolean {
+    for (i in 1..<size) {
+        if (comparator.compare(this[i - 1], this[i]) > 0) return false
+    }
+    return true
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted according to the specified [comparator].
+ * 
+ * @return `true` if the array is sorted according to the specified [comparator], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedWithULongArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun ULongArray.isSortedWith(comparator: Comparator<in ULong>): Boolean {
+    for (i in 1..<size) {
+        if (comparator.compare(this[i - 1], this[i]) > 0) return false
+    }
+    return true
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted according to the specified [comparator].
+ * 
+ * @return `true` if the array is sorted according to the specified [comparator], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedWithUByteArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun UByteArray.isSortedWith(comparator: Comparator<in UByte>): Boolean {
+    for (i in 1..<size) {
+        if (comparator.compare(this[i - 1], this[i]) > 0) return false
+    }
+    return true
+}
+
+/**
+ * Returns `true` if all elements in the array are sorted according to the specified [comparator].
+ * 
+ * @return `true` if the array is sorted according to the specified [comparator], `false` otherwise.
+ * 
+ * @sample samples.collections.Arrays.Sorting.isSortedWithUShortArray
+ */
+@SinceKotlin("2.4")
+@ExperimentalUnsignedTypes
+public fun UShortArray.isSortedWith(comparator: Comparator<in UShort>): Boolean {
+    for (i in 1..<size) {
+        if (comparator.compare(this[i - 1], this[i]) > 0) return false
+    }
+    return true
+}
+
+/**
  * Reverses elements in the array in-place.
  */
 @SinceKotlin("1.3")
