@@ -329,5 +329,51 @@ class Sequences {
             assertPrints(fridgeContent.toList(), "[Dish(🥦: 34 cal, taste 2.3/5), Dish(🧃: 34 cal, taste 4.9/5), Dish(🍨: 207 cal, taste 4.7/5)]")
         }
 
+        @Sample
+        fun isSorted() {
+            val sorted = sequenceOf(1, 2, 3, 4, 5)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = sequenceOf(1, 3, 2, 4, 5)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedBy() {
+            data class Person(val name: String, val age: Int)
+
+            val people = sequenceOf(Person("Carol", 20), Person("Bob", 25), Person("Alice", 30))
+            assertPrints(people.isSortedBy { it.age }, "true")
+            assertPrints(people.isSortedBy { it.name }, "false") // "Carol" > "Bob" > "Alice"
+        }
+
+        @Sample
+        fun isSortedByDescending() {
+            data class Person(val name: String, val age: Int)
+
+            val people = sequenceOf(Person("Alice", 30), Person("Bob", 25), Person("Carol", 20))
+            assertPrints(people.isSortedByDescending { it.age }, "true")
+            assertPrints(people.isSortedByDescending { it.name }, "false") // "Alice" < "Bob" < "Carol"
+        }
+
+        @Sample
+        fun isSortedDescending() {
+            val sortedDescending = sequenceOf(5, 4, 3, 2, 1)
+            assertPrints(sortedDescending.isSortedDescending(), "true")
+
+            val unsorted = sequenceOf(5, 3, 4, 2, 1)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedWith() {
+            val byLength = compareBy<String> { it.length }
+
+            val sorted = sequenceOf("a", "bb", "ccc")
+            assertPrints(sorted.isSortedWith(byLength), "true")
+
+            val unsorted = sequenceOf("bb", "a", "ccc")
+            assertPrints(unsorted.isSortedWith(byLength), "false")
+        }
     }
 }
