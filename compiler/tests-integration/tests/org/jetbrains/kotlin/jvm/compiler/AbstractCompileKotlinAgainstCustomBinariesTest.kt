@@ -504,7 +504,8 @@ abstract class AbstractCompileKotlinAgainstCustomBinariesTest : AbstractKotlinCo
             additionalOptions = listOf(
                 CommonCompilerArguments::skipPrereleaseCheck.cliArgument,
                 CommonCompilerArguments::languageVersion.cliArgument,
-                LanguageVersion.KOTLIN_2_3.versionString,
+                LanguageVersion.entries.lastOrNull { it < LanguageFeature.ContextParameters.sinceVersion!! }?.versionString
+                    ?: error("No language version found where context parameters aren't enabled by default. Consider dropping this test.")
             )
         )
     }
