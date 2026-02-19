@@ -5,10 +5,12 @@
 
 package kotlin.reflect.jvm.internal.types
 
+import org.jetbrains.kotlin.types.model.KotlinTypeMarker
 import org.jetbrains.kotlin.types.model.RigidTypeMarker
 import kotlin.reflect.*
 import kotlin.reflect.full.createType
 import kotlin.reflect.full.createTypeImpl
+import kotlin.reflect.jvm.internal.types.ReflectTypeSystemContext.isFlexible
 import kotlin.reflect.jvm.internal.types.ReflectTypeSystemContext.withNullability as withNullabilityFromTypeSystem
 
 internal class KTypeSubstitutor(
@@ -50,7 +52,7 @@ internal class KTypeSubstitutor(
             return when {
                 substitutingType != null && substitutingVariance != null -> KTypeProjection(
                     substitutingVariance.intersectWith(variance),
-                    substitutingType.withNullabilityOf(type),
+                    substitutingType.withWorseNullabilityOfBoth(type),
                 )
                 else -> substitutingProjection
             }
@@ -121,7 +123,9 @@ internal class KTypeSubstitutor(
         }
 
     // TODO (KT-77700): also keep annotations of 'other'
-    private fun KType.withNullabilityOf(other: KType): KType {
+    private fun KType.withWorseNullabilityOfBoth(other: KType): KType {
+        check(other is KotlinTypeMarker && !other.isFlexible()) { "'$other' must be non flexible" }
+        if (isNullabilityFlexible() && !other.isMarkedNullable) return this
         val thiz = this as RigidTypeMarker
         return with(ReflectTypeSystemContext) {
             val withNullability = withNullabilityFromTypeSystem(other.isMarkedNullable || isMarkedNullable)
@@ -172,6 +176,14 @@ internal class KTypeSubstitutor(
             return KTypeSubstitutor(typeParameters.zip(arguments).toMap())
         }
     }
+}
+
+private fun KType.isNullabilityFlexible(): Boolean {
+    if (this !is AbstractKType) return false
+    val lower = lowerBoundIfFlexible()
+    val upper = upperBoundIfFlexible()
+    if (lower == null || upper == null) return false
+    return lower.isMarkedNullable != upper.isMarkedNullable
 }
 
 /**
