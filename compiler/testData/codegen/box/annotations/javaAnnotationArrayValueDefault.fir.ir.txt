@@ -3,7 +3,7 @@ Module: main
 FILE fqName:<root> fileName:/1.kt
   CLASS CLASS name:MyClass1 modality:FINAL visibility:public superTypes:[kotlin.Any]
     annotations:
-      JavaAnn(value = <null>)
+      JavaAnn(value = ["d1", "d2"] type=kotlin.Array<out kotlin.String> varargElementType=kotlin.String)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:<root>.MyClass1
     CONSTRUCTOR visibility:public returnType:<root>.MyClass1 [primary]
       BLOCK_BODY
@@ -24,7 +24,7 @@ FILE fqName:<root> fileName:/1.kt
         public open fun toString (): kotlin.String declared in kotlin.Any
   CLASS CLASS name:MyClass2 modality:FINAL visibility:public superTypes:[kotlin.Any]
     annotations:
-      JavaAnn(value = <null>)
+      JavaAnn(value = ["d1", "d2"] type=kotlin.Array<out kotlin.String> varargElementType=kotlin.String)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:<root>.MyClass2
     CONSTRUCTOR visibility:public returnType:<root>.MyClass2 [primary]
       BLOCK_BODY

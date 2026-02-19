@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.descriptors.Visibilities
 import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.backend.*
 import org.jetbrains.kotlin.fir.backend.utils.*
+import org.jetbrains.kotlin.fir.backend.utils.toIrConst
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.impl.FirDefaultPropertyGetter
 import org.jetbrains.kotlin.fir.declarations.impl.FirDefaultPropertySetter
@@ -315,13 +316,10 @@ class Fir2IrCallableDeclarationsGenerator(private val c: Fir2IrComponents) : Fir
                                     field.initializer = factory.createExpressionBody(initializer.toIrConst(constType))
                                 } else if (property.isConst) {
                                     val constType = initializer!!.resolvedType.toIrType()
-                                    var value = when(property.evaluatedInitializer) {
-                                        is FirEvaluatorResult.Evaluated -> (property.evaluatedInitializer as FirEvaluatorResult.Evaluated).unwrapOr<FirLiteralExpression> {}
+                                    val evaluatedInitializer = property.evaluatedInitializer?.unwrapOr<FirExpression> {  }
+                                    field.initializer = when (val initializer = evaluatedInitializer ?: field.initializer) {
+                                        is FirLiteralExpression -> factory.createExpressionBody(initializer.toIrConst(constType))
                                         else -> null
-                                    }
-                                    if (value != null) {
-                                        var irExpression = value.toIrConst(constType)
-                                        field.initializer = factory.createExpressionBody(irExpression)
                                     }
                                 }
                             }

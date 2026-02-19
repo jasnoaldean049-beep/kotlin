@@ -1011,10 +1011,31 @@ class CallAndReferenceGenerator(
         return visitor.withAnnotationMode {
             val annotationCall = annotation.toAnnotationCall()
 
-            irAnnotation.deepCopyWithoutPatchingParents()
+            irAnnotation
                 .applyReceiversAndArguments(annotationCall, declarationSiteSymbol = firConstructorSymbol, explicitReceiverExpression = null)
+                .applyDefaultEvaluatedAnnotationArguments(firConstructorSymbol?.fir)
                 .applyTypeArgumentsWithTypealiasConstructorRemapping(firConstructorSymbol?.fir, annotationCall?.typeArguments.orEmpty())
         }
+    }
+
+    private fun IrExpression.applyDefaultEvaluatedAnnotationArguments(constructor: FirConstructor?): IrExpression {
+        if (this !is IrMemberAccessExpression<*> || constructor == null) return this
+        if (arguments.all {it != null}) return this
+
+        for (i in arguments.indices) {
+            if (arguments[i] == null) {
+                val parameter = constructor.valueParameters[i]
+                var evaluatedArg = parameter.evaluatedInitializer?.unwrapOr<FirExpression> { throw AssertionError("No evaluated initializer") }
+                if (evaluatedArg == null) {
+                    // There are some annotations that don't get visited by FirDeclarationResolveTransformer
+                    evaluatedArg = FirExpressionEvaluator.evaluateParameterDefaultValue(parameter, session)!!
+                        .unwrapOr<FirExpression> { throw AssertionError("No evaluated initializer") }!!
+                }
+                arguments[i] = convertArgument(evaluatedArg, constructor.valueParameters[i], ConeSubstitutor.Empty)
+            }
+        }
+
+        return this
     }
 
     private fun FirAnnotation.toAnnotationCall(): FirAnnotationCall? {
@@ -1561,7 +1582,6 @@ class CallAndReferenceGenerator(
                 val parameterIndex = receiverInfo.contextArgumentOffset() + index
 
                 val irExpression = convertArgument(contextArgument, parameter, substitutor)
-
                 add(ArgumentInfo(parameter, irExpression, parameterIndex))
             }
 
