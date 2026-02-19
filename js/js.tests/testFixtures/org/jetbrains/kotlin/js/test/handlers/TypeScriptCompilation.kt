@@ -43,10 +43,10 @@ class TypeScriptCompilation<A : ResultingArtifact.Binary<A>>(
         val target = customizedTarget
             ?: defaultTarget
 
-        val libs = listOf(
-            customizedTarget ?: "es2015", // We generate Promise usages even in ES5 mode, so we should use at least the ES2015 definitions
-            "dom",
-        )
+        val customizedLibs = allDirectives[JsEnvironmentConfigurationDirectives.TSC_LIB]
+            .ifEmpty { listOf(customizedTarget ?: "es2015") }
+
+        val libs = customizedLibs + "dom" // We generate Promise usages even in ES5 mode, so we should use at least the ES2015 definitions
 
         val moduleOption = allDirectives[JsEnvironmentConfigurationDirectives.TSC_MODULE].firstOrNull()?.let {
             listOf("--module", it)
