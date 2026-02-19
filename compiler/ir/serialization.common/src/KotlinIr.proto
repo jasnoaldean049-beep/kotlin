@@ -559,8 +559,8 @@ message IrExpression {
   }
 
   optional IrOperationPre_2_4_0 operation_pre_2_4_0 = 1; // Was required before 2.4.0
-  optional int32 type = 2; // Was required before 2.4.0
-  optional int64 coordinates = 3; // Was required before 2.4.0
+  required int32 type = 2;
+  required int64 coordinates = 3;
 }
 
 message NullableIrExpression {

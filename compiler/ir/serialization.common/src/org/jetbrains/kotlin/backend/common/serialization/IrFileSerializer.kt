@@ -1052,6 +1052,13 @@ open class IrFileSerializer(
             val coordinates = serializeCoordinates(expression.startOffset, expression.endOffset)
             proto.setCoordinates(coordinates)
             proto.setType(serializeIrType(expression.type))
+        } else {
+            // Those field are `required` in the proto schema, so they need to be assigned some value to avoid serialization error.
+            // They will be ignored when deserialized.
+            // (They also cannot be migrated to `optional`, because then 0 values would be elided (as the default value), in which case the
+            // older compiler, which still sees them as `required`, would fail to deserialize then.)
+            proto.setCoordinates(0)
+            proto.setType(0)
         }
 
         if (settings.abiCompatibilityLevel.isAtLeast(KlibAbiCompatibilityLevel.ABI_LEVEL_2_4)) {

@@ -401,36 +401,20 @@ public interface IrExpressionOrBuilder extends
   org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 getOperationPre240();
 
   /**
-   * <code>optional int32 type = 2;</code>
-   *
-   * <pre>
-   * Was required before 2.4.0
-   * </pre>
+   * <code>required int32 type = 2;</code>
    */
   boolean hasType();
   /**
-   * <code>optional int32 type = 2;</code>
-   *
-   * <pre>
-   * Was required before 2.4.0
-   * </pre>
+   * <code>required int32 type = 2;</code>
    */
   int getType();
 
   /**
-   * <code>optional int64 coordinates = 3;</code>
-   *
-   * <pre>
-   * Was required before 2.4.0
-   * </pre>
+   * <code>required int64 coordinates = 3;</code>
    */
   boolean hasCoordinates();
   /**
-   * <code>optional int64 coordinates = 3;</code>
-   *
-   * <pre>
-   * Was required before 2.4.0
-   * </pre>
+   * <code>required int64 coordinates = 3;</code>
    */
   long getCoordinates();
 }

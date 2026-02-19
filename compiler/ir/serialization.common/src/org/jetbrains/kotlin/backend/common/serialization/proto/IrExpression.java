@@ -1461,21 +1461,13 @@ public final class IrExpression extends
   public static final int TYPE_FIELD_NUMBER = 2;
   private int type_;
   /**
-   * <code>optional int32 type = 2;</code>
-   *
-   * <pre>
-   * Was required before 2.4.0
-   * </pre>
+   * <code>required int32 type = 2;</code>
    */
   public boolean hasType() {
     return ((bitField1_ & 0x00000200) == 0x00000200);
   }
   /**
-   * <code>optional int32 type = 2;</code>
-   *
-   * <pre>
-   * Was required before 2.4.0
-   * </pre>
+   * <code>required int32 type = 2;</code>
    */
   public int getType() {
     return type_;
@@ -1484,21 +1476,13 @@ public final class IrExpression extends
   public static final int COORDINATES_FIELD_NUMBER = 3;
   private long coordinates_;
   /**
-   * <code>optional int64 coordinates = 3;</code>
-   *
-   * <pre>
-   * Was required before 2.4.0
-   * </pre>
+   * <code>required int64 coordinates = 3;</code>
    */
   public boolean hasCoordinates() {
     return ((bitField1_ & 0x00000400) == 0x00000400);
   }
   /**
-   * <code>optional int64 coordinates = 3;</code>
-   *
-   * <pre>
-   * Was required before 2.4.0
-   * </pre>
+   * <code>required int64 coordinates = 3;</code>
    */
   public long getCoordinates() {
     return coordinates_;
@@ -1515,6 +1499,14 @@ public final class IrExpression extends
     if (isInitialized == 1) return true;
     if (isInitialized == 0) return false;
 
+    if (!hasType()) {
+      memoizedIsInitialized = 0;
+      return false;
+    }
+    if (!hasCoordinates()) {
+      memoizedIsInitialized = 0;
+      return false;
+    }
     if (hasOpGetValue()) {
       if (!getOpGetValue().isInitialized()) {
         memoizedIsInitialized = 0;
@@ -2513,6 +2505,14 @@ public final class IrExpression extends
     }
 
     public final boolean isInitialized() {
+      if (!hasType()) {
+        
+        return false;
+      }
+      if (!hasCoordinates()) {
+        
+        return false;
+      }
       if (hasOpGetValue()) {
         if (!getOpGetValue().isInitialized()) {
           
@@ -5478,31 +5478,19 @@ public final class IrExpression extends
 
     private int type_ ;
     /**
-     * <code>optional int32 type = 2;</code>
-     *
-     * <pre>
-     * Was required before 2.4.0
-     * </pre>
+     * <code>required int32 type = 2;</code>
      */
     public boolean hasType() {
       return ((bitField1_ & 0x00000200) == 0x00000200);
     }
     /**
-     * <code>optional int32 type = 2;</code>
-     *
-     * <pre>
-     * Was required before 2.4.0
-     * </pre>
+     * <code>required int32 type = 2;</code>
      */
     public int getType() {
       return type_;
     }
     /**
-     * <code>optional int32 type = 2;</code>
-     *
-     * <pre>
-     * Was required before 2.4.0
-     * </pre>
+     * <code>required int32 type = 2;</code>
      */
     public Builder setType(int value) {
       bitField1_ |= 0x00000200;
@@ -5511,11 +5499,7 @@ public final class IrExpression extends
       return this;
     }
     /**
-     * <code>optional int32 type = 2;</code>
-     *
-     * <pre>
-     * Was required before 2.4.0
-     * </pre>
+     * <code>required int32 type = 2;</code>
      */
     public Builder clearType() {
       bitField1_ = (bitField1_ & ~0x00000200);
@@ -5526,31 +5510,19 @@ public final class IrExpression extends
 
     private long coordinates_ ;
     /**
-     * <code>optional int64 coordinates = 3;</code>
-     *
-     * <pre>
-     * Was required before 2.4.0
-     * </pre>
+     * <code>required int64 coordinates = 3;</code>
      */
     public boolean hasCoordinates() {
       return ((bitField1_ & 0x00000400) == 0x00000400);
     }
     /**
-     * <code>optional int64 coordinates = 3;</code>
-     *
-     * <pre>
-     * Was required before 2.4.0
-     * </pre>
+     * <code>required int64 coordinates = 3;</code>
      */
     public long getCoordinates() {
       return coordinates_;
     }
     /**
-     * <code>optional int64 coordinates = 3;</code>
-     *
-     * <pre>
-     * Was required before 2.4.0
-     * </pre>
+     * <code>required int64 coordinates = 3;</code>
      */
     public Builder setCoordinates(long value) {
       bitField1_ |= 0x00000400;
@@ -5559,11 +5531,7 @@ public final class IrExpression extends
       return this;
     }
     /**
-     * <code>optional int64 coordinates = 3;</code>
-     *
-     * <pre>
-     * Was required before 2.4.0
-     * </pre>
+     * <code>required int64 coordinates = 3;</code>
      */
     public Builder clearCoordinates() {
       bitField1_ = (bitField1_ & ~0x00000400);
