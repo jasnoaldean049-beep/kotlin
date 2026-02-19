@@ -5,9 +5,11 @@
 
 package generators
 
+import generators.test.IsSortedTestGenerator
 import generators.test.MinMaxTestGenerator
 
 
 fun main() {
     MinMaxTestGenerator.generate()
+    IsSortedTestGenerator.generate()
 }
