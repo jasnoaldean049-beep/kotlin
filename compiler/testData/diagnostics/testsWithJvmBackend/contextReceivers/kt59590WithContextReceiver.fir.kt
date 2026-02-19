@@ -6,7 +6,7 @@
 // LANGUAGE: +ContextParameters
 
 <!CONFLICTING_JVM_DECLARATIONS!>object O {
-    context(_: O)
+    <!CONTEXT_PARAMETERS_WITH_BACKING_FIELD!>context<!>(_: O)
     @JvmField
-    <!CONFLICTING_JVM_DECLARATIONS!>val INSTANCE: O? = <!CONTEXT_PARAMETERS_WITH_BACKING_FIELD!>null<!><!>
+    <!CONFLICTING_JVM_DECLARATIONS!>val INSTANCE: O? = null<!>
 }<!>
