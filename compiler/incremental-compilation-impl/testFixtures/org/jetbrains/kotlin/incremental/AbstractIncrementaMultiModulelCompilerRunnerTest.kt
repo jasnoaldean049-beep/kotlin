@@ -24,6 +24,7 @@ abstract class AbstractIncrementalMultiModuleCompilerRunnerTest<Args : CommonCom
 
     protected val repository: File by lazy { File(workingDir, "repository") }
     private val modulesInfo: MutableMap<String, ModuleBuildConfiguration> = mutableMapOf()
+    private val modulesOrder: MutableList<String> = mutableListOf()
 
     private val dirToModule = mutableMapOf<File, IncrementalModuleEntry>()
     private val nameToModules = mutableMapOf<String, MutableSet<IncrementalModuleEntry>>()
@@ -37,8 +38,7 @@ abstract class AbstractIncrementalMultiModuleCompilerRunnerTest<Args : CommonCom
 
     protected abstract val modulesApiHistory: ApiHistory
 
-    final override val moduleNames: Collection<String>?
-        field = mutableListOf()
+    override val moduleNames: Collection<String>? get() = modulesOrder
 
     protected abstract val scopeExpansionMode: CompileScopeExpansionMode
 
@@ -50,7 +50,7 @@ abstract class AbstractIncrementalMultiModuleCompilerRunnerTest<Args : CommonCom
         nameToModules.clear()
         jarToModule.clear()
 
-        moduleNames.forEach { setupModuleApiHistory(it, newOutDir, newCacheDir) }
+        modulesOrder.forEach { setupModuleApiHistory(it, newOutDir, newCacheDir) }
     }
 
     override fun setupTest(testDir: File, srcDir: File, cacheDir: File, outDir: File): List<File> {
@@ -72,7 +72,7 @@ abstract class AbstractIncrementalMultiModuleCompilerRunnerTest<Args : CommonCom
 
         DFS.topologicalOrder(dependencyGraph.keys) { m ->
             (dependencyGraph[m] ?: error("Expected dependencies for module $m")).map { it.moduleName }
-        }.reversed().mapTo(moduleNames) { it }
+        }.reversed().mapTo(modulesOrder) { it }
 
         for ((moduleName, fileEntries) in results) {
             val moduleDir = File(workingDir, moduleName).apply { mkdirs() }
@@ -207,7 +207,7 @@ abstract class AbstractIncrementalMultiModuleCompilerRunnerTest<Args : CommonCom
         var compilationIsEnabled = true
         val isInitial = repository.list()?.isEmpty() ?: true
 
-        for (module in moduleNames) {
+        for (module in modulesOrder) {
             val moduleDependencies = collectEffectiveDependencies(module)
 
             val moduleModifiedDependencies = modifiedLibraries.filter { it.first in moduleDependencies }.map { it.second }
