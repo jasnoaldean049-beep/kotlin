@@ -50,6 +50,8 @@ internal abstract class KFunctionImplNew(val flags: Int, val arity: Int, val id:
 }
 
 internal abstract class KFunctionErrorImpl(val message: String) {
+    val name: String get() = throwIrLinkageError(message)
+
     override fun equals(other: Any?): Boolean = throwIrLinkageError(message)
 
     override fun hashCode(): Int = throwIrLinkageError(message)
