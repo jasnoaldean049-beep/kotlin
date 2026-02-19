@@ -17,6 +17,7 @@
 package samples.collections
 
 import samples.*
+import kotlin.test.*
 
 @RunWith(Enclosed::class)
 class Iterables {
@@ -83,6 +84,58 @@ class Iterables {
             val list = listOf(Person("Tom", 18), Person("Andy", 32), Person("Sarah", 22))
             val result = list.partition { it.age < 30 }
             assertPrints(result, "([Tom - 18, Sarah - 22], [Andy - 32])")
+        }
+    }
+
+    class Sorting {
+        @Sample
+        fun isSorted() {
+            val sortedList = listOf(1, 2, 3, 4, 5)
+            assertPrints(sortedList.isSorted(), "true")
+
+            val unsortedList = listOf(1, 3, 2, 4, 5)
+            assertPrints(unsortedList.isSorted(), "false")
+
+            val emptyList = emptyList<Int>()
+            assertPrints(emptyList.isSorted(), "true")
+        }
+
+        @Sample
+        fun isSortedBy() {
+            data class Person(val name: String, val age: Int)
+
+            val people = listOf(Person("Carol", 20), Person("Bob", 25), Person("Alice", 30))
+            assertPrints(people.isSortedBy { it.age }, "true")
+            assertPrints(people.isSortedBy { it.name }, "false") // "Carol" > "Bob" > "Alice"
+        }
+
+        @Sample
+        fun isSortedByDescending() {
+            data class Person(val name: String, val age: Int)
+
+            val people = listOf(Person("Alice", 30), Person("Bob", 25), Person("Carol", 20))
+            assertPrints(people.isSortedByDescending { it.age }, "true")
+            assertPrints(people.isSortedByDescending { it.name }, "false") // "Alice" < "Bob" < "Carol"
+        }
+
+        @Sample
+        fun isSortedDescending() {
+            val sortedDescending = listOf(5, 4, 3, 2, 1)
+            assertPrints(sortedDescending.isSortedDescending(), "true")
+
+            val unsorted = listOf(5, 3, 4, 2, 1)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedWith() {
+            val byLength = compareBy<String> { it.length }
+
+            val sorted = listOf("a", "bb", "ccc")
+            assertPrints(sorted.isSortedWith(byLength), "true")
+
+            val unsorted = listOf("bb", "a", "ccc")
+            assertPrints(unsorted.isSortedWith(byLength), "false")
         }
     }
 }
