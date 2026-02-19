@@ -55,6 +55,7 @@ abstract class AbstractCompileKotlinAgainstCustomBinariesTest : AbstractKotlinCo
         additionalOptions: List<String>,
         expectedFileName: String?,
         additionalSources: List<String>,
+        ignoreTestDataDirectory: Boolean,
         sanitizeCompilerOutput: (String) -> String,
     ): Pair<String, ExitCode> {
         val options =
@@ -67,7 +68,7 @@ abstract class AbstractCompileKotlinAgainstCustomBinariesTest : AbstractKotlinCo
         return super.compileKotlin(
             fileName, output, classpath, compiler, options,
             if (expectedFirFile != null && languageVersion.usesK2 && expectedFirFile.exists()) expectedFirFile.name else expectedFileName,
-            additionalSources, sanitizeCompilerOutput
+            additionalSources, ignoreTestDataDirectory, sanitizeCompilerOutput
         )
     }
 

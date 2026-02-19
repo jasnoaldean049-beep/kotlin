@@ -166,14 +166,15 @@ abstract class AbstractKotlinCompilerIntegrationTest : TestCaseWithTmpdir() {
         additionalOptions: List<String> = emptyList(),
         expectedFileName: String? = "output.txt",
         additionalSources: List<String> = emptyList(),
+        ignoreTestDataDirectory: Boolean = false,
         sanitizeCompilerOutput: (String) -> String = { it },
     ): Pair<String, ExitCode> {
         val args = mutableListOf<String>()
-        val sourceFile = File(testDataDirectory, fileName)
+        val sourceFile = if (!ignoreTestDataDirectory) File(testDataDirectory, fileName) else File(fileName)
         assert(sourceFile.exists()) { "Source file does not exist: ${sourceFile.absolutePath}" }
         args.add(sourceFile.path)
 
-        additionalSources.mapTo(args) { File(testDataDirectory, it).path }
+        additionalSources.mapTo(args) { (if (!ignoreTestDataDirectory) File(testDataDirectory, it) else File(it)).path }
 
         if (compiler is K2JSCompiler) {
             args.add(K2JSCompilerArguments::libraries.cliArgument)
@@ -198,7 +199,10 @@ abstract class AbstractKotlinCompilerIntegrationTest : TestCaseWithTmpdir() {
 
         val result = AbstractCliTest.executeCompilerGrabOutput(compiler, args)
         if (expectedFileName != null) {
-            TestDataAssertions.assertEqualsToFile(File(testDataDirectory, expectedFileName), sanitizeCompilerOutput(normalizeOutput(result)))
+            TestDataAssertions.assertEqualsToFile(
+                if (!ignoreTestDataDirectory) File(testDataDirectory, expectedFileName) else File(expectedFileName),
+                sanitizeCompilerOutput(normalizeOutput(result))
+            )
         }
         return result
     }
