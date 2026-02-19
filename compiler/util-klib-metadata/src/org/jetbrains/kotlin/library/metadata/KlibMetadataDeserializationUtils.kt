@@ -14,6 +14,9 @@ fun parsePackageFragment(packageMetadata: ByteArray): ProtoBuf.PackageFragment =
 fun parseModuleHeader(libraryMetadata: ByteArray): KlibMetadataProtoBuf.Header =
     KlibMetadataProtoBuf.Header.parseFrom(libraryMetadata, KlibMetadataSerializerProtocol.extensionRegistry)
 
+@Deprecated("Restored to keep ABI compatibility with kotlinx-benchmark Gradle plugin (KT-71414)", level = DeprecationLevel.HIDDEN)
+interface PackageAccessHandler
+
 /**
  * A special interceptor that allows customizing the way how metadata proto objects are loaded.
  * The single real usage is in IntelliJ IDEA.

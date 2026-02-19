@@ -43,6 +43,20 @@ interface KlibMetadataModuleDescriptorFactory {
         library, languageVersionSettings, storageManager, null, LookupTracker.DO_NOTHING
     )
 
+    @Deprecated(
+        "Preserved for binary compatibility with existing versions of the kotlinx-benchmarks Gradle plugin. See KT-82882.",
+        level = DeprecationLevel.HIDDEN
+    )
+    @Suppress("DEPRECATION_ERROR")
+    fun createDescriptorOptionalBuiltIns(
+        library: KotlinLibrary,
+        languageVersionSettings: LanguageVersionSettings,
+        storageManager: StorageManager,
+        builtIns: KotlinBuiltIns?,
+        packageAccessHandler: PackageAccessHandler?,
+        lookupTracker: LookupTracker
+    ): ModuleDescriptorImpl = createDescriptorOptionalBuiltIns(library, languageVersionSettings, storageManager, builtIns, lookupTracker)
+
     fun createDescriptorOptionalBuiltIns(
         library: KotlinLibrary,
         languageVersionSettings: LanguageVersionSettings,
