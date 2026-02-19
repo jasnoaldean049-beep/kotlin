@@ -70,7 +70,6 @@ open class IncrementalResultsConsumerImpl : IncrementalResultsConsumer {
     }
 
 //    class IrFileData(fileData: ByteArray, symbols: ByteArray, types: ByteArray, strings: ByteArray, bodies: ByteArray, declarations: ByteArray)
-    private val _irFileData = hashMapOf<File, IrTranslationResultValue>()
     val irFileData: Map<File, IrTranslationResultValue>
         field = hashMapOf<File, IrTranslationResultValue>()
 
