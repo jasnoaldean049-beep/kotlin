@@ -596,11 +596,9 @@ object Ordering : TemplateGroupBase() {
         }
         sample(
             when (f) {
-                Iterables -> "samples.collections.Iterables.Sorting.isSortedWith${f.name}"
-                Sequences -> "samples.collections.Sequences.Sorting.isSortedWith${f.name}"
                 ArraysOfObjects -> "samples.collections.Arrays.Sorting.isSortedWithArrayOfComparable"
                 ArraysOfPrimitives, ArraysOfUnsigned -> "samples.collections.Arrays.Sorting.isSortedWith${primitive?.name}Array"
-                else -> error("Unsupported collection type: $f")
+                else -> "samples.collections.${f.name}.Sorting.isSortedWith"
             }
         )
         body {
@@ -643,11 +641,9 @@ object Ordering : TemplateGroupBase() {
         }
         sample(
             when (f) {
-                Iterables -> "samples.collections.Iterables.Sorting.isSorted${f.name}"
-                Sequences -> "samples.collections.Sequences.Sorting.isSorted${f.name}"
                 ArraysOfObjects -> "samples.collections.Arrays.Sorting.isSortedArrayOfComparable"
                 ArraysOfPrimitives, ArraysOfUnsigned -> "samples.collections.Arrays.Sorting.isSorted${primitive?.name}Array"
-                else -> error("Unsupported collection type: $f")
+                else -> "samples.collections.${f.name}.Sorting.isSorted"
             }
         )
         body { "return isSortedWith(naturalOrder())" }
@@ -670,11 +666,9 @@ object Ordering : TemplateGroupBase() {
         }
         sample(
             when (f) {
-                Iterables -> "samples.collections.Iterables.Sorting.isSortedDescending${f.name}"
-                Sequences -> "samples.collections.Sequences.Sorting.isSortedDescending${f.name}"
                 ArraysOfObjects -> "samples.collections.Arrays.Sorting.isSortedDescendingArrayOfComparable"
                 ArraysOfPrimitives, ArraysOfUnsigned -> "samples.collections.Arrays.Sorting.isSortedDescending${primitive?.name}Array"
-                else -> error("Unsupported collection type: $f")
+                else -> "samples.collections.${f.name}.Sorting.isSortedDescending"
             }
         )
         body { "return isSortedWith(reverseOrder())" }
@@ -698,11 +692,9 @@ object Ordering : TemplateGroupBase() {
         }
         sample(
             when (f) {
-                Iterables -> "samples.collections.Iterables.Sorting.isSortedBy${f.name}"
-                Sequences -> "samples.collections.Sequences.Sorting.isSortedBy${f.name}"
                 ArraysOfObjects -> "samples.collections.Arrays.Sorting.isSortedByArrayOfComparable"
                 ArraysOfPrimitives, ArraysOfUnsigned -> "samples.collections.Arrays.Sorting.isSortedBy${primitive?.name}Array"
-                else -> error("Unsupported collection type: $f")
+                else -> "samples.collections.${f.name}.Sorting.isSortedBy"
             }
         )
         body { "return isSortedWith(compareBy(selector))" }
@@ -726,11 +718,9 @@ object Ordering : TemplateGroupBase() {
         }
         sample(
             when (f) {
-                Iterables -> "samples.collections.Iterables.Sorting.isSortedByDescending${f.name}"
-                Sequences -> "samples.collections.Sequences.Sorting.isSortedByDescending${f.name}"
                 ArraysOfObjects -> "samples.collections.Arrays.Sorting.isSortedByDescendingArrayOfComparable"
                 ArraysOfPrimitives, ArraysOfUnsigned -> "samples.collections.Arrays.Sorting.isSortedByDescending${primitive?.name}Array"
-                else -> error("Unsupported collection type: $f")
+                else -> "samples.collections.${f.name}.Sorting.isSortedByDescending"
             }
         )
         body { "return isSortedWith(compareByDescending(selector))" }

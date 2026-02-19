@@ -986,7 +986,7 @@ public inline fun <T> Iterable<T>.takeWhile(predicate: (T) -> Boolean): List<T> 
  * 
  * @return `true` if the collection is sorted according to its natural sort order, `false` otherwise.
  * 
- * @sample samples.collections.Iterables.Sorting.isSortedIterables
+ * @sample samples.collections.Iterables.Sorting.isSorted
  */
 @SinceKotlin("2.4")
 public fun <T : Comparable<T>> Iterable<T>.isSorted(): Boolean {
@@ -998,7 +998,7 @@ public fun <T : Comparable<T>> Iterable<T>.isSorted(): Boolean {
  * 
  * @return `true` if the collection is sorted according to the natural sort order of the value returned by [selector], `false` otherwise.
  * 
- * @sample samples.collections.Iterables.Sorting.isSortedByIterables
+ * @sample samples.collections.Iterables.Sorting.isSortedBy
  */
 @SinceKotlin("2.4")
 public inline fun <T, R : Comparable<R>> Iterable<T>.isSortedBy(crossinline selector: (T) -> R?): Boolean {
@@ -1010,7 +1010,7 @@ public inline fun <T, R : Comparable<R>> Iterable<T>.isSortedBy(crossinline sele
  * 
  * @return `true` if the collection is sorted in descending order according to the natural sort order of the value returned by [selector], `false` otherwise.
  * 
- * @sample samples.collections.Iterables.Sorting.isSortedByDescendingIterables
+ * @sample samples.collections.Iterables.Sorting.isSortedByDescending
  */
 @SinceKotlin("2.4")
 public inline fun <T, R : Comparable<R>> Iterable<T>.isSortedByDescending(crossinline selector: (T) -> R?): Boolean {
@@ -1022,7 +1022,7 @@ public inline fun <T, R : Comparable<R>> Iterable<T>.isSortedByDescending(crossi
  * 
  * @return `true` if the collection is sorted in descending order according to its natural sort order, `false` otherwise.
  * 
- * @sample samples.collections.Iterables.Sorting.isSortedDescendingIterables
+ * @sample samples.collections.Iterables.Sorting.isSortedDescending
  */
 @SinceKotlin("2.4")
 public fun <T : Comparable<T>> Iterable<T>.isSortedDescending(): Boolean {
@@ -1034,7 +1034,7 @@ public fun <T : Comparable<T>> Iterable<T>.isSortedDescending(): Boolean {
  * 
  * @return `true` if the collection is sorted according to the specified [comparator], `false` otherwise.
  * 
- * @sample samples.collections.Iterables.Sorting.isSortedWithIterables
+ * @sample samples.collections.Iterables.Sorting.isSortedWith
  */
 @SinceKotlin("2.4")
 public fun <T> Iterable<T>.isSortedWith(comparator: Comparator<in T>): Boolean {
