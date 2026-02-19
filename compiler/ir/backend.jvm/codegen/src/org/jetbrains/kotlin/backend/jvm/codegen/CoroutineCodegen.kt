@@ -54,9 +54,6 @@ internal fun MethodNode.acceptWithStateMachine(
         containingClassInternalName = classCodegen.type.internalName,
         obtainClassBuilderForCoroutineState = obtainContinuationClassBuilder,
         isForNamedFunction = irFunction.isSuspend,
-        disableTailCallOptimizationForFunctionReturningUnit = irFunction.isSuspend && irFunction.suspendFunctionOriginal().let {
-            it.returnType.isUnit() && it.anyOfOverriddenFunctionsReturnsNonUnit()
-        },
         reportSuspensionPointInsideMonitor = {
             classCodegen.context.ktDiagnosticReporter.at(irFunction, classCodegen.irClass)
                 .report(JvmBackendErrors.SUSPENSION_POINT_INSIDE_MONITOR, it)
