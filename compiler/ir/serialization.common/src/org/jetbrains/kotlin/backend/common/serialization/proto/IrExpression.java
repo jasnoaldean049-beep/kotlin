@@ -55,11 +55,11 @@ public final class IrExpression extends
             break;
           }
           case 10: {
-            org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.Builder subBuilder = null;
+            org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.Builder subBuilder = null;
             if (((bitField1_ & 0x00000100) == 0x00000100)) {
               subBuilder = operationPre240_.toBuilder();
             }
-            operationPre240_ = input.readMessage(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.PARSER, extensionRegistry);
+            operationPre240_ = input.readMessage(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.PARSER, extensionRegistry);
             if (subBuilder != null) {
               subBuilder.mergeFrom(operationPre240_);
               operationPre240_ = subBuilder.buildPartial();
@@ -1435,10 +1435,10 @@ public final class IrExpression extends
     return org.jetbrains.kotlin.backend.common.serialization.proto.IrMissingExpression.getDefaultInstance();
   }
 
-  public static final int OPERATION_PRE240_FIELD_NUMBER = 1;
-  private org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operationPre240_;
+  public static final int OPERATION_PRE_2_4_0_FIELD_NUMBER = 1;
+  private org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operationPre240_;
   /**
-   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
+   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
    *
    * <pre>
    * Was required before 2.4.0
@@ -1448,13 +1448,13 @@ public final class IrExpression extends
     return ((bitField1_ & 0x00000100) == 0x00000100);
   }
   /**
-   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
+   * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
    *
    * <pre>
    * Was required before 2.4.0
    * </pre>
    */
-  public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 getOperationPre240() {
+  public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 getOperationPre240() {
     return operationPre240_;
   }
 
@@ -1505,7 +1505,7 @@ public final class IrExpression extends
   }
 
   private void initFields() {
-    operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance();
+    operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.getDefaultInstance();
     type_ = 0;
     coordinates_ = 0L;
   }
@@ -2160,7 +2160,7 @@ public final class IrExpression extends
 
     public Builder clear() {
       super.clear();
-      operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance();
+      operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.getDefaultInstance();
       bitField1_ = (bitField1_ & ~0x00000100);
       type_ = 0;
       bitField1_ = (bitField1_ & ~0x00000200);
@@ -5392,9 +5392,9 @@ public final class IrExpression extends
       return this;
     }
 
-    private org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance();
+    private org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.getDefaultInstance();
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
@@ -5404,23 +5404,23 @@ public final class IrExpression extends
       return ((bitField1_ & 0x00000100) == 0x00000100);
     }
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
      * </pre>
      */
-    public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 getOperationPre240() {
+    public org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 getOperationPre240() {
       return operationPre240_;
     }
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
      * </pre>
      */
-    public Builder setOperationPre240(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 value) {
+    public Builder setOperationPre240(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 value) {
       if (value == null) {
         throw new NullPointerException();
       }
@@ -5430,31 +5430,31 @@ public final class IrExpression extends
       return this;
     }
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
      * </pre>
      */
     public Builder setOperationPre240(
-        org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.Builder builderForValue) {
+        org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.Builder builderForValue) {
       operationPre240_ = builderForValue.build();
 
       bitField1_ |= 0x00000100;
       return this;
     }
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
      * </pre>
      */
-    public Builder mergeOperationPre240(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 value) {
+    public Builder mergeOperationPre240(org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 value) {
       if (((bitField1_ & 0x00000100) == 0x00000100) &&
-          operationPre240_ != org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance()) {
+          operationPre240_ != org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.getDefaultInstance()) {
         operationPre240_ =
-          org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.newBuilder(operationPre240_).mergeFrom(value).buildPartial();
+          org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.newBuilder(operationPre240_).mergeFrom(value).buildPartial();
       } else {
         operationPre240_ = value;
       }
@@ -5463,14 +5463,14 @@ public final class IrExpression extends
       return this;
     }
     /**
-     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240 operation_pre240 = 1;</code>
+     * <code>optional .org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0 operation_pre_2_4_0 = 1;</code>
      *
      * <pre>
      * Was required before 2.4.0
      * </pre>
      */
     public Builder clearOperationPre240() {
-      operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre240.getDefaultInstance();
+      operationPre240_ = org.jetbrains.kotlin.backend.common.serialization.proto.IrOperationPre_2_4_0.getDefaultInstance();
 
       bitField1_ = (bitField1_ & ~0x00000100);
       return this;

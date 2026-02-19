@@ -225,10 +225,10 @@ public final class MemberAccessCommon extends
     return argument_.get(index);
   }
 
-  public static final int ARGUMENT_PRE240_FIELD_NUMBER = 6;
+  public static final int ARGUMENT_PRE_2_4_0_FIELD_NUMBER = 6;
   private java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression> argumentPre240_;
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
    *
    * <pre>
    * Value argument serialization scheme before 2.4.0
@@ -238,7 +238,7 @@ public final class MemberAccessCommon extends
     return argumentPre240_;
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
    *
    * <pre>
    * Value argument serialization scheme before 2.4.0
@@ -249,7 +249,7 @@ public final class MemberAccessCommon extends
     return argumentPre240_;
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
    *
    * <pre>
    * Value argument serialization scheme before 2.4.0
@@ -259,7 +259,7 @@ public final class MemberAccessCommon extends
     return argumentPre240_.size();
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
    *
    * <pre>
    * Value argument serialization scheme before 2.4.0
@@ -269,7 +269,7 @@ public final class MemberAccessCommon extends
     return argumentPre240_.get(index);
   }
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
    *
    * <pre>
    * Value argument serialization scheme before 2.4.0
@@ -942,7 +942,7 @@ public final class MemberAccessCommon extends
     }
 
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0
@@ -952,7 +952,7 @@ public final class MemberAccessCommon extends
       return java.util.Collections.unmodifiableList(argumentPre240_);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0
@@ -962,7 +962,7 @@ public final class MemberAccessCommon extends
       return argumentPre240_.size();
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0
@@ -972,7 +972,7 @@ public final class MemberAccessCommon extends
       return argumentPre240_.get(index);
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0
@@ -989,7 +989,7 @@ public final class MemberAccessCommon extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0
@@ -1003,7 +1003,7 @@ public final class MemberAccessCommon extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0
@@ -1019,7 +1019,7 @@ public final class MemberAccessCommon extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0
@@ -1036,7 +1036,7 @@ public final class MemberAccessCommon extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0
@@ -1050,7 +1050,7 @@ public final class MemberAccessCommon extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0
@@ -1064,7 +1064,7 @@ public final class MemberAccessCommon extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0
@@ -1079,7 +1079,7 @@ public final class MemberAccessCommon extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0
@@ -1092,7 +1092,7 @@ public final class MemberAccessCommon extends
       return this;
     }
     /**
-     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+     * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
      *
      * <pre>
      * Value argument serialization scheme before 2.4.0

@@ -34,7 +34,7 @@ public interface MemberAccessCommonOrBuilder extends
   int getArgumentCount();
 
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
    *
    * <pre>
    * Value argument serialization scheme before 2.4.0
@@ -43,7 +43,7 @@ public interface MemberAccessCommonOrBuilder extends
   java.util.List<org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression> 
       getArgumentPre240List();
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
    *
    * <pre>
    * Value argument serialization scheme before 2.4.0
@@ -51,7 +51,7 @@ public interface MemberAccessCommonOrBuilder extends
    */
   org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression getArgumentPre240(int index);
   /**
-   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre240 = 6;</code>
+   * <code>repeated .org.jetbrains.kotlin.backend.common.serialization.proto.NullableIrExpression argument_pre_2_4_0 = 6;</code>
    *
    * <pre>
    * Value argument serialization scheme before 2.4.0
