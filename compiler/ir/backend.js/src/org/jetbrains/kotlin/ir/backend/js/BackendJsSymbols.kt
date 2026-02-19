@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.backend.common.ir.PreSerializationJsSymbols
 import org.jetbrains.kotlin.backend.common.ir.PreSerializationWebSymbols
 import org.jetbrains.kotlin.builtins.PrimitiveType
 import org.jetbrains.kotlin.builtins.StandardNames
+import org.jetbrains.kotlin.config.LanguageVersionSettings
 import org.jetbrains.kotlin.ir.*
 import org.jetbrains.kotlin.ir.declarations.StageController
 import org.jetbrains.kotlin.ir.expressions.IrCall
@@ -55,8 +56,9 @@ abstract class BackendWebSymbols(
 class BackendJsSymbols(
     irBuiltIns: IrBuiltIns,
     private val stageController: StageController,
-    private val compileLongAsBigint: Boolean
-) : PreSerializationJsSymbols by PreSerializationJsSymbols.Impl(irBuiltIns), BackendWebSymbols(irBuiltIns) {
+    private val compileLongAsBigint: Boolean,
+    languageVersionSettings: LanguageVersionSettings,
+) : PreSerializationJsSymbols by PreSerializationJsSymbols.Impl(irBuiltIns, languageVersionSettings), BackendWebSymbols(irBuiltIns) {
     val noWhenBranchMatchedException = CallableIds.noWhenBranchMatchedException.functionSymbol()
 
     override val throwNullPointerException = CallableIds.throwNpe.functionSymbol()

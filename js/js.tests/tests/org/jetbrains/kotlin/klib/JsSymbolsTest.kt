@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.klib
 
 import org.jetbrains.kotlin.backend.common.ir.PreSerializationSymbols
+import org.jetbrains.kotlin.config.LanguageVersionSettings
 import org.jetbrains.kotlin.ir.IrBuiltIns
 import org.jetbrains.kotlin.ir.backend.js.BackendJsSymbols
 import org.jetbrains.kotlin.ir.declarations.StageController
@@ -45,10 +46,10 @@ class JsSymbolsTest : AbstractSymbolsValidationTest(
 }
 
 private class JsSymbolValidationHandler(testServices: TestServices) : IrSecondPhaseSymbolValidationHandler(testServices) {
-    override fun getSymbols(irBuiltIns: IrBuiltIns): List<PreSerializationSymbols> {
+    override fun getSymbols(irBuiltIns: IrBuiltIns, languageVersionSettings: LanguageVersionSettings): List<PreSerializationSymbols> {
         return listOf(
-            BackendJsSymbols(irBuiltIns, StageController(), compileLongAsBigint = true),
-            BackendJsSymbols(irBuiltIns, StageController(), compileLongAsBigint = false),
+            BackendJsSymbols(irBuiltIns, StageController(), compileLongAsBigint = true, languageVersionSettings),
+            BackendJsSymbols(irBuiltIns, StageController(), compileLongAsBigint = false, languageVersionSettings),
         )
     }
 }

@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.backend.common.ir.PreSerializationNativeSymbols
 import org.jetbrains.kotlin.backend.konan.*
 import org.jetbrains.kotlin.builtins.StandardNames
 import org.jetbrains.kotlin.config.CompilerConfiguration
+import org.jetbrains.kotlin.config.languageVersionSettings
 import org.jetbrains.kotlin.ir.*
 import org.jetbrains.kotlin.ir.declarations.IrFunction
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
@@ -253,7 +254,8 @@ class BackendNativeSymbols(
     context: ErrorReportingContext,
     irBuiltIns: IrBuiltIns,
     config: CompilerConfiguration,
-) : PreSerializationNativeSymbols by PreSerializationNativeSymbols.Impl(irBuiltIns), BackendKlibSymbols(irBuiltIns) {
+) : PreSerializationNativeSymbols by PreSerializationNativeSymbols.Impl(irBuiltIns, config.languageVersionSettings),
+    BackendKlibSymbols(irBuiltIns) {
     val entryPoint by run {
         val mainCallableId = config.getMainCallableId()
         val unfilteredCandidates = mainCallableId?.functionSymbols()

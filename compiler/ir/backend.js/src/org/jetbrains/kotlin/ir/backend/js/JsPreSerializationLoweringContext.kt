@@ -9,6 +9,7 @@ import org.jetbrains.kotlin.backend.common.PreSerializationLoweringContext
 import org.jetbrains.kotlin.backend.common.ir.KlibSharedVariablesManager
 import org.jetbrains.kotlin.backend.common.ir.PreSerializationJsSymbols
 import org.jetbrains.kotlin.config.CompilerConfiguration
+import org.jetbrains.kotlin.config.languageVersionSettings
 import org.jetbrains.kotlin.ir.IrBuiltIns
 import org.jetbrains.kotlin.ir.IrDiagnosticReporter
 import org.jetbrains.kotlin.ir.backend.js.lower.serialization.ir.JsManglerIr
@@ -19,7 +20,7 @@ class JsPreSerializationLoweringContext(
     configuration: CompilerConfiguration,
     diagnosticReporter: IrDiagnosticReporter,
 ) : PreSerializationLoweringContext(irBuiltIns, configuration, diagnosticReporter) {
-    override val symbols: PreSerializationJsSymbols = PreSerializationJsSymbols.Impl(irBuiltIns)
+    override val symbols: PreSerializationJsSymbols = PreSerializationJsSymbols.Impl(irBuiltIns, configuration.languageVersionSettings)
 
     override val sharedVariablesManager = KlibSharedVariablesManager(symbols)
 

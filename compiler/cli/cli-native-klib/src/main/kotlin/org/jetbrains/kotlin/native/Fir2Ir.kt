@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.cli.common.fir.FirDiagnosticsCompilerResultsReporter
 import org.jetbrains.kotlin.cli.common.renderDiagnosticInternalName
 import org.jetbrains.kotlin.compiler.plugin.getCompilerExtensions
 import org.jetbrains.kotlin.config.CommonConfigurationKeys
+import org.jetbrains.kotlin.config.languageVersionSettings
 import org.jetbrains.kotlin.diagnostics.impl.DiagnosticsCollectorImpl
 import org.jetbrains.kotlin.fir.backend.Fir2IrConfiguration
 import org.jetbrains.kotlin.fir.backend.Fir2IrVisibilityConverter
@@ -105,7 +106,7 @@ fun NativeFirstStagePhaseContext.fir2Ir(
         }
     }
 
-    val symbols = PreSerializationNativeSymbols.Impl(actualizedResult.irBuiltIns)
+    val symbols = PreSerializationNativeSymbols.Impl(actualizedResult.irBuiltIns, configuration.languageVersionSettings)
 
     val renderDiagnosticNames = configuration.renderDiagnosticInternalName
     FirDiagnosticsCompilerResultsReporter.reportToMessageCollector(diagnosticsReporter, messageCollector, renderDiagnosticNames)

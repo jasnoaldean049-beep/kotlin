@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.backend.common.lower.InnerClassesSupport
 import org.jetbrains.kotlin.backend.common.reportWarning
 import org.jetbrains.kotlin.backend.common.serialization.IrInterningService
 import org.jetbrains.kotlin.config.CompilerConfiguration
+import org.jetbrains.kotlin.config.languageVersionSettings
 import org.jetbrains.kotlin.config.messageCollector
 import org.jetbrains.kotlin.config.phaseConfig
 import org.jetbrains.kotlin.config.phaser.PhaseConfig
@@ -130,7 +131,8 @@ class JsIrBackendContext(
     override val jsPromiseSymbol: IrClassSymbol
         get() = symbols.promiseClassSymbol
 
-    override val symbols = BackendJsSymbols(irBuiltIns, irFactory.stageController, configuration.compileLongAsBigint)
+    override val symbols =
+        BackendJsSymbols(irBuiltIns, irFactory.stageController, configuration.compileLongAsBigint, configuration.languageVersionSettings)
 
     override val propertyLazyInitialization: PropertyLazyInitialization = PropertyLazyInitialization(
         enabled = configuration.get(JSConfigurationKeys.PROPERTY_LAZY_INITIALIZATION, true),

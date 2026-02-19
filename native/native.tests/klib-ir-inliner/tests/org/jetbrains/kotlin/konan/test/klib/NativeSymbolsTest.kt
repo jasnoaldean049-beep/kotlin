@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.backend.konan.ir.BackendNativeSymbols
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
 import org.jetbrains.kotlin.cli.create
 import org.jetbrains.kotlin.config.CompilerConfiguration
+import org.jetbrains.kotlin.config.LanguageVersionSettings
 import org.jetbrains.kotlin.ir.IrBuiltIns
 import org.jetbrains.kotlin.konan.test.Fir2IrNativeResultsConverter
 import org.jetbrains.kotlin.konan.test.NativeKlibSerializerFacade
@@ -49,7 +50,7 @@ class NativeSymbolValidationHandler(testServices: TestServices) : IrSecondPhaseS
             get() = error("should not be called")
     }
 
-    override fun getSymbols(irBuiltIns: IrBuiltIns): List<PreSerializationSymbols> {
+    override fun getSymbols(irBuiltIns: IrBuiltIns, languageVersionSettings: LanguageVersionSettings): List<PreSerializationSymbols> {
         return listOf(BackendNativeSymbols(errorReportingContext, irBuiltIns, CompilerConfiguration.create()))
     }
 }

@@ -34,11 +34,14 @@ import kotlin.reflect.KVisibility
 
 abstract class IrSymbolValidationHandler(testServices: TestServices) : AbstractIrHandler(testServices) {
     protected open val blackList: List<String> = emptyList()
-    protected abstract fun getSymbols(irBuiltIns: IrBuiltIns): List<PreSerializationSymbols>
+    protected abstract fun getSymbols(
+        irBuiltIns: IrBuiltIns,
+        languageVersionSettings: LanguageVersionSettings,
+    ): List<PreSerializationSymbols>
 
     override fun processModule(module: TestModule, info: IrBackendInput) {
         validateContainer(info.irBuiltIns)
-        for (symbols in getSymbols(info.irBuiltIns)) {
+        for (symbols in getSymbols(info.irBuiltIns, module.languageVersionSettings)) {
             validateContainer(symbols)
         }
     }
@@ -115,20 +118,20 @@ abstract class IrPreSerializationSymbolValidationHandler(testServices: TestServi
 }
 
 class IrPreSerializationJsSymbolValidationHandler(testServices: TestServices) : IrPreSerializationSymbolValidationHandler(testServices) {
-    override fun getSymbols(irBuiltIns: IrBuiltIns): List<PreSerializationSymbols> {
-        return listOf(PreSerializationJsSymbols.Impl(irBuiltIns))
+    override fun getSymbols(irBuiltIns: IrBuiltIns, languageVersionSettings: LanguageVersionSettings): List<PreSerializationSymbols> {
+        return listOf(PreSerializationJsSymbols.Impl(irBuiltIns, languageVersionSettings))
     }
 }
 
 class IrPreSerializationWasmSymbolValidationHandler(testServices: TestServices) : IrPreSerializationSymbolValidationHandler(testServices) {
-    override fun getSymbols(irBuiltIns: IrBuiltIns): List<PreSerializationSymbols> {
-        return listOf(PreSerializationWasmSymbols.Impl(irBuiltIns))
+    override fun getSymbols(irBuiltIns: IrBuiltIns, languageVersionSettings: LanguageVersionSettings): List<PreSerializationSymbols> {
+        return listOf(PreSerializationWasmSymbols.Impl(irBuiltIns, languageVersionSettings))
     }
 }
 
 class IrPreSerializationNativeSymbolValidationHandler(testServices: TestServices) : IrPreSerializationSymbolValidationHandler(testServices) {
-    override fun getSymbols(irBuiltIns: IrBuiltIns): List<PreSerializationSymbols> {
-        return listOf(PreSerializationNativeSymbols.Impl(irBuiltIns))
+    override fun getSymbols(irBuiltIns: IrBuiltIns, languageVersionSettings: LanguageVersionSettings): List<PreSerializationSymbols> {
+        return listOf(PreSerializationNativeSymbols.Impl(irBuiltIns, languageVersionSettings))
     }
 }
 

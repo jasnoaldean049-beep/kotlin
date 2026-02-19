@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.backend.common.ir.KlibSharedVariablesManager
 import org.jetbrains.kotlin.backend.common.ir.PreSerializationWasmSymbols
 import org.jetbrains.kotlin.backend.common.ir.SharedVariablesManager
 import org.jetbrains.kotlin.config.CompilerConfiguration
+import org.jetbrains.kotlin.config.languageVersionSettings
 import org.jetbrains.kotlin.ir.IrBuiltIns
 import org.jetbrains.kotlin.ir.IrDiagnosticReporter
 import org.jetbrains.kotlin.ir.backend.js.lower.serialization.ir.JsManglerIr
@@ -20,7 +21,7 @@ class WasmPreSerializationLoweringContext(
     configuration: CompilerConfiguration,
     diagnosticReporter: IrDiagnosticReporter,
 ) : PreSerializationLoweringContext(irBuiltIns, configuration, diagnosticReporter) {
-    override val symbols: PreSerializationWasmSymbols = PreSerializationWasmSymbols.Impl(irBuiltIns)
+    override val symbols: PreSerializationWasmSymbols = PreSerializationWasmSymbols.Impl(irBuiltIns, configuration.languageVersionSettings)
 
     override val sharedVariablesManager: SharedVariablesManager = KlibSharedVariablesManager(symbols)
 

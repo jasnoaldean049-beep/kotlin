@@ -8,6 +8,7 @@ package org.jetbrains.kotlin.backend.common.ir
 
 import org.jetbrains.kotlin.builtins.PrimitiveType
 import org.jetbrains.kotlin.builtins.StandardNames
+import org.jetbrains.kotlin.config.LanguageVersionSettings
 import org.jetbrains.kotlin.name.NativeStandardInteropNames
 import org.jetbrains.kotlin.builtins.StandardNames.COROUTINES_PACKAGE_FQ_NAME
 import org.jetbrains.kotlin.builtins.StandardNames.KOTLIN_REFLECT_FQ_NAME
@@ -109,7 +110,8 @@ interface PreSerializationKlibSymbols : PreSerializationSymbols {
 
     val genericSharedVariableBox: SharedVariableBoxClassInfo
 
-    abstract class Impl(irBuiltIns: IrBuiltIns) : PreSerializationKlibSymbols, PreSerializationSymbols.Impl(irBuiltIns) {
+    abstract class Impl(irBuiltIns: IrBuiltIns, val languageVersionSettings: LanguageVersionSettings) : PreSerializationKlibSymbols,
+        PreSerializationSymbols.Impl(irBuiltIns) {
         override val genericSharedVariableBox: SharedVariableBoxClassInfo = findSharedVariableBoxClass(null)
         override val syntheticConstructorMarker: IrClassSymbol = ClassIds.SyntheticConstructorMarker.classSymbol()
         override val throwUninitializedPropertyAccessException: IrSimpleFunctionSymbol =
@@ -140,7 +142,8 @@ interface PreSerializationKlibSymbols : PreSerializationSymbols {
 }
 
 interface PreSerializationWebSymbols : PreSerializationKlibSymbols {
-    abstract class Impl(irBuiltIns: IrBuiltIns) : PreSerializationWebSymbols, PreSerializationKlibSymbols.Impl(irBuiltIns) {
+    abstract class Impl(irBuiltIns: IrBuiltIns, languageVersionSettings: LanguageVersionSettings) : PreSerializationWebSymbols,
+        PreSerializationKlibSymbols.Impl(irBuiltIns, languageVersionSettings) {
         override val coroutineContextGetter: IrSimpleFunctionSymbol by CallableIds.coroutineContextGetter.getterSymbol()
 
         companion object {
@@ -159,7 +162,8 @@ interface PreSerializationJsSymbols : PreSerializationWebSymbols {
     val jsCode: IrSimpleFunctionSymbol
     val jsOutlinedFunctionAnnotationSymbol: IrClassSymbol
 
-    open class Impl(irBuiltIns: IrBuiltIns) : PreSerializationJsSymbols, PreSerializationWebSymbols.Impl(irBuiltIns) {
+    open class Impl(irBuiltIns: IrBuiltIns, languageVersionSettings: LanguageVersionSettings) : PreSerializationJsSymbols,
+        PreSerializationWebSymbols.Impl(irBuiltIns, languageVersionSettings) {
         override val suspendCoroutineUninterceptedOrReturn: IrSimpleFunctionSymbol =
             CallableIds.suspendCoroutineUninterceptedOrReturn.functionSymbol()
         override val coroutineGetContext: IrSimpleFunctionSymbol = CallableIds.coroutineGetContext.functionSymbol()
@@ -188,7 +192,8 @@ interface PreSerializationJsSymbols : PreSerializationWebSymbols {
 }
 
 interface PreSerializationWasmSymbols : PreSerializationWebSymbols {
-    open class Impl(irBuiltIns: IrBuiltIns) : PreSerializationWasmSymbols, PreSerializationWebSymbols.Impl(irBuiltIns) {
+    open class Impl(irBuiltIns: IrBuiltIns, languageVersionSettings: LanguageVersionSettings) : PreSerializationWasmSymbols,
+        PreSerializationWebSymbols.Impl(irBuiltIns, languageVersionSettings) {
         override val suspendCoroutineUninterceptedOrReturn: IrSimpleFunctionSymbol =
             CallableIds.suspendCoroutineUninterceptedOrReturn.functionSymbol()
         override val coroutineGetContext: IrSimpleFunctionSymbol = CallableIds.coroutineGetContext.functionSymbol()
@@ -230,7 +235,10 @@ interface PreSerializationNativeSymbols : PreSerializationKlibSymbols {
     val immutableBlobOf: IrSimpleFunctionSymbol
     val createCleaner: IrSimpleFunctionSymbol
 
-    open class Impl(irBuiltIns: IrBuiltIns) : PreSerializationNativeSymbols, PreSerializationKlibSymbols.Impl(irBuiltIns) {
+    open class Impl(
+        irBuiltIns: IrBuiltIns,
+        languageVersionSettings: LanguageVersionSettings,
+    ) : PreSerializationNativeSymbols, PreSerializationKlibSymbols.Impl(irBuiltIns, languageVersionSettings) {
         override val asserts: Iterable<IrSimpleFunctionSymbol> = CallableIds.asserts.functionSymbols()
 
         override val isAssertionArgumentEvaluationEnabled: IrSimpleFunctionSymbol =
