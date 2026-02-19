@@ -17,6 +17,7 @@
 package samples.collections
 
 import samples.*
+import kotlin.math.abs
 import kotlin.test.*
 
 
@@ -532,6 +533,540 @@ class Arrays {
             assertPrints(people.joinToString(), "Bjorn Ironside, Ragnar Lodbrok, Sweyn Forkbeard")
         }
 
+        @Sample
+        fun isSortedArrayOfComparable() {
+            val sorted = arrayOf("apple", "banana", "cherry")
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = arrayOf("banana", "apple", "cherry")
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedByteArray() {
+            val sorted = byteArrayOf(1, 2, 3, 4, 5)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = byteArrayOf(1, 3, 2, 4, 5)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedShortArray() {
+            val sorted = shortArrayOf(1, 2, 3, 4, 5)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = shortArrayOf(1, 3, 2, 4, 5)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedIntArray() {
+            val sorted = intArrayOf(1, 2, 3, 4, 5)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = intArrayOf(1, 3, 2, 4, 5)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedLongArray() {
+            val sorted = longArrayOf(1L, 2L, 3L, 4L, 5L)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = longArrayOf(1L, 3L, 2L, 4L, 5L)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedFloatArray() {
+            val sorted = floatArrayOf(1.0f, 2.5f, 3.14f)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = floatArrayOf(2.5f, 1.0f, 3.14f)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedDoubleArray() {
+            val sorted = doubleArrayOf(1.0, 2.5, 3.14)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = doubleArrayOf(2.5, 1.0, 3.14)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedBooleanArray() {
+            val sorted = booleanArrayOf(false, false, true)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = booleanArrayOf(true, false, true)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedCharArray() {
+            val sorted = charArrayOf('a', 'b', 'c')
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = charArrayOf('b', 'a', 'c')
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedUIntArray() {
+            val sorted = uintArrayOf(1u, 2u, 3u, 4u, 5u)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = uintArrayOf(1u, 3u, 2u, 4u, 5u)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedULongArray() {
+            val sorted = ulongArrayOf(1u, 2u, 3u, 4u, 5u)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = ulongArrayOf(1u, 3u, 2u, 4u, 5u)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedUByteArray() {
+            val sorted = ubyteArrayOf(1u, 2u, 3u, 4u, 5u)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = ubyteArrayOf(1u, 3u, 2u, 4u, 5u)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedUShortArray() {
+            val sorted = ushortArrayOf(1u, 2u, 3u, 4u, 5u)
+            assertPrints(sorted.isSorted(), "true")
+
+            val unsorted = ushortArrayOf(1u, 3u, 2u, 4u, 5u)
+            assertPrints(unsorted.isSorted(), "false")
+        }
+
+        @Sample
+        fun isSortedByArrayOfComparable() {
+            val strings = arrayOf("c", "bb", "aaa")
+            assertPrints(strings.isSortedBy { it.length }, "true")
+            assertPrints(strings.isSortedBy { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByByteArray() {
+            val byteArray = byteArrayOf(1, -2, 3, -4, 5)
+            assertPrints(byteArray.isSortedBy { it * it }, "true")  // 1, 4, 9, 16, 25
+            assertPrints(byteArray.isSortedBy { abs(it.toInt()) }, "true")  // 1, 2, 3, 4, 5
+            assertPrints(byteArray.isSortedBy { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByShortArray() {
+            val shortArray = shortArrayOf(1, -2, 3, -4, 5)
+            assertPrints(shortArray.isSortedBy { it * it }, "true")  // 1, 4, 9, 16, 25
+            assertPrints(shortArray.isSortedBy { abs(it.toInt()) }, "true")  // 1, 2, 3, 4, 5
+            assertPrints(shortArray.isSortedBy { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByIntArray() {
+            val intArray = intArrayOf(1, -2, 3, -4, 5)
+            assertPrints(intArray.isSortedBy { it * it }, "true")  // 1, 4, 9, 16, 25
+            assertPrints(intArray.isSortedBy { abs(it) }, "true")  // 1, 2, 3, 4, 5
+            assertPrints(intArray.isSortedBy { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByLongArray() {
+            val longArray = longArrayOf(1L, -2L, 3L, -4L, 5L)
+            assertPrints(longArray.isSortedBy { it * it }, "true")  // 1, 4, 9, 16, 25
+            assertPrints(longArray.isSortedBy { abs(it) }, "true")  // 1, 2, 3, 4, 5
+            assertPrints(longArray.isSortedBy { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByFloatArray() {
+            val floatArray = floatArrayOf(-0.5f, 1.0f, -1.5f, 2.0f)
+            assertPrints(floatArray.isSortedBy { it * it }, "true")  // 0.25, 1.0, 2.25, 4.0
+            assertPrints(floatArray.isSortedBy { abs(it) }, "true")  // 0.5, 1.0, 1.5, 2.0
+            assertPrints(floatArray.isSortedBy { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDoubleArray() {
+            val doubleArray = doubleArrayOf(-0.5, 1.0, -1.5, 2.0)
+            assertPrints(doubleArray.isSortedBy { it * it }, "true")  // 0.25, 1.0, 2.25, 4.0
+            assertPrints(doubleArray.isSortedBy { abs(it) }, "true")  // 0.5, 1.0, 1.5, 2.0
+            assertPrints(doubleArray.isSortedBy { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByBooleanArray() {
+            val booleanArray = booleanArrayOf(false, false, true)
+            assertPrints(booleanArray.isSortedBy { it.compareTo(false) }, "true")  // 0, 0, 1
+            assertPrints(booleanArray.isSortedBy { it }, "true")
+            assertPrints(booleanArray.isSortedBy { !it }, "false")  // true, true, false
+        }
+
+        @Sample
+        fun isSortedByCharArray() {
+            val charArray = charArrayOf('A', 'b', 'C')
+            assertPrints(charArray.isSortedBy { it.uppercaseChar() }, "true")  // A, B, C
+            assertPrints(charArray.isSortedBy { it.lowercaseChar() }, "true")  // a, b, c
+            assertPrints(charArray.isSortedBy { it }, "false")  // 'A'(65), 'b'(98), 'C'(67)
+        }
+
+        @Sample
+        fun isSortedByUIntArray() {
+            val uintArray = uintArrayOf(3u, 1u, 4u, 2u)
+            assertPrints(uintArray.isSortedBy { it % 3u }, "true")  // 0, 1, 1, 2
+            assertPrints(uintArray.isSortedBy { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByULongArray() {
+            val ulongArray = ulongArrayOf(3u, 1u, 4u, 2u)
+            assertPrints(ulongArray.isSortedBy { it % 3uL }, "true")  // 0, 1, 1, 2
+            assertPrints(ulongArray.isSortedBy { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByUByteArray() {
+            val ubyteArray = ubyteArrayOf(3u, 1u, 4u, 2u)
+            assertPrints(ubyteArray.isSortedBy { it.toUInt() % 3u }, "true")  // 0, 1, 1, 2
+            assertPrints(ubyteArray.isSortedBy { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByUShortArray() {
+            val ushortArray = ushortArrayOf(3u, 1u, 4u, 2u)
+            assertPrints(ushortArray.isSortedBy { it.toUInt() % 3u }, "true")  // 0, 1, 1, 2
+            assertPrints(ushortArray.isSortedBy { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDescendingArrayOfComparable() {
+            val strings = arrayOf("aaa", "bb", "c")
+            assertPrints(strings.isSortedByDescending { it.length }, "true")
+            assertPrints(strings.isSortedByDescending { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDescendingByteArray() {
+            val byteArray = byteArrayOf(5, -4, 3, -2, 1)
+            assertPrints(byteArray.isSortedByDescending { it * it }, "true")  // 25, 16, 9, 4, 1
+            assertPrints(byteArray.isSortedByDescending { abs(it.toInt()) }, "true")  // 5, 4, 3, 2, 1
+            assertPrints(byteArray.isSortedByDescending { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDescendingShortArray() {
+            val shortArray = shortArrayOf(5, -4, 3, -2, 1)
+            assertPrints(shortArray.isSortedByDescending { it * it }, "true")  // 25, 16, 9, 4, 1
+            assertPrints(shortArray.isSortedByDescending { abs(it.toInt()) }, "true")  // 5, 4, 3, 2, 1
+            assertPrints(shortArray.isSortedByDescending { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDescendingIntArray() {
+            val intArray = intArrayOf(5, -4, 3, -2, 1)
+            assertPrints(intArray.isSortedByDescending { it * it }, "true")  // 25, 16, 9, 4, 1
+            assertPrints(intArray.isSortedByDescending { abs(it) }, "true")  // 5, 4, 3, 2, 1
+            assertPrints(intArray.isSortedByDescending { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDescendingLongArray() {
+            val longArray = longArrayOf(5L, -4L, 3L, -2L, 1L)
+            assertPrints(longArray.isSortedByDescending { it * it }, "true")  // 25, 16, 9, 4, 1
+            assertPrints(longArray.isSortedByDescending { abs(it) }, "true")  // 5, 4, 3, 2, 1
+            assertPrints(longArray.isSortedByDescending { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDescendingFloatArray() {
+            val floatArray = floatArrayOf(2.0f, -1.5f, 1.0f, -0.5f)
+            assertPrints(floatArray.isSortedByDescending { it * it }, "true")  // 4.0, 2.25, 1.0, 0.25
+            assertPrints(floatArray.isSortedByDescending { abs(it) }, "true")  // 2.0, 1.5, 1.0, 0.5
+            assertPrints(floatArray.isSortedByDescending { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDescendingDoubleArray() {
+            val doubleArray = doubleArrayOf(2.0, -1.5, 1.0, -0.5)
+            assertPrints(doubleArray.isSortedByDescending { it * it }, "true")  // 4.0, 2.25, 1.0, 0.25
+            assertPrints(doubleArray.isSortedByDescending { abs(it) }, "true")  // 2.0, 1.5, 1.0, 0.5
+            assertPrints(doubleArray.isSortedByDescending { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDescendingBooleanArray() {
+            val booleanArray = booleanArrayOf(true, true, false)
+            assertPrints(booleanArray.isSortedByDescending { it.compareTo(false) }, "true")  // 1, 1, 0
+            assertPrints(booleanArray.isSortedByDescending { it }, "true")
+            assertPrints(booleanArray.isSortedByDescending { !it }, "false")  // false, false, true
+        }
+
+        @Sample
+        fun isSortedByDescendingCharArray() {
+            val charArray = charArrayOf('C', 'b', 'A')
+            assertPrints(charArray.isSortedByDescending { it.uppercaseChar() }, "true")  // C, B, A
+            assertPrints(charArray.isSortedByDescending { it.lowercaseChar() }, "true")  // c, b, a
+            assertPrints(charArray.isSortedByDescending { it }, "false")  // 'C'(67), 'b'(98), 'A'(65)
+        }
+
+        @Sample
+        fun isSortedByDescendingUIntArray() {
+            val uintArray = uintArrayOf(2u, 4u, 1u, 3u)
+            assertPrints(uintArray.isSortedByDescending { it % 3u }, "true")  // 2, 1, 1, 0
+            assertPrints(uintArray.isSortedByDescending { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDescendingULongArray() {
+            val ulongArray = ulongArrayOf(2u, 4u, 1u, 3u)
+            assertPrints(ulongArray.isSortedByDescending { it % 3uL }, "true")  // 2, 1, 1, 0
+            assertPrints(ulongArray.isSortedByDescending { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDescendingUByteArray() {
+            val ubyteArray = ubyteArrayOf(2u, 4u, 1u, 3u)
+            assertPrints(ubyteArray.isSortedByDescending { it.toUInt() % 3u }, "true")  // 2, 1, 1, 0
+            assertPrints(ubyteArray.isSortedByDescending { it }, "false")
+        }
+
+        @Sample
+        fun isSortedByDescendingUShortArray() {
+            val ushortArray = ushortArrayOf(2u, 4u, 1u, 3u)
+            assertPrints(ushortArray.isSortedByDescending { it.toUInt() % 3u }, "true")  // 2, 1, 1, 0
+            assertPrints(ushortArray.isSortedByDescending { it }, "false")
+        }
+
+        @Sample
+        fun isSortedDescendingArrayOfComparable() {
+            val sorted = arrayOf("cherry", "banana", "apple")
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = arrayOf("banana", "cherry", "apple")
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingByteArray() {
+            val sorted = byteArrayOf(5, 4, 3, 2, 1)
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = byteArrayOf(5, 3, 4, 2, 1)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingShortArray() {
+            val sorted = shortArrayOf(5, 4, 3, 2, 1)
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = shortArrayOf(5, 3, 4, 2, 1)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingIntArray() {
+            val sorted = intArrayOf(5, 4, 3, 2, 1)
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = intArrayOf(5, 3, 4, 2, 1)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingLongArray() {
+            val sorted = longArrayOf(5L, 4L, 3L, 2L, 1L)
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = longArrayOf(5L, 3L, 4L, 2L, 1L)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingFloatArray() {
+            val sorted = floatArrayOf(3.14f, 2.5f, 1.0f)
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = floatArrayOf(2.5f, 3.14f, 1.0f)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingDoubleArray() {
+            val sorted = doubleArrayOf(3.14, 2.5, 1.0)
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = doubleArrayOf(2.5, 3.14, 1.0)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingBooleanArray() {
+            val sorted = booleanArrayOf(true, false, false)
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = booleanArrayOf(false, true, false)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingCharArray() {
+            val sorted = charArrayOf('c', 'b', 'a')
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = charArrayOf('b', 'c', 'a')
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingUIntArray() {
+            val sorted = uintArrayOf(5u, 4u, 3u, 2u, 1u)
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = uintArrayOf(5u, 3u, 4u, 2u, 1u)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingULongArray() {
+            val sorted = ulongArrayOf(5u, 4u, 3u, 2u, 1u)
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = ulongArrayOf(5u, 3u, 4u, 2u, 1u)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingUByteArray() {
+            val sorted = ubyteArrayOf(5u, 4u, 3u, 2u, 1u)
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = ubyteArrayOf(5u, 3u, 4u, 2u, 1u)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedDescendingUShortArray() {
+            val sorted = ushortArrayOf(5u, 4u, 3u, 2u, 1u)
+            assertPrints(sorted.isSortedDescending(), "true")
+
+            val unsorted = ushortArrayOf(5u, 3u, 4u, 2u, 1u)
+            assertPrints(unsorted.isSortedDescending(), "false")
+        }
+
+        @Sample
+        fun isSortedWithArrayOfComparable() {
+            val byLength = compareBy<String> { it.length }
+
+            val sorted = arrayOf("a", "bb", "ccc")
+            assertPrints(sorted.isSortedWith(byLength), "true")
+
+            val unsorted = arrayOf("bb", "a", "ccc")
+            assertPrints(unsorted.isSortedWith(byLength), "false")
+        }
+
+        @Sample
+        fun isSortedWithByteArray() {
+            val byteArray = byteArrayOf(1, -2, 3, -4, 5)
+            assertPrints(byteArray.isSortedWith(compareBy { it * it }), "true")  // 1, 4, 9, 16, 25
+            assertPrints(byteArray.isSortedWith(compareBy { abs(it.toInt()) }), "true")  // 1, 2, 3, 4, 5
+            assertPrints(byteArray.isSortedWith(compareBy { it }), "false")
+        }
+
+        @Sample
+        fun isSortedWithShortArray() {
+            val shortArray = shortArrayOf(1, -2, 3, -4, 5)
+            assertPrints(shortArray.isSortedWith(compareBy { it * it }), "true")  // 1, 4, 9, 16, 25
+            assertPrints(shortArray.isSortedWith(compareBy { abs(it.toInt()) }), "true")  // 1, 2, 3, 4, 5
+            assertPrints(shortArray.isSortedWith(compareBy { it }), "false")
+        }
+
+        @Sample
+        fun isSortedWithIntArray() {
+            val intArray = intArrayOf(1, -2, 3, -4, 5)
+            assertPrints(intArray.isSortedWith(compareBy { it * it }), "true")  // 1, 4, 9, 16, 25
+            assertPrints(intArray.isSortedWith(compareBy { abs(it) }), "true")  // 1, 2, 3, 4, 5
+            assertPrints(intArray.isSortedWith(compareBy { it }), "false")
+        }
+
+        @Sample
+        fun isSortedWithLongArray() {
+            val longArray = longArrayOf(1L, -2L, 3L, -4L, 5L)
+            assertPrints(longArray.isSortedWith(compareBy { it * it }), "true")  // 1, 4, 9, 16, 25
+            assertPrints(longArray.isSortedWith(compareBy { abs(it) }), "true")  // 1, 2, 3, 4, 5
+            assertPrints(longArray.isSortedWith(compareBy { it }), "false")
+        }
+
+        @Sample
+        fun isSortedWithFloatArray() {
+            val floatArray = floatArrayOf(-0.5f, 1.0f, -1.5f, 2.0f)
+            assertPrints(floatArray.isSortedWith(compareBy { it * it }), "true")  // 0.25, 1.0, 2.25, 4.0
+            assertPrints(floatArray.isSortedWith(compareBy { abs(it) }), "true")  // 0.5, 1.0, 1.5, 2.0
+            assertPrints(floatArray.isSortedWith(compareBy { it }), "false")
+        }
+
+        @Sample
+        fun isSortedWithDoubleArray() {
+            val doubleArray = doubleArrayOf(-0.5, 1.0, -1.5, 2.0)
+            assertPrints(doubleArray.isSortedWith(compareBy { it * it }), "true")  // 0.25, 1.0, 2.25, 4.0
+            assertPrints(doubleArray.isSortedWith(compareBy { abs(it) }), "true")  // 0.5, 1.0, 1.5, 2.0
+            assertPrints(doubleArray.isSortedWith(compareBy { it }), "false")
+        }
+
+        @Sample
+        fun isSortedWithBooleanArray() {
+            val booleanArray = booleanArrayOf(false, false, true)
+            assertPrints(booleanArray.isSortedWith(compareBy { it.toString() }), "true")
+            assertPrints(booleanArray.isSortedWith(compareBy { it }), "true")
+            assertPrints(booleanArray.isSortedWith(compareBy { !it }), "false")
+        }
+
+        @Sample
+        fun isSortedWithCharArray() {
+            val charArray = charArrayOf('A', 'b', 'C')  // mixed case
+            assertPrints(charArray.isSortedWith(compareBy { it.uppercaseChar() }), "true")  // A, B, C
+            assertPrints(charArray.isSortedWith(compareBy { it.lowercaseChar() }), "true")  // a, b, c
+            assertPrints(charArray.isSortedWith(compareBy { it }), "false")  // 'A'(65), 'b'(98), 'C'(67)
+        }
+
+        @Sample
+        fun isSortedWithUIntArray() {
+            val uintArray = uintArrayOf(3u, 1u, 4u, 2u)
+            assertPrints(uintArray.isSortedWith(compareBy { it % 3u }), "true")  // 0, 1, 1, 2
+            assertPrints(uintArray.isSortedWith(compareBy { it }), "false")
+        }
+
+        @Sample
+        fun isSortedWithULongArray() {
+            val ulongArray = ulongArrayOf(3u, 1u, 4u, 2u)
+            assertPrints(ulongArray.isSortedWith(compareBy { it % 3uL }), "true")  // 0, 1, 1, 2
+            assertPrints(ulongArray.isSortedWith(compareBy { it }), "false")
+        }
+
+        @Sample
+        fun isSortedWithUByteArray() {
+            val ubyteArray = ubyteArrayOf(3u, 1u, 4u, 2u)
+            assertPrints(ubyteArray.isSortedWith(compareBy { it.toUInt() % 3u }), "true")  // 0, 1, 1, 2
+            assertPrints(ubyteArray.isSortedWith(compareBy { it }), "false")
+        }
+
+        @Sample
+        fun isSortedWithUShortArray() {
+            val ushortArray = ushortArrayOf(3u, 1u, 4u, 2u)
+            assertPrints(ushortArray.isSortedWith(compareBy { it.toUInt() % 3u }), "true")  // 0, 1, 1, 2
+            assertPrints(ushortArray.isSortedWith(compareBy { it }), "false")
+        }
     }
 
     class Constructors {
@@ -619,5 +1154,4 @@ class Arrays {
             assertPrints(booleanArray.contentToString(), "[true, false, true]")
         }
     }
-
 }
