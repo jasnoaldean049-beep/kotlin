@@ -145,10 +145,11 @@ public abstract class AbstractTestSuite<F: Function<Unit>>(override val name: St
         override fun toString(): String = "$name ($suite)"
     }
 
-    final override val testCases: Map<String, BasicTestCase<F>>
-        field = mutableMapOf<String, BasicTestCase<F>>()
+    private val _testCases = mutableMapOf<String, BasicTestCase<F>>()
+    override val testCases: Map<String, BasicTestCase<F>>
+        get() = _testCases
 
-    private fun registerTestCase(testCase: BasicTestCase<F>) = testCases.put(testCase.name, testCase)
+    private fun registerTestCase(testCase: BasicTestCase<F>) = _testCases.put(testCase.name, testCase)
 
     public fun registerTestCase(name: String, testFunction: F, ignored: Boolean): BasicTestCase<F>? =
             registerTestCase(createTestCase(name, testFunction, ignored))
