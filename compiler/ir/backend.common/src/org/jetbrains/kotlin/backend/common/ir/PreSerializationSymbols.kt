@@ -240,8 +240,8 @@ interface PreSerializationNativeSymbols : PreSerializationKlibSymbols {
     val asserts: Iterable<IrSimpleFunctionSymbol>
     val isAssertionArgumentEvaluationEnabled: IrSimpleFunctionSymbol
 
-    val testInitializer: IrClassSymbol? // KT-83807 Restore non-nullability of symbols not available in 2.3.0 stdlib
-    val testsProcessed: IrClassSymbol? // KT-83807 Restore non-nullability of symbols not available in 2.3.0 stdlib
+    val testInitializer: IrClassSymbol
+    val testsProcessed: IrClassSymbol
 
     val topLevelSuite: IrClassSymbol
     val baseClassSuite: IrClassSymbol
@@ -267,8 +267,14 @@ interface PreSerializationNativeSymbols : PreSerializationKlibSymbols {
         override val isAssertionArgumentEvaluationEnabled: IrSimpleFunctionSymbol =
             CallableIds.isAssertionArgumentEvaluationEnabled.functionSymbol()
 
-        override val testInitializer = ClassIds.testInitializer.classSymbolOrNull()
-        override val testsProcessed = ClassIds.testsProcessed.classSymbolOrNull()
+        override val testInitializer: IrClassSymbol by featureDependentClassSymbol(
+            ClassIds.testInitializer,
+            LanguageFeature.NativeTestProcessorBeforeSerialization
+        )
+        override val testsProcessed: IrClassSymbol by featureDependentClassSymbol(
+            ClassIds.testsProcessed,
+            LanguageFeature.NativeTestProcessorBeforeSerialization
+        )
 
         override val topLevelSuite = ClassIds.topLevelSuite.classSymbol()
         override val baseClassSuite = ClassIds.baseClassSuite.classSymbol()
