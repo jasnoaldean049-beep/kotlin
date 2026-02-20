@@ -182,6 +182,23 @@ abstract class IrSignatureClashTest {
                     type = klass.defaultType
                 }.apply { kind = IrParameterKind.DispatchReceiver }
             }
+            setter = IrFactoryImpl.buildFun {
+                name = Name.special("<set-memberProperty>")
+                returnType = TestIrBuiltins.unitType
+                startOffset = 20
+                endOffset = 30
+            }.also {
+                it.correspondingPropertySymbol = this.symbol
+                it.parent = klass
+                it.addValueParameter {
+                    name = SpecialNames.THIS
+                    type = klass.defaultType
+                }.apply { kind = IrParameterKind.DispatchReceiver }
+                it.addValueParameter {
+                    name = Name.identifier("value")
+                    type = TestIrBuiltins.intType
+                }
+            }
         }
 
         val memberPropertyWithoutDispatchReceiver = IrFactoryImpl.buildProperty {
@@ -199,6 +216,19 @@ abstract class IrSignatureClashTest {
                 it.correspondingPropertySymbol = this.symbol
                 it.parent = klass
             }
+            setter = IrFactoryImpl.buildFun {
+                name = Name.special("<set-memberProperty>")
+                returnType = TestIrBuiltins.unitType
+                startOffset = 20
+                endOffset = 30
+            }.also {
+                it.correspondingPropertySymbol = this.symbol
+                it.parent = klass
+                it.addValueParameter {
+                    name = Name.identifier("value")
+                    type = TestIrBuiltins.intType
+                }
+            }
         }
 
         file.declarations += klass
@@ -208,8 +238,10 @@ abstract class IrSignatureClashTest {
         declarationTable.inFile(file) {
             trackDeclaration(memberProperty)
             trackDeclaration(memberProperty.getter!!)
+            trackDeclaration(memberProperty.setter!!)
             trackDeclaration(memberPropertyWithoutDispatchReceiver)
             trackDeclaration(memberPropertyWithoutDispatchReceiver.getter!!)
+            trackDeclaration(memberPropertyWithoutDispatchReceiver.setter!!)
         }
 
         assertNoClashes()
