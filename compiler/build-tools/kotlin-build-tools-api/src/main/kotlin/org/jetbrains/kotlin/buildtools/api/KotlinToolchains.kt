@@ -9,7 +9,7 @@ import org.jetbrains.kotlin.buildtools.api.KotlinToolchains.Companion.loadImplem
 import org.jetbrains.kotlin.buildtools.api.KotlinToolchains.Toolchain
 import org.jetbrains.kotlin.buildtools.api.cri.CriToolchain
 import org.jetbrains.kotlin.buildtools.api.internal.KotlinCompilerVersion
-import org.jetbrains.kotlin.buildtools.api.internal.wrappers.KotlinWrapperPre2_3_30
+import org.jetbrains.kotlin.buildtools.api.internal.wrappers.KotlinWrapperPre2_3_20
 import org.jetbrains.kotlin.buildtools.api.internal.wrappers.KotlinWrapperPre2_4_0
 import org.jetbrains.kotlin.buildtools.api.jvm.JvmPlatformToolchain
 import kotlin.contracts.ExperimentalContracts
@@ -164,7 +164,7 @@ public interface KotlinToolchains {
             val kotlinCompilerVersion = KotlinCompilerVersion(baseImplementation.getCompilerVersion())
 
             if (kotlinCompilerVersion < KotlinCompilerVersion(2, 3, 20, "snapshot")) {
-                baseImplementation = KotlinWrapperPre2_3_30(baseImplementation)
+                baseImplementation = KotlinWrapperPre2_3_20(baseImplementation)
             }
             if (kotlinCompilerVersion < KotlinCompilerVersion(2, 4, 0, "snapshot")) {
                 baseImplementation = KotlinWrapperPre2_4_0(baseImplementation)

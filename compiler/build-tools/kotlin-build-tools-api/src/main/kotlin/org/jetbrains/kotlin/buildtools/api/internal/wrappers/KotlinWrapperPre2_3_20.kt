@@ -29,7 +29,7 @@ import kotlin.io.path.Path
  * @param base The base implementation of `KotlinToolchains` to wrap.
  */
 @Suppress("DEPRECATION", "ClassName")
-internal class KotlinWrapperPre2_3_30(
+internal class KotlinWrapperPre2_3_20(
     private val base: KotlinToolchains,
 ) : KotlinToolchains by base {
 
@@ -68,7 +68,7 @@ internal class KotlinWrapperPre2_3_30(
         }
     }
 
-    class BuildSessionWrapper(override val kotlinToolchains: KotlinWrapperPre2_3_30, private val base: KotlinToolchains.BuildSession) :
+    class BuildSessionWrapper(override val kotlinToolchains: KotlinWrapperPre2_3_20, private val base: KotlinToolchains.BuildSession) :
         KotlinToolchains.BuildSession by base {
         override fun <R> executeOperation(operation: BuildOperation<R>): R {
             return this.executeOperation(operation, logger = null)
