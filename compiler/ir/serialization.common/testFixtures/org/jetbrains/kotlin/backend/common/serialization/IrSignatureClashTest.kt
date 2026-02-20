@@ -184,24 +184,32 @@ abstract class IrSignatureClashTest {
             }
         }
 
-        val memberPropertyAccessorWithoutDispatchReceiver = IrFactoryImpl.buildFun {
-            name = Name.special("<get-memberProperty>")
-            returnType = TestIrBuiltins.intType
+        val memberPropertyWithoutDispatchReceiver = IrFactoryImpl.buildProperty {
+            name = Name.identifier("memberProperty")
             startOffset = 20
             endOffset = 30
-        }.also {
-            it.correspondingPropertySymbol = memberProperty.symbol
-            it.parent = klass
+        }.apply {
+            parent = klass
+            getter = IrFactoryImpl.buildFun {
+                name = Name.special("<get-memberProperty>")
+                returnType = TestIrBuiltins.intType
+                startOffset = 20
+                endOffset = 30
+            }.also {
+                it.correspondingPropertySymbol = this.symbol
+                it.parent = klass
+            }
         }
 
         file.declarations += klass
         klass.declarations += memberProperty
-        klass.declarations += memberPropertyAccessorWithoutDispatchReceiver
+        klass.declarations += memberPropertyWithoutDispatchReceiver
 
         declarationTable.inFile(file) {
             trackDeclaration(memberProperty)
             trackDeclaration(memberProperty.getter!!)
-            trackDeclaration(memberPropertyAccessorWithoutDispatchReceiver)
+            trackDeclaration(memberPropertyWithoutDispatchReceiver)
+            trackDeclaration(memberPropertyWithoutDispatchReceiver.getter!!)
         }
 
         assertNoClashes()
