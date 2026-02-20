@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.expression.FirFunctionCallChecker
 import org.jetbrains.kotlin.fir.analysis.diagnostics.native.FirNativeErrors
 import org.jetbrains.kotlin.fir.backend.native.interop.isCFunctionOrGlobalAccessor
-import org.jetbrains.kotlin.fir.backend.native.interop.isVariadicObjCMethod
+import org.jetbrains.kotlin.fir.backend.native.interop.isObjCMethod
 import org.jetbrains.kotlin.fir.expressions.FirFunctionCall
 import org.jetbrains.kotlin.fir.expressions.FirSpreadArgumentExpression
 import org.jetbrains.kotlin.fir.expressions.FirVarargArgumentsExpression
@@ -25,8 +25,9 @@ internal object FirNativeVariadicSpreadChecker : FirFunctionCallChecker(MppCheck
     context(context: CheckerContext, reporter: DiagnosticReporter)
     override fun check(expression: FirFunctionCall) {
         val symbol = expression.toResolvedCallableSymbol() as? FirFunctionSymbol<*> ?: return
+        if (symbol.valueParameterSymbols.none { it.isVararg }) return
         val session = context.session
-        val isObjC = symbol.isVariadicObjCMethod(session)
+        val isObjC = symbol.isObjCMethod(session)
         val isC = symbol.isCFunctionOrGlobalAccessor(session) && symbol.valueParameterSymbols.any { it.isVararg }
 
         if (isObjC || isC)
