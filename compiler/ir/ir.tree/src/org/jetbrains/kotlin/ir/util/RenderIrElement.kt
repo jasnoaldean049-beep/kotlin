@@ -53,14 +53,14 @@ open class RenderIrElementVisitor(
         }
     }
 
-    fun renderFilePath(fileEntry: IrFileEntry): String {
-        val fileName = if (options.printFilePath) fileEntry.name else File(fileEntry.name).name
+    fun renderFilePath(fileEntry: IrFileEntry, doRenderFullPath: Boolean): String {
+        val fileName = if (doRenderFullPath) fileEntry.name else File(fileEntry.name).name
         return options.filePathRenderer(fileEntry, fileName)
     }
 
     fun renderFileEntry(fileEntry: IrFileEntry): String {
         // TODO: use offsets in IR deserialization tests, KT-73171
-        return "FILE_ENTRY path:${renderFilePath(fileEntry)}"
+        return "FILE_ENTRY path:${renderFilePath(fileEntry, doRenderFullPath = options.printFilePath && !fileEntry.name.startsWith("/"))}"
     }
 
     fun renderType(type: IrType) = type.renderTypeWithRenderer(this@RenderIrElementVisitor, options)
@@ -291,11 +291,10 @@ open class RenderIrElementVisitor(
         "EXTERNAL_PACKAGE_FRAGMENT fqName:${declaration.packageFqName}"
 
     override fun visitFile(declaration: IrFile, data: Nothing?): String {
-        val fileName = if (options.printFilePath) declaration.path else declaration.name
         return declaration.runTrimEnd {
             "FILE " +
                     "fqName:${packageFqName} " +
-                    "fileName:${renderFilePath(declaration.fileEntry)} " +
+                    "fileName:/${renderFilePath(declaration.fileEntry, doRenderFullPath = false)} " +
                     renderLineStartOffsets(options)
         }
     }
