@@ -157,7 +157,10 @@ fun FirFunctionSymbol<*>.isCFunctionOrGlobalAccessor(session: FirSession): Boole
             hasAnnotation(cGlobalAccessClassId, session)
 }
 
-fun FirFunctionSymbol<*>.isVariadicObjCMethod(session: FirSession): Boolean {
+fun FirFunctionSymbol<*>.isVariadicObjCMethod(session: FirSession): Boolean =
+    valueParameterSymbols.any { it.isVararg } && isObjCMethod(session)
+
+fun FirFunctionSymbol<*>.isObjCMethod(session: FirSession): Boolean {
     if (this is FirConstructorSymbol && isObjCConstructor(session)) {
         val initMethod = getObjCInitMethod(session)
         return initMethod != null && initMethod.decodeObjCMethodAnnotation(session) != null

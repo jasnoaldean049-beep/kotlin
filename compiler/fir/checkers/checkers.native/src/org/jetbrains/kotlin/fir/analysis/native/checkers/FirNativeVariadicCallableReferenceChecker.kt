@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.expression.FirCallableReferenceAccessChecker
 import org.jetbrains.kotlin.fir.analysis.diagnostics.native.FirNativeErrors
 import org.jetbrains.kotlin.fir.backend.native.interop.isCFunctionOrGlobalAccessor
-import org.jetbrains.kotlin.fir.backend.native.interop.isVariadicObjCMethod
+import org.jetbrains.kotlin.fir.backend.native.interop.isObjCMethod
 import org.jetbrains.kotlin.fir.expressions.FirCallableReferenceAccess
 import org.jetbrains.kotlin.fir.references.toResolvedCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirFunctionSymbol
@@ -27,7 +27,7 @@ internal object FirNativeVariadicCallableReferenceChecker : FirCallableReference
         if (symbol.isCFunctionOrGlobalAccessor(session)) {
             reporter.reportOn(expression.source, FirNativeErrors.CALLABLE_REFERENCES_TO_VARIADIC_C_FUNCTIONS_ARE_NOT_SUPPORTED, symbol)
         }
-        if (symbol.isVariadicObjCMethod(session)) {
+        if (symbol.isObjCMethod(session)) {
             reporter.reportOn(expression.source, FirNativeErrors.CALLABLE_REFERENCES_TO_VARIADIC_OBJECTIVE_C_METHODS_ARE_NOT_SUPPORTED, symbol)
         }
     }
