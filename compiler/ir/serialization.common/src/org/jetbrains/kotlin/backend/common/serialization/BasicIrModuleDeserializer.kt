@@ -46,6 +46,8 @@ abstract class BasicIrModuleDeserializer(
 
     protected open val ir: KlibIrComponent get() = klib.irOrFail
 
+    private val fileEntryCache = FileEntryCache()
+
     override val moduleDependencies by lazy {
         moduleDescriptor.allDependencyModules
             .filter { it != moduleDescriptor }
@@ -63,7 +65,7 @@ abstract class BasicIrModuleDeserializer(
                 val fileStream = ir.irFile(i).codedInputStream
                 val fileProto = ProtoFile.parseFrom(fileStream, ExtensionRegistryLite.getEmptyRegistry())
                 val fileReader = IrLibraryFileFromBytes(IrKlibBytesSource(ir, i))
-                val file = fileReader.createFile(moduleFragment, fileProto, linker.irInterner)
+                val file = with(fileEntryCache) { fileReader.createFile(moduleFragment, fileProto, linker.irInterner) }
 
                 this += deserializeIrFile(fileProto, file, fileReader, i, delegate, allowErrorNodes)
 

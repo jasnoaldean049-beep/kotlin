@@ -1413,14 +1413,6 @@ open class IrFileSerializer(
 
 // ---------- Top level ------------------------------------------------------
 
-    // This class is needed solely to have generated `equals()` and `hashCode()` for `FileEntry`, to compare objects by value.
-    // For correct deduplication, it must have the same fields as `FileEntry` in `KotlinIr.proto`.
-    data class ProtoFileEntryDeduplicationKey(
-        val name: Any,
-        val lineStartOffsetList: List<Int>,
-        val firstRelevantLineIndex: Int
-    )
-
     private fun serializeFileEntryId(
         entry: IrFileEntry,
         includeLineStartOffsets: Boolean = true,

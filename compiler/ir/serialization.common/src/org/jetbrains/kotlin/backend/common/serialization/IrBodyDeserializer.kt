@@ -92,6 +92,7 @@ class IrBodyDeserializer(
 ) {
 
     private val fileLoops = hashMapOf<Int, IrLoop>()
+    private val fileEntryCache = FileEntryCache()
 
     private fun deserializeLoopHeader(loopIndex: Int, loopBuilder: () -> IrLoop): IrLoop =
         fileLoops.getOrPut(loopIndex, loopBuilder)
@@ -184,7 +185,7 @@ class IrBodyDeserializer(
         val inlinedFunctionSymbol = runIf(proto.hasInlinedFunctionSymbol()) {
             deserializeTypedSymbol<IrFunctionSymbol>(proto.inlinedFunctionSymbol, FUNCTION_SYMBOL)
         }
-        val inlinedFunctionFileEntry = libraryFile.deserializeFileEntry(libraryFile.fileEntry(proto), irInterner)
+        val inlinedFunctionFileEntry = with(fileEntryCache) { libraryFile.deserializeFileEntry(libraryFile.fileEntry(proto), irInterner) }
         return withDeserializedBlock(proto.base) { origin, statements ->
             IrInlinedFunctionBlockImpl(
                 start, end,
