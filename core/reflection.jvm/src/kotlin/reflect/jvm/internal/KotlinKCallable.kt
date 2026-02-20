@@ -17,7 +17,7 @@ internal abstract class KotlinKCallable<out R>(
 
     abstract override val annotations: List<Annotation>
 
-    override val isPackagePrivate: Boolean get() = false
+    final override val isPackagePrivate: Boolean get() = false
 }
 
 private val KotlinKCallable<*>.isLocalDelegatedProperty: Boolean

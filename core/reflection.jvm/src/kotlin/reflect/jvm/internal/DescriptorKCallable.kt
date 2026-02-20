@@ -129,10 +129,10 @@ internal abstract class DescriptorKCallable<out R>(
     override val visibility: KVisibility?
         get() = descriptor.visibility.toKVisibility()
 
-    override val modality: Modality
+    final override val modality: Modality
         get() = overriddenStorage.modality ?: descriptor.modality.toMetadataModality()
 
-    override val isPackagePrivate: Boolean
+    final override val isPackagePrivate: Boolean
         get() = descriptor.visibility == JavaDescriptorVisibilities.PACKAGE_VISIBILITY
 }
 

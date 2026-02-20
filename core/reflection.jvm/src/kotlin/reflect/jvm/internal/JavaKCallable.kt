@@ -19,7 +19,7 @@ internal abstract class JavaKCallable<out R>(
     override val visibility: KVisibility?
         get() = member.modifiers.computeVisibilityForJavaModifiers()
 
-    override val modality: Modality
+    final override val modality: Modality
         get() = overriddenStorage.modality ?: when {
             Modifier.isFinal(member.modifiers) -> Modality.FINAL
             Modifier.isAbstract(member.modifiers) -> Modality.ABSTRACT
@@ -29,6 +29,6 @@ internal abstract class JavaKCallable<out R>(
     final override val isSuspend: Boolean
         get() = false
 
-    override val isPackagePrivate: Boolean
+    final override val isPackagePrivate: Boolean
         get() = member.modifiers.isPackagePrivate
 }
