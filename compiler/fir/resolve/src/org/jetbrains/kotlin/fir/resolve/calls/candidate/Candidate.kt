@@ -61,7 +61,9 @@ class Candidate(
     // ---------------------------------------- Symbol ----------------------------------------
 
     override var symbol: FirBasedSymbol<*> = symbol
-        private set
+        private set(value) {
+            field = value
+        }
 
     @UpdatingCandidateInvariants
     fun updateSymbol(symbol: FirBasedSymbol<*>) {

@@ -250,11 +250,24 @@ class FirCallResolver(
             implicitInvokeMode = if (qualifiedAccess is FirImplicitInvokeCall) ImplicitInvokeMode.Regular else ImplicitInvokeMode.None,
             containingCandidateForCollectionLiteral = containingCallCandidateForCL,
         )
-        towerResolver.reset()
+        val candidateCollectorForCLCall =
+            if (containingCallCandidateForCL != null) {
+                CandidateCollector(components, components.resolutionStageRunner)
+            } else {
+                towerResolver.reset()
+                null
+            }
 
         val candidateFactory = CandidateFactory(resolutionContext, info)
 
-        val resultCollector: CandidateCollector = towerResolver.runResolver(info, resolutionContext, collector, candidateFactory)
+        val resultCollector: CandidateCollector =
+            towerResolver.runResolver(
+                info,
+                resolutionContext,
+                collector ?: candidateCollectorForCLCall,
+                candidateCollectorForCLCall?.let { TowerResolveManager(it) },
+                candidateFactory,
+            )
         var (reducedCandidates, applicability) = reduceCandidates(resultCollector, explicitReceiver, resolutionContext)
         reducedCandidates = overloadByLambdaReturnTypeResolver.reduceCandidates(qualifiedAccess, reducedCandidates, reducedCandidates)
 

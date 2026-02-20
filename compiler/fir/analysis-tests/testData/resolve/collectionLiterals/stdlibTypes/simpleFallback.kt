@@ -52,8 +52,8 @@ fun couldFallback() {
     Utils.takeAny(<!CANNOT_INFER_PARAMETER_TYPE!>[]<!>)
     Utils.takeAny([1, 2, 3])
 
-    <!OVERLOAD_RESOLUTION_AMBIGUITY!>println<!>(<!CANNOT_INFER_PARAMETER_TYPE!>[]<!>)
-    <!OVERLOAD_RESOLUTION_AMBIGUITY!>println<!>([1, 2, 3])
+    println([])
+    println([<!ARGUMENT_TYPE_MISMATCH!>1<!>, <!ARGUMENT_TYPE_MISMATCH!>2<!>, <!ARGUMENT_TYPE_MISMATCH!>3<!>])
 
     mutableListOf(1, 2, 3).addAll([4, 5, 6])
 }

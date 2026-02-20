@@ -36,6 +36,7 @@ sealed class CallKind(vararg val resolutionSequence: ResolutionStage) {
         CollectTypeVariableUsagesInfo,
         CheckArguments,
         EagerResolveOfCallableReferences,
+        EagerResolveOfCollectionLiteral,
         ConstraintSystemForks,
         CheckIncompatibleTypeVariableUpperBounds,
     )
@@ -55,6 +56,7 @@ sealed class CallKind(vararg val resolutionSequence: ResolutionStage) {
         CheckShadowedImplicits,
         CheckCallModifiers,
         EagerResolveOfCallableReferences,
+        EagerResolveOfCollectionLiteral,
         CheckLowPriorityInOverloadResolution,
         ProcessDynamicExtensionAnnotation,
         LowerPriorityIfDynamic,
@@ -78,6 +80,7 @@ sealed class CallKind(vararg val resolutionSequence: ResolutionStage) {
         CheckContextArguments,
         CheckShadowedImplicits,
         EagerResolveOfCallableReferences,
+        EagerResolveOfCollectionLiteral,
         ConstraintSystemForks,
         CheckIncompatibleTypeVariableUpperBounds,
         CheckLambdaAgainstTypeVariableContradiction,
@@ -109,6 +112,7 @@ sealed class CallKind(vararg val resolutionSequence: ResolutionStage) {
         CollectTypeVariableUsagesInfo,
         CheckArguments,
         EagerResolveOfCallableReferences,
+        EagerResolveOfCollectionLiteral,
         ConstraintSystemForks,
         CheckIncompatibleTypeVariableUpperBounds,
     )
