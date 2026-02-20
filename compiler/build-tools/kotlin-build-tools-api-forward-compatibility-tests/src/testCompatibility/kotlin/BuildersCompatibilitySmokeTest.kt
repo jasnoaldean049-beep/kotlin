@@ -5,10 +5,10 @@
 
 @file:Suppress("DEPRECATION")
 
+package org.jetbrains.kotlin.buildtools.tests
+
 import org.jetbrains.kotlin.buildtools.api.BuildOperation
-import org.jetbrains.kotlin.buildtools.api.CompilerExecutionStrategyConfiguration
 import org.jetbrains.kotlin.buildtools.api.ExecutionPolicy
-import org.jetbrains.kotlin.buildtools.api.KotlinToolchains
 import org.jetbrains.kotlin.buildtools.api.SourcesChanges
 import org.jetbrains.kotlin.buildtools.api.arguments.JvmCompilerArguments
 import org.jetbrains.kotlin.buildtools.api.arguments.JvmCompilerArguments.Companion.CLASSPATH
@@ -21,10 +21,8 @@ import org.jetbrains.kotlin.buildtools.api.jvm.JvmSnapshotBasedIncrementalCompil
 import org.jetbrains.kotlin.buildtools.api.jvm.JvmSnapshotBasedIncrementalCompilationOptions
 import org.jetbrains.kotlin.buildtools.api.jvm.operations.JvmClasspathSnapshottingOperation
 import org.jetbrains.kotlin.buildtools.api.jvm.operations.JvmCompilationOperation
-import org.jetbrains.kotlin.buildtools.tests.compilation.BaseCompilationTest
-import org.jetbrains.kotlin.buildtools.tests.compilation.model.BtaVersionsOnlyCompilationTest
-import org.jetbrains.kotlin.buildtools.tests.compilation.model.DefaultStrategyAgnosticCompilationTest
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import kotlin.io.path.absolutePathString
 import kotlin.io.path.toPath
 import kotlin.io.path.writeText
@@ -32,8 +30,8 @@ import kotlin.io.path.writeText
 class BuildersCompatibilitySmokeTest : BaseCompilationTest() {
 
     @DisplayName("Test all APIs using legacy non-builders")
-    @BtaVersionsOnlyCompilationTest
-    fun testAllApisUsingLegacyNonBuilders(toolchain: KotlinToolchains) {
+    @Test
+    fun testAllApisUsingLegacyNonBuilders() {
         val sources = listOf(workingDirectory.resolve("a.kt").also { it.writeText("class A") })
         val destination = workingDirectory.resolve("classes")
 

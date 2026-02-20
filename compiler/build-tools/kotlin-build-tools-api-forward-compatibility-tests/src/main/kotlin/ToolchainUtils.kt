@@ -1,14 +1,14 @@
 /*
- * Copyright 2010-2025 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
-package org.jetbrains.kotlin.buildtools.tests.compilation.util
+package org.jetbrains.kotlin.buildtools.tests
 
+import org.jetbrains.kotlin.buildtools.api.KotlinToolchains
 import org.jetbrains.kotlin.buildtools.api.SharedApiClassesClassLoader
 import java.io.File
 import java.net.URLClassLoader
-import kotlin.io.path.toPath
 
 private const val COMPILER_CLASSPATH_PROPERTY = "kotlin.build-tools-api.test.compilerClasspath"
 
@@ -26,5 +26,4 @@ private fun initializeBtaClassloader(): URLClassLoader {
 
 val btaClassloader = initializeBtaClassloader()
 
-val currentKotlinStdlibLocation
-    get() = btaClassloader.loadClass(KotlinVersion::class.qualifiedName).protectionDomain.codeSource.location.toURI().toPath()
+val toolchain by lazy(LazyThreadSafetyMode.NONE) { KotlinToolchains.loadImplementation(btaClassloader) }

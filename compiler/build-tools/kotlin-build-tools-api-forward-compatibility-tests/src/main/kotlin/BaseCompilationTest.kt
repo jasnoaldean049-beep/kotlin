@@ -1,9 +1,9 @@
 /*
- * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
-package org.jetbrains.kotlin.buildtools.tests.compilation
+package org.jetbrains.kotlin.buildtools.tests
 
 import com.intellij.testFramework.TestDataPath
 import org.junit.jupiter.api.io.TempDir
@@ -13,4 +13,5 @@ import java.nio.file.Path
 abstract class BaseCompilationTest {
     @TempDir
     lateinit var workingDirectory: Path
+
 }
