@@ -647,6 +647,18 @@ object Ordering : TemplateGroupBase() {
             }
         )
         body { "return isSortedWith(naturalOrder())" }
+        body(ArraysOfPrimitives, ArraysOfUnsigned) {
+            val condition = if (primitive?.isFloatingPoint() == true)
+                "this[i - 1].compareTo(this[i]) > 0"
+            else
+                "this[i - 1] > this[i]"
+            """
+            for (i in 1..lastIndex) {
+                if ($condition) return false
+            }
+            return true
+            """
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -672,6 +684,18 @@ object Ordering : TemplateGroupBase() {
             }
         )
         body { "return isSortedWith(reverseOrder())" }
+        body(ArraysOfPrimitives, ArraysOfUnsigned) {
+            val condition = if (primitive?.isFloatingPoint() == true)
+                "this[i - 1].compareTo(this[i]) < 0"
+            else
+                "this[i - 1] < this[i]"
+            """
+            for (i in 1..lastIndex) {
+                if ($condition) return false
+            }
+            return true
+            """
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")

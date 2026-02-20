@@ -2762,7 +2762,10 @@ public inline fun UShortArray.takeWhile(predicate: (UShort) -> Boolean): List<US
 @SinceKotlin("2.4")
 @ExperimentalUnsignedTypes
 public fun UIntArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] > this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -2775,7 +2778,10 @@ public fun UIntArray.isSorted(): Boolean {
 @SinceKotlin("2.4")
 @ExperimentalUnsignedTypes
 public fun ULongArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] > this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -2788,7 +2794,10 @@ public fun ULongArray.isSorted(): Boolean {
 @SinceKotlin("2.4")
 @ExperimentalUnsignedTypes
 public fun UByteArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] > this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -2801,7 +2810,10 @@ public fun UByteArray.isSorted(): Boolean {
 @SinceKotlin("2.4")
 @ExperimentalUnsignedTypes
 public fun UShortArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] > this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -2918,7 +2930,10 @@ public inline fun <R : Comparable<R>> UShortArray.isSortedByDescending(crossinli
 @SinceKotlin("2.4")
 @ExperimentalUnsignedTypes
 public fun UIntArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] < this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -2931,7 +2946,10 @@ public fun UIntArray.isSortedDescending(): Boolean {
 @SinceKotlin("2.4")
 @ExperimentalUnsignedTypes
 public fun ULongArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] < this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -2944,7 +2962,10 @@ public fun ULongArray.isSortedDescending(): Boolean {
 @SinceKotlin("2.4")
 @ExperimentalUnsignedTypes
 public fun UByteArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] < this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -2957,7 +2978,10 @@ public fun UByteArray.isSortedDescending(): Boolean {
 @SinceKotlin("2.4")
 @ExperimentalUnsignedTypes
 public fun UShortArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] < this[i]) return false
+    }
+    return true
 }
 
 /**

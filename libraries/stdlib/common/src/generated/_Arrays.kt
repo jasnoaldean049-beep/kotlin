@@ -5571,7 +5571,10 @@ public fun <T : Comparable<T>> Array<out T>.isSorted(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun ByteArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] > this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -5583,7 +5586,10 @@ public fun ByteArray.isSorted(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun ShortArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] > this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -5595,7 +5601,10 @@ public fun ShortArray.isSorted(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun IntArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] > this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -5607,7 +5616,10 @@ public fun IntArray.isSorted(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun LongArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] > this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -5619,7 +5631,10 @@ public fun LongArray.isSorted(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun FloatArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1].compareTo(this[i]) > 0) return false
+    }
+    return true
 }
 
 /**
@@ -5631,7 +5646,10 @@ public fun FloatArray.isSorted(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun DoubleArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1].compareTo(this[i]) > 0) return false
+    }
+    return true
 }
 
 /**
@@ -5643,7 +5661,10 @@ public fun DoubleArray.isSorted(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun BooleanArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] > this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -5655,7 +5676,10 @@ public fun BooleanArray.isSorted(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun CharArray.isSorted(): Boolean {
-    return isSortedWith(naturalOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] > this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -5895,7 +5919,10 @@ public fun <T : Comparable<T>> Array<out T>.isSortedDescending(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun ByteArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] < this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -5907,7 +5934,10 @@ public fun ByteArray.isSortedDescending(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun ShortArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] < this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -5919,7 +5949,10 @@ public fun ShortArray.isSortedDescending(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun IntArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] < this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -5931,7 +5964,10 @@ public fun IntArray.isSortedDescending(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun LongArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] < this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -5943,7 +5979,10 @@ public fun LongArray.isSortedDescending(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun FloatArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1].compareTo(this[i]) < 0) return false
+    }
+    return true
 }
 
 /**
@@ -5955,7 +5994,10 @@ public fun FloatArray.isSortedDescending(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun DoubleArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1].compareTo(this[i]) < 0) return false
+    }
+    return true
 }
 
 /**
@@ -5967,7 +6009,10 @@ public fun DoubleArray.isSortedDescending(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun BooleanArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] < this[i]) return false
+    }
+    return true
 }
 
 /**
@@ -5979,7 +6024,10 @@ public fun BooleanArray.isSortedDescending(): Boolean {
  */
 @SinceKotlin("2.4")
 public fun CharArray.isSortedDescending(): Boolean {
-    return isSortedWith(reverseOrder())
+    for (i in 1..lastIndex) {
+        if (this[i - 1] < this[i]) return false
+    }
+    return true
 }
 
 /**
