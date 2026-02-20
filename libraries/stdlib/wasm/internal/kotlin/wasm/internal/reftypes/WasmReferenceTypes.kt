@@ -24,3 +24,4 @@ internal interface eqref : anyref
 internal interface structref : eqref
 internal interface i31ref : eqref
 internal interface funcref : anyref
+internal interface typedfuncref<T : Function<*>> : funcref

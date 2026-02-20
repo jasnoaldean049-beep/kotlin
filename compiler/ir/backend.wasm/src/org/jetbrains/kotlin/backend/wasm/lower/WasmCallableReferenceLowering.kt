@@ -401,6 +401,12 @@ class WasmCallableReferenceLowering(val backendContext: WasmBackendContext) : Fi
         val additionalInterfaces = getAdditionalInterfaces(functionReference)
         val key = CallableReferenceKey(superClass, arity, isSuspend, isKReference, boundValueTypes)
 
+        // Build the erased function type that matches what callRef expects.
+        val anyNType = backendContext.irBuiltIns.anyNType
+        val funcRefParameterTypes = boundValueTypes + List(arity) { anyNType } +
+                if (isSuspend) listOf(anyNType) else emptyList()
+        val erasedFunctionType = backendContext.irBuiltIns.functionN(funcRefParameterTypes.size).typeWith(funcRefParameterTypes + anyNType)
+
         // Check per-file cache to avoid duplicates within the same file
         fileLocalClassCache[key]?.let {
             return it
@@ -432,7 +438,7 @@ class WasmCallableReferenceLowering(val backendContext: WasmBackendContext) : Fi
                 name = Name.identifier("func")
                 startOffset = SYNTHETIC_OFFSET
                 endOffset = SYNTHETIC_OFFSET
-                type = backendContext.wasmSymbols.wasmFuncRefType
+                type = backendContext.wasmSymbols.wasmTypedFuncRefType(erasedFunctionType)
                 kind = IrParameterKind.Regular
             }) + boundValueTypes.mapIndexed { index, type ->
                 buildValueParameter(this) {
@@ -460,7 +466,7 @@ class WasmCallableReferenceLowering(val backendContext: WasmBackendContext) : Fi
             name = Name.identifier("func")
             visibility = DescriptorVisibilities.PRIVATE
             isFinal = true
-            type = backendContext.wasmSymbols.wasmFuncRefType
+            type = backendContext.wasmSymbols.wasmTypedFuncRefType(erasedFunctionType)
         }.apply {
             val builder = backendContext.createIrBuilder(symbol, SYNTHETIC_OFFSET, SYNTHETIC_OFFSET)
             initializer = builder.irExprBody(builder.irGet(constructor.parameters[0]))

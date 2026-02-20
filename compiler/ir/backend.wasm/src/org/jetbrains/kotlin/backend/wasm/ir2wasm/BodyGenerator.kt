@@ -785,7 +785,6 @@ class BodyGenerator(
             callRefArguments.forEach { generateExpression(it!!) }
             val functionTypeReference = wasmFileCodegenContext.referenceFunctionType(wasmFunctionType)
             generateExpression(call.arguments[0]!!)
-            body.buildRefCastStatic(wasmFileCodegenContext.referenceFunctionHeapType(wasmFunctionType), location)
             body.buildInstr(WasmOp.CALL_REF, location, functionTypeReference)
             if (resultType.isUnit())
                 body.buildGetUnit()
