@@ -685,7 +685,9 @@ class WasmCallableReferenceLowering(val backendContext: WasmBackendContext) : Fi
         val anyNType = backendContext.irBuiltIns.anyNType
 
         return functionReferenceClass.addFunction {
-            origin = IrDeclarationOrigin.DEFINED
+            startOffset = SYNTHETIC_OFFSET
+            endOffset = SYNTHETIC_OFFSET
+            origin = GENERATED_MEMBER_IN_CALLABLE_REFERENCE
             name = Name.identifier("invoke")
             returnType = anyNType
             isSuspend = classKey.isSuspend

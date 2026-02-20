@@ -73,6 +73,7 @@ fun box() {
 // test.kt:18 $test2 (4)
 // test.kt:5 $normalFunction (4)
 // test.kt:6 $normalFunction (1)
+// test.kt:18 $test2 (4)
 // test.kt:19 $test2 (4)
 // test.kt:20 $test2 (1)
 // test.kt:25 $box (1)
