@@ -8,6 +8,7 @@ package org.jetbrains.kotlin.backend.common.ir
 
 import org.jetbrains.kotlin.builtins.PrimitiveType
 import org.jetbrains.kotlin.builtins.StandardNames
+import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.config.LanguageVersionSettings
 import org.jetbrains.kotlin.name.NativeStandardInteropNames
 import org.jetbrains.kotlin.builtins.StandardNames.COROUTINES_PACKAGE_FQ_NAME
@@ -118,6 +119,20 @@ interface PreSerializationKlibSymbols : PreSerializationSymbols {
             CallableIds.throwUninitializedPropertyAccessException.functionSymbol()
         override val throwUnsupportedOperationException: IrSimpleFunctionSymbol =
             CallableIds.throwUnsupportedOperationException.functionSymbol()
+
+        private val lazySymbolsByLanguageFeature = mutableListOf<Pair<Lazy<IrClassSymbol>, LanguageFeature>>()
+
+        protected fun initializeEnabledFeatureDependentSymbols() {
+            for ((lazySymbol, languageFeature) in lazySymbolsByLanguageFeature) {
+                if (languageVersionSettings.supportsFeature(languageFeature)) lazySymbol.value
+            }
+        }
+
+        protected fun featureDependentClassSymbol(id: ClassId, languageFeature: LanguageFeature): Lazy<IrClassSymbol> {
+            val lazySymbol = lazy { id.classSymbol() }
+            lazySymbolsByLanguageFeature.add(lazySymbol to languageFeature)
+            return lazySymbol
+        }
     }
 
     companion object {
@@ -171,6 +186,10 @@ interface PreSerializationJsSymbols : PreSerializationWebSymbols {
         override val jsCode by CallableIds.jsCall.functionSymbol() { !it.isExpect }
         override val jsOutlinedFunctionAnnotationSymbol: IrClassSymbol = ClassIds.JsOutlinedFunction.classSymbol()
 
+        init {
+            initializeEnabledFeatureDependentSymbols()
+        }
+
         companion object {
             private const val COROUTINE_SUSPEND_OR_RETURN_JS_NAME = "suspendCoroutineUninterceptedOrReturnJS"
 
@@ -197,6 +216,10 @@ interface PreSerializationWasmSymbols : PreSerializationWebSymbols {
         override val suspendCoroutineUninterceptedOrReturn: IrSimpleFunctionSymbol =
             CallableIds.suspendCoroutineUninterceptedOrReturn.functionSymbol()
         override val coroutineGetContext: IrSimpleFunctionSymbol = CallableIds.coroutineGetContext.functionSymbol()
+
+        init {
+            initializeEnabledFeatureDependentSymbols()
+        }
 
         companion object {
             private val wasmInternalFqName = FqName.fromSegments(listOf("kotlin", "wasm", "internal"))
@@ -268,6 +291,10 @@ interface PreSerializationNativeSymbols : PreSerializationKlibSymbols {
         override val suspendCoroutineUninterceptedOrReturn: IrSimpleFunctionSymbol =
             CallableIds.suspendCoroutineUninterceptedOrReturn.functionSymbol()
         override val coroutineGetContext: IrSimpleFunctionSymbol = CallableIds.getCoroutineContext.functionSymbol()
+
+        init {
+            initializeEnabledFeatureDependentSymbols()
+        }
 
         companion object {
             private const val COROUTINE_SUSPEND_OR_RETURN_NAME = "suspendCoroutineUninterceptedOrReturn"
