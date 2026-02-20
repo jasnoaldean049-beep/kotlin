@@ -10,7 +10,6 @@ import org.jetbrains.kotlin.backend.jvm.JvmBackendErrors
 import org.jetbrains.kotlin.backend.jvm.JvmLoweredDeclarationOrigin
 import org.jetbrains.kotlin.backend.jvm.ir.hasContinuation
 import org.jetbrains.kotlin.backend.jvm.ir.isReadOfCrossinline
-import org.jetbrains.kotlin.backend.jvm.ir.suspendFunctionOriginal
 import org.jetbrains.kotlin.backend.jvm.unboxInlineClass
 import org.jetbrains.kotlin.codegen.ClassBuilder
 import org.jetbrains.kotlin.codegen.coroutines.CoroutineTransformerMethodVisitor
@@ -68,9 +67,6 @@ internal fun MethodNode.acceptWithStateMachine(
     )
     accept(visitor)
 }
-
-private fun IrFunction.anyOfOverriddenFunctionsReturnsNonUnit(): Boolean =
-    this is IrSimpleFunction && allOverridden().any { !it.returnType.isUnit() }
 
 internal fun IrFunction.isSuspendCapturingCrossinline(): Boolean =
     this is IrSimpleFunction && hasContinuation() && parent is IrClass && parentAsClass.declarations.any {
