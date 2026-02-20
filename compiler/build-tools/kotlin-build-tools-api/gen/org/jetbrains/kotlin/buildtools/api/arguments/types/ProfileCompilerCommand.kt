@@ -11,7 +11,7 @@ import org.jetbrains.kotlin.buildtools.api.arguments.ExperimentalCompilerArgumen
  * @since 2.4.0
  */
 @ExperimentalCompilerArgument
-public class ProfileCompilerCommand(
+public data class ProfileCompilerCommand(
   public val profilerPath: Path,
   public val command: String,
   public val outputDir: Path,

@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 import java.nio.file.Path
 
 @Serializable
-class ProfileCompilerCommand(
+data class ProfileCompilerCommand(
     val profilerPath: Path,
     val command: String,
     val outputDir: Path,
