@@ -14,8 +14,6 @@ import org.jetbrains.kotlin.gradle.plugin.await
  * Sets up Application Binary Interface (ABI) validation as part of the Kotlin Gradle plugin. This was previously known as the Binary Compatibility validator.
  */
 internal val AbiValidationSetupAction = KotlinProjectSetupCoroutine {
-    val abiClasspath = prepareAbiClasspath()
-
     kotlinExtensionOrNull?.abiValidation?.configure(project)
 
     // wait until all compilations are configured
@@ -25,7 +23,7 @@ internal val AbiValidationSetupAction = KotlinProjectSetupCoroutine {
         kotlinJvmExtensionOrNull != null -> {
             val extension = kotlinJvmExtension
             val target = extension.target
-            finalizeJvmVariant(this, abiClasspath, target)
+            finalizeJvmVariant(this, target)
 
             val abiValidation = extension.abiValidation
             addDependencyWithCheckTask(abiValidation)
@@ -34,7 +32,7 @@ internal val AbiValidationSetupAction = KotlinProjectSetupCoroutine {
         kotlinAndroidExtensionOrNull != null -> {
             val extension = kotlinAndroidExtension
             val target = extension.target
-            finalizeAndroidVariant(this, abiClasspath, target)
+            finalizeAndroidVariant(this, target)
 
             val abiValidation = extension.abiValidation
             addDependencyWithCheckTask(abiValidation)
@@ -45,7 +43,7 @@ internal val AbiValidationSetupAction = KotlinProjectSetupCoroutine {
             val abiValidation = extension.abiValidation
 
             val targets = extension.awaitTargets()
-            abiValidation.finalizeMultiplatformVariant(this, abiClasspath, targets)
+            abiValidation.finalizeMultiplatformVariant(this, targets)
 
             addDependencyWithCheckTask(abiValidation)
         }

@@ -8,7 +8,8 @@ package org.jetbrains.kotlin.gradle.tasks.abi
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.tasks.*
 import org.gradle.work.DisableCachingByDefault
-import org.jetbrains.kotlin.abi.tools.AbiTools
+import org.jetbrains.kotlin.buildtools.api.KotlinToolchains
+import org.jetbrains.kotlin.buildtools.api.abi.AbiValidationToolchain
 import org.jetbrains.kotlin.gradle.plugin.abi.internal.AbiValidationPaths.LEGACY_JVM_DUMP_EXTENSION
 import org.jetbrains.kotlin.gradle.plugin.abi.internal.AbiValidationPaths.LEGACY_KLIB_DUMP_EXTENSION
 
@@ -30,7 +31,7 @@ internal abstract class KotlinAbiCheckTaskImpl : AbiToolsTask() {
     private val rootDir = project.rootDir
 
 
-    override fun runTools(tools: AbiTools) {
+    override fun runTools(abiValidationToolchain: AbiValidationToolchain, buildSession: KotlinToolchains.BuildSession) {
         val referenceDir = referenceDir.get().asFile
         val actualDir = actualDir.get().asFile
         val pathPrefix = if (projectPath == ":") ":" else "$projectPath:"
@@ -52,16 +53,13 @@ internal abstract class KotlinAbiCheckTaskImpl : AbiToolsTask() {
             val relative = actualDump.toRelativeString(actualDir)
             val referenceDump = referenceDir.resolve(relative)
             if (referenceDumps.remove(referenceDump)) {
+                val diffBuilder = StringBuilder()
+                val operation = abiValidationToolchain.compareDumpFiles(diffBuilder, referenceDump.toPath(), actualDump.toPath())
+                buildSession.executeOperation(operation)
 
-                val diffSet = mutableSetOf<String>()
-                val diff = tools.filesDiff(
-                    referenceDump,
-                    actualDump
-                )
-                if (diff != null) diffSet.add(diff)
-                if (diffSet.isNotEmpty()) {
-                    val diffText = diffSet.joinToString("\n\n")
-                    errorBuilder.append("\n<<<ABI has changed>>>\n$diffText\n\n")
+                val diff = diffBuilder.toString()
+                if (diff.isNotEmpty()) {
+                    errorBuilder.append("\n<<<ABI has changed>>>\n$diff\n\n")
                 }
 
             } else {

@@ -6,12 +6,12 @@
 package org.jetbrains.kotlin.gradle.plugin.abi.internal
 
 import org.gradle.api.Project
-import org.gradle.api.file.ProjectLayout
 import org.gradle.api.provider.Property
-import org.gradle.api.tasks.TaskContainer
 import org.gradle.language.base.plugins.LifecycleBasePlugin
+import org.jetbrains.kotlin.compilerRunner.btapi.BuildSessionService
 import org.jetbrains.kotlin.gradle.dsl.abi.AbiValidationExtension
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
+import org.jetbrains.kotlin.gradle.plugin.BUILD_TOOLS_API_CLASSPATH_CONFIGURATION_NAME
 import org.jetbrains.kotlin.gradle.tasks.abi.KotlinAbiCheckTaskImpl
 import org.jetbrains.kotlin.gradle.tasks.abi.KotlinAbiDumpTaskImpl
 import org.jetbrains.kotlin.gradle.tasks.abi.KotlinAbiUpdateTask
@@ -26,7 +26,7 @@ internal fun AbiValidationExtension.configure(project: Project) {
     referenceDumpDir.convention(project.layout.projectDirectory.dir(AbiValidationPaths.LEGACY_DEFAULT_REFERENCE_DUMP_DIR))
     keepLocallyUnsupportedTargets.convention(true)
 
-    configureTasks(project.name, project.tasks, project.layout, enabled)
+    configureTasks(project, enabled)
 }
 
 /**
@@ -34,11 +34,13 @@ internal fun AbiValidationExtension.configure(project: Project) {
  */
 @ExperimentalAbiValidation
 private fun AbiValidationExtension.configureTasks(
-    projectName: String,
-    tasks: TaskContainer,
-    layout: ProjectLayout,
+    project: Project,
     isEnabled: Property<Boolean>,
 ) {
+    val projectName = project.name
+    val tasks = project.tasks
+    val layout = project.layout
+
     val klibFileName = "$projectName${AbiValidationPaths.LEGACY_KLIB_DUMP_EXTENSION}"
 
     val referenceDir = referenceDumpDir
@@ -46,8 +48,14 @@ private fun AbiValidationExtension.configureTasks(
     val dumpDir =
         layout.buildDirectory.dir(AbiValidationPaths.ACTUAL_DUMP_DIR)
 
+    val buildSessionService = BuildSessionService.registerIfAbsent(project)
+    val buildToolsClasspath = project.configurations.named(BUILD_TOOLS_API_CLASSPATH_CONFIGURATION_NAME)
+
     val dumpTaskProvider =
         tasks.register(KotlinAbiDumpTaskImpl.NAME, KotlinAbiDumpTaskImpl::class.java) {
+            it.buildSessionService.convention(buildSessionService)
+            it.buildToolsClasspath.from(buildToolsClasspath)
+
             it.dumpDir.convention(dumpDir)
             it.referenceKlibDump.convention(referenceDir.map { dir -> dir.file(klibFileName) })
             it.keepLocallyUnsupportedTargets.convention(true)
@@ -68,6 +76,9 @@ private fun AbiValidationExtension.configureTasks(
         }
 
     val checkTaskProvider = tasks.register(KotlinAbiCheckTaskImpl.NAME, KotlinAbiCheckTaskImpl::class.java) {
+        it.buildSessionService.convention(buildSessionService)
+        it.buildToolsClasspath.from(buildToolsClasspath)
+
         it.actualDir.convention(dumpTaskProvider.map { t -> t.dumpDir.get() })
         it.referenceDir.convention(referenceDir)
 

@@ -6,12 +6,11 @@
 package org.jetbrains.kotlin.gradle.plugin.abi.internal
 
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Configuration
 import org.gradle.api.file.FileCollection
 import org.gradle.api.provider.Provider
+import org.jetbrains.kotlin.abi.tools.KlibTarget
 import org.jetbrains.kotlin.gradle.tasks.abi.KotlinAbiCheckTaskImpl
 import org.jetbrains.kotlin.gradle.tasks.abi.KotlinAbiDumpTaskImpl
-import org.jetbrains.kotlin.abi.tools.KlibTarget
 import org.jetbrains.kotlin.gradle.utils.named
 
 /**
@@ -83,18 +82,6 @@ internal class AbiValidationTaskSet(project: Project) {
     fun unsupportedTarget(klibTarget: KlibTarget) {
         legacyDumpTaskProvider.configure {
             it.unsupportedTargets.add(klibTarget)
-        }
-    }
-
-    /**
-     * Sets the classpath of the ABI tools dependency for all ABI validation tasks.
-     */
-    fun setClasspath(toolClasspath: Configuration) {
-        legacyDumpTaskProvider.configure {
-            it.toolsClasspath.from(toolClasspath)
-        }
-        legacyCheckDumpTaskProvider.configure {
-            it.toolsClasspath.from(toolClasspath)
         }
     }
 }

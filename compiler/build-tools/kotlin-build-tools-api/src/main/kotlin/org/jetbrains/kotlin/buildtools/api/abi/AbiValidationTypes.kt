@@ -1,25 +1,27 @@
 /*
- * Copyright 2010-2025 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
-package org.jetbrains.kotlin.abi.tools
+package org.jetbrains.kotlin.buildtools.api.abi
+
 
 /**
- * Set of filtering rules that restrict ABI declarations included into a dump.
+ * Set of filtering rules that restrict ABI declarations included in a dump.
  *
  * The rules combine inclusion and exclusion of declarations.
- * Each filter can be written as a filter for the class name (see [includedClasses] or [excludedClasses]), or an annotation filter (see [includedAnnotatedWith] or [excludedAnnotatedWith]).
+ * Each filter can be written as a filter for the class name (see [includedNamed] or [excludedNamed]), or an annotation filter (see [includedAnnotatedWith] or [excludedAnnotatedWith]).
  *
- * In order for a declaration (class, field, property or function) to get into the dump, it must pass the inclusion **and** exclusion filters.
+ * In order for a declaration (class, field, property, or function) to get into the dump, it must pass the inclusion **and** exclusion filters.
  *
- * A declaration passes the exclusion filters if it does not match any class names (see [excludedClasses]) or annotation  (see [excludedAnnotatedWith]) filter rules.
+ * A declaration passes the exclusion filters if it does not match any class names (see [excludedNamed]) or annotation  (see [excludedAnnotatedWith]) filter rules.
  *
- * A declaration passes the inclusion filters if there is no inclusion rules, or it matches any inclusion rule, or at least one of its members (actual for class declaration) matches any inclusion rule.
+ * A declaration passes the inclusion filters if there are no inclusion rules, or it matches any inclusion rule, or at least one of its members (actual for class declaration) matches any inclusion rule.
  *
- * @since 2.3.20
+ * @since 2.4.0
  */
 public class AbiFilters(
+
     /**
      * Include a class, file-level property, or file-level function in a dump by its name.
      * Declarations that do not match the specified names, that do not have an annotation from [includedAnnotatedWith]
@@ -39,7 +41,7 @@ public class AbiFilters(
      * - `*` - zero or any number of characters excluding dot. Using to specify simple class name.
      * - `?` - any single character.
      */
-    public val includedClasses: Set<String>,
+    public val includedNamed: Set<String> = emptySet(),
 
     /**
      * Excludes a class, file-level property, or file-level function from a dump by its name.
@@ -58,8 +60,7 @@ public class AbiFilters(
      * - `*` - zero or any number of characters excluding dot. Using to specify simple class name.
      * - `?` - any single character.
      */
-    public val excludedClasses: Set<String>,
-
+    public val excludedNamed: Set<String> = emptySet(),
     /**
      * Includes a declaration by annotations placed on it.
      *
@@ -74,7 +75,7 @@ public class AbiFilters(
      *
      * The annotation should not have [Retention] equal to [AnnotationRetention.SOURCE], otherwise, filtering by it will not work.
      */
-    public val includedAnnotatedWith: Set<String>,
+    public val includedAnnotatedWith: Set<String> = emptySet(),
 
     /**
      * Excludes a declaration by annotations placed on it.
@@ -89,12 +90,51 @@ public class AbiFilters(
      *
      * The annotation should not have [Retention] equal to [AnnotationRetention.SOURCE], otherwise, filtering by it will not work.
      */
-    public val excludedAnnotatedWith: Set<String>,
+    public val excludedAnnotatedWith: Set<String> = emptySet(),
 ) {
     public companion object {
         public val EMPTY: AbiFilters = AbiFilters(emptySet(), emptySet(), emptySet(), emptySet())
     }
 
     public val isEmpty: Boolean =
-        includedClasses.isEmpty() && excludedClasses.isEmpty() && includedAnnotatedWith.isEmpty() && excludedAnnotatedWith.isEmpty()
+        includedNamed.isEmpty() && excludedNamed.isEmpty() && includedAnnotatedWith.isEmpty() && excludedAnnotatedWith.isEmpty()
+}
+
+/**
+ * Target name consisting of two parts: a [customizedName] that could be configured by a user, and a [canonicalName]
+ * that names a target platform and could not be configured by a user.
+ *
+ * When serialized, the target is represented as a tuple `<canonicalName>.<customizedName>`, like `iosArm64.ios`.
+ * If both names are the same (they are by default, unless a user decides to use a custom name), the serialized
+ * from is shortened to a single term. For example, `macosArm64.macosArm64` and `macosArm64` are a long and a short
+ * serialized forms of the same target.
+ *
+ * @since 2.4.0
+ */
+public class KlibTargetId(
+    /**
+     * An actual name of a target that remains unaffected by any custom settings.
+     */
+    public val canonicalName: String,
+    /**
+     * A name of a target that could be configured by a user.
+     * Usually, it's the same name as [canonicalName].
+     */
+    public val customizedName: String
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is KlibTargetId) return false
+
+        if (canonicalName != other.canonicalName) return false
+        if (customizedName != other.customizedName) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = canonicalName.hashCode()
+        result = 31 * result + customizedName.hashCode()
+        return result
+    }
 }

@@ -31,6 +31,13 @@ dependencies {
     embedded(project(":kotlin-scripting-common")) { isTransitive = false }
     embedded(project(":kotlin-scripting-jvm")) { isTransitive = false }
 
+    // dependencies for ABI validation
+    compileOnly(project(":libraries:tools:abi-validation:abi-tools-api"))
+    embedded(project(":libraries:tools:abi-validation:abi-tools-api")) { isTransitive = false }
+    embedded(project(":libraries:tools:abi-validation:abi-tools")) { isTransitive = false }
+    embedded(project(":kotlin-metadata-jvm")) { isTransitive = false }
+    embedded("io.github.java-diff-utils:java-diff-utils:4.12") { isTransitive = false }
+
 
     testCompileOnly(project(":compiler:cli"))
     testCompileOnly(intellijPlatformUtil())

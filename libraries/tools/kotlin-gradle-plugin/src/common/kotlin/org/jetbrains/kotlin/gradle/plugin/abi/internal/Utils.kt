@@ -6,20 +6,13 @@
 package org.jetbrains.kotlin.gradle.plugin.abi.internal
 
 import org.gradle.api.NamedDomainObjectContainer
-import org.gradle.api.Project
-import org.gradle.api.artifacts.Configuration
 import org.jetbrains.kotlin.abi.tools.KlibTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
-import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.js.KotlinWasmTargetType
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrTarget
-import org.jetbrains.kotlin.gradle.utils.createResolvable
-import org.jetbrains.kotlin.gradle.utils.setInvisibleIfSupported
-
-private const val ABI_TOOLS_DEPENDENCY_CONFIGURATION = "kotlinInternalAbiValidation"
 
 internal const val ANDROID_RELEASE_BUILD_TYPE = "release"
 
@@ -56,21 +49,6 @@ internal val KotlinTarget.emitsKlib: Boolean
 @Suppress("TYPEALIAS_EXPANSION_DEPRECATION")
 internal val org.jetbrains.kotlin.gradle.utils.DeprecatedAndroidBaseVariant.isTestVariant: Boolean
     get() = this is org.jetbrains.kotlin.gradle.utils.DeprecatedAndroidTestVariant || this is org.jetbrains.kotlin.gradle.utils.DeprecatedAndroidUnitTestVariant
-
-
-internal fun Project.prepareAbiClasspath(): Configuration {
-    val version = getKotlinPluginVersion()
-
-    return configurations.createResolvable(ABI_TOOLS_DEPENDENCY_CONFIGURATION)
-        .also {
-            it.setInvisibleIfSupported()
-            it.defaultDependencies { dependencies ->
-                dependencies.add(
-                    project.dependencies.create("org.jetbrains.kotlin:abi-tools:$version")
-                )
-            }
-        }
-}
 
 /**
  * Executes a given [action] against the compilation with the name [compilationName].
