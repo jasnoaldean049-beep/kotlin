@@ -57,7 +57,7 @@ class NativeBoxRunner(testServices: TestServices) : NativeBinaryArtifactHandler(
     }
 
     private fun createTestRun(executable: File): TestRun {
-        val testKind = parseTestKind(testServices.moduleStructure.allDirectives) ?: testServices.testRunSettings.get<TestKind>()
+        val testKind = parseTestKind(testServices.moduleStructure.modules.first().directives) ?: testServices.testRunSettings.get<TestKind>()
         val checks = TestRunChecks(
             executionTimeoutCheck = TestRunCheck.ExecutionTimeout.ShouldNotExceed(30.seconds),
             testFiltering = TestRunCheck.TestFiltering(
